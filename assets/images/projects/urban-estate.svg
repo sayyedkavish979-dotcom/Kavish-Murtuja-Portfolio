@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ueBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#0d1527" />
+      <stop offset="100%" stop-color="#050810" />
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#4338ca" />
+    </linearGradient>
+    <linearGradient id="propCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141d33" />
+      <stop offset="100%" stop-color="#0e1424" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" rx="16" fill="url(#ueBg)" />
+  <rect x="1" y="1" width="798" height="498" rx="15" fill="none" stroke="#6366f1" stroke-opacity="0.3" stroke-width="1.5" />
+
+  <!-- Browser Header Bar -->
+  <rect x="0" y="0" width="800" height="42" rx="16" fill="#0d1424" />
+  <rect x="0" y="32" width="800" height="10" fill="#0d1424" />
+  <circle cx="24" cy="21" r="5" fill="#ef4444" />
+  <circle cx="40" cy="21" r="5" fill="#f59e0b" />
+  <circle cx="56" cy="21" r="5" fill="#10b981" />
+  <rect x="80" y="11" width="340" height="20" rx="6" fill="#18233c" />
+  <text x="100" y="25" fill="#a5b4fc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="11">https://urbanestate-realty.demo</text>
+
+  <!-- Navigation -->
+  <text x="40" y="76" fill="#818cf8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="18" letter-spacing="1">URBAN ESTATE</text>
+  <text x="40" y="90" fill="#6366f1" font-family="sans-serif" font-size="8.5" letter-spacing="1">MODERN LUXURY REAL ESTATE</text>
+  
+  <text x="400" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Properties</text>
+  <text x="475" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Developments</text>
+  <text x="575" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Agents</text>
+  <rect x="635" y="62" width="125" height="30" rx="15" fill="url(#indigoGrad)" />
+  <text x="657" y="81" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="10.5">LIST PROPERTY</text>
+
+  <!-- Hero Content -->
+  <g transform="translate(40, 125)">
+    <rect x="0" y="0" width="145" height="20" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-opacity="0.4" />
+    <text x="12" y="14" fill="#a5b4fc" font-family="sans-serif" font-size="9" font-weight="600">VERIFIED LUXURY LISTINGS</text>
+    
+    <text x="0" y="55" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28">Find Your Dream</text>
+    <text x="0" y="90" fill="#818cf8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28">Architectural Sanctuary</text>
+    
+    <text x="0" y="125" fill="#94a3b8" font-family="sans-serif" font-size="12">
+      Curated portfolio of prime penthouses, waterfront villas,
+    </text>
+    <text x="0" y="145" fill="#94a3b8" font-family="sans-serif" font-size="12">
+      and modern smart estates with panoramic views.
+    </text>
+
+    <!-- Buttons -->
+    <rect x="0" y="175" width="140" height="38" rx="8" fill="url(#indigoGrad)" />
+    <text x="24" y="199" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="11.5">BROWSE HOMES</text>
+
+    <rect x="155" y="175" width="125" height="38" rx="8" fill="none" stroke="#6366f1" stroke-width="1.5" />
+    <text x="180" y="199" fill="#a5b4fc" font-family="sans-serif" font-weight="600" font-size="11.5">SCHEDULE TOUR</text>
+  </g>
+
+  <!-- Visual Property Card -->
+  <g transform="translate(430, 115)">
+    <rect x="0" y="0" width="330" height="230" rx="14" fill="url(#propCard)" stroke="#233152" stroke-width="1.5" />
+    
+    <!-- Architectural graphic -->
+    <rect x="20" y="20" width="290" height="130" rx="10" fill="#0f172a" />
+    <!-- Modern architectural shapes -->
+    <polygon points="40,150 40,65 140,40 220,55 220,150" fill="#1e293b" />
+    <polygon points="140,40 220,55 290,75 290,150 220,150" fill="#334155" />
+    <!-- Glass facade windows -->
+    <rect x="55" y="70" width="25" height="35" rx="2" fill="#38bdf8" opacity="0.6" />
+    <rect x="90" y="70" width="25" height="35" rx="2" fill="#38bdf8" opacity="0.6" />
+    <rect x="150" y="65" width="30" height="40" rx="2" fill="#818cf8" opacity="0.6" />
+    <rect x="190" y="70" width="25" height="35" rx="2" fill="#818cf8" opacity="0.6" />
+    <rect x="235" y="85" width="35" height="45" rx="2" fill="#38bdf8" opacity="0.5" />
+    
+    <!-- Badges on image -->
+    <rect x="30" y="30" width="65" height="20" rx="6" fill="#10b981" />
+    <text x="38" y="44" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="9">FOR SALE</text>
+    
+    <rect x="235" y="30" width="65" height="20" rx="6" fill="#000000" opacity="0.75" />
+    <text x="244" y="44" fill="#ffffff" font-family="sans-serif" font-size="9">VR 3D Tour</text>
+
+    <!-- Property Info -->
+    <rect x="20" y="165" width="290" height="52" rx="8" fill="#080d19" stroke="#1e293b" />
+    <text x="32" y="185" fill="#f8fafc" font-family="sans-serif" font-weight="700" font-size="12">Skyline Horizon Penthouse</text>
+    <text x="32" y="202" fill="#94a3b8" font-family="sans-serif" font-size="9.5">4 Beds • 5 Baths • 4,850 sq.ft • Private Elevator</text>
+    <text x="245" y="194" fill="#818cf8" font-family="sans-serif" font-weight="800" font-size="13.5">₹4.25 Cr</text>
+  </g>
+
+  <!-- Filter & Search Console at Bottom -->
+  <g transform="translate(40, 385)">
+    <rect x="0" y="0" width="720" height="85" rx="12" fill="#0d1629" stroke="#1f2d4a" stroke-width="1.5" />
+    
+    <g transform="translate(25, 20)">
+      <text x="0" y="14" fill="#a5b4fc" font-family="sans-serif" font-size="9" font-weight="600">LOCATION</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">Civil Lines / Swaroop Nagar</text>
+      <text x="0" y="49" fill="#64748b" font-family="sans-serif" font-size="9">Kanpur prime sectors</text>
+    </g>
+
+    <line x1="220" y1="18" x2="220" y2="67" stroke="#1e293b" stroke-width="1" />
+
+    <g transform="translate(245, 20)">
+      <text x="0" y="14" fill="#a5b4fc" font-family="sans-serif" font-size="9" font-weight="600">PROPERTY TYPE</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">Luxury Penthouse &amp; Villa</text>
+      <text x="0" y="49" fill="#64748b" font-family="sans-serif" font-size="9">Gated community</text>
+    </g>
+
+    <line x1="420" y1="18" x2="420" y2="67" stroke="#1e293b" stroke-width="1" />
+
+    <g transform="translate(445, 20)">
+      <text x="0" y="14" fill="#a5b4fc" font-family="sans-serif" font-size="9" font-weight="600">BUDGET RANGE</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">₹1.5 Cr – ₹6.0 Cr</text>
+      <text x="0" y="49" fill="#64748b" font-family="sans-serif" font-size="9">Pre-approved finance</text>
+    </g>
+
+    <rect x="580" y="18" width="115" height="48" rx="8" fill="url(#indigoGrad)" />
+    <text x="605" y="47" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="12">SEARCH</text>
+  </g>
+</svg>

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="luxBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#061c1e" />
+      <stop offset="50%" stop-color="#041214" />
+      <stop offset="100%" stop-color="#02080a" />
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="50%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="suiteCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e2a2c" />
+      <stop offset="100%" stop-color="#07181a" />
+    </linearGradient>
+    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" rx="16" fill="url(#luxBg)" />
+  <rect x="1" y="1" width="798" height="498" rx="15" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="1.5" />
+
+  <!-- Browser Header Bar -->
+  <rect x="0" y="0" width="800" height="42" rx="16" fill="#081719" />
+  <rect x="0" y="32" width="800" height="10" fill="#081719" />
+  <circle cx="24" cy="21" r="5" fill="#ef4444" />
+  <circle cx="40" cy="21" r="5" fill="#f59e0b" />
+  <circle cx="56" cy="21" r="5" fill="#10b981" />
+  <rect x="80" y="11" width="340" height="20" rx="6" fill="#0c2426" />
+  <text x="100" y="25" fill="#6ee7b7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="11">https://luxestay-resorts.demo</text>
+
+  <!-- Navigation -->
+  <text x="40" y="76" fill="#6ee7b7" font-family="'Cinzel', serif, Georgia" font-weight="700" font-size="18" letter-spacing="3">LUXESTAY</text>
+  <text x="40" y="90" fill="#10b981" font-family="sans-serif" font-size="8.5" letter-spacing="1.5">BOUTIQUE HOTELS &amp; RESORTS</text>
+  
+  <text x="410" y="80" fill="#e5e7eb" font-family="sans-serif" font-size="11" opacity="0.8">Suites</text>
+  <text x="470" y="80" fill="#e5e7eb" font-family="sans-serif" font-size="11" opacity="0.8">Wellness Spa</text>
+  <text x="565" y="80" fill="#e5e7eb" font-family="sans-serif" font-size="11" opacity="0.8">Dining</text>
+  <rect x="635" y="62" width="125" height="30" rx="15" fill="url(#emeraldGrad)" />
+  <text x="657" y="81" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="10.5" letter-spacing="0.5">CHECK AVAILABILITY</text>
+
+  <!-- Hero Content -->
+  <g transform="translate(40, 125)">
+    <rect x="0" y="0" width="130" height="20" rx="10" fill="#06322b" stroke="#10b981" stroke-opacity="0.4" />
+    <text x="12" y="14" fill="#6ee7b7" font-family="sans-serif" font-size="9" font-weight="600">5-STAR LUXURY GETAWAY</text>
+    
+    <text x="0" y="55" fill="#ffffff" font-family="Georgia, serif" font-weight="700" font-size="28">Serenity Meets</text>
+    <text x="0" y="90" fill="#34d399" font-family="Georgia, serif" font-weight="700" font-size="28">Unrivaled Opulence</text>
+    
+    <text x="0" y="125" fill="#9ca3af" font-family="sans-serif" font-size="12" opacity="0.85">
+      Private oceanfront villas, curated wellness rituals, and
+    </text>
+    <text x="0" y="145" fill="#9ca3af" font-family="sans-serif" font-size="12" opacity="0.85">
+      Michelin-starred dining under the stars.
+    </text>
+
+    <!-- Buttons -->
+    <rect x="0" y="175" width="140" height="38" rx="8" fill="url(#emeraldGrad)" />
+    <text x="24" y="199" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="11.5">EXPLORE SUITES</text>
+
+    <rect x="155" y="175" width="125" height="38" rx="8" fill="none" stroke="#10b981" stroke-width="1.5" />
+    <text x="175" y="199" fill="#6ee7b7" font-family="sans-serif" font-weight="600" font-size="11.5">VIRTUAL TOUR</text>
+  </g>
+
+  <!-- Visual Hotel Card / Suite Showcase -->
+  <g transform="translate(430, 115)">
+    <rect x="0" y="0" width="330" height="230" rx="14" fill="url(#suiteCard)" stroke="#134e4a" stroke-width="1.5" />
+    
+    <!-- Pool and Villa Graphics -->
+    <rect x="20" y="20" width="290" height="135" rx="10" fill="#042f2e" />
+    <!-- Gradient water representation -->
+    <path d="M20 90 Q90 80 165 95 Q240 110 310 90 L310 155 L20 155 Z" fill="#0d9488" opacity="0.7" />
+    <path d="M20 115 Q90 100 165 120 Q240 135 310 115 L310 155 L20 155 Z" fill="#14b8a6" opacity="0.5" />
+    <!-- Villa Architecture Lines -->
+    <polygon points="60,40 180,40 180,95 60,95" fill="#0f766e" opacity="0.9" />
+    <polygon points="190,50 280,50 280,95 190,95" fill="#115e59" opacity="0.8" />
+    <!-- Glass railing line -->
+    <line x1="40" y1="95" x2="290" y2="95" stroke="#99f6e4" stroke-width="2" opacity="0.8" />
+
+    <!-- Suite Title Tag -->
+    <rect x="20" y="170" width="290" height="46" rx="8" fill="#021a1c" stroke="#134e4a" />
+    <text x="35" y="190" fill="#ccfbf1" font-family="sans-serif" font-weight="700" font-size="11.5">Presidential Ocean Villa</text>
+    <text x="35" y="205" fill="#5eead4" font-family="sans-serif" font-size="9.5">Private Pool • Butler Service • 2,400 sq.ft</text>
+    <text x="250" y="198" fill="#34d399" font-family="sans-serif" font-weight="bold" font-size="13">₹28,500<tspan font-size="9" fill="#99f6e4">/nt</tspan></text>
+  </g>
+
+  <!-- Interactive Search / Booking Bar Widget at Bottom -->
+  <g transform="translate(40, 385)">
+    <rect x="0" y="0" width="720" height="85" rx="12" fill="#042022" stroke="#0f766e" stroke-width="1.5" />
+    
+    <g transform="translate(25, 20)">
+      <text x="0" y="14" fill="#5eead4" font-family="sans-serif" font-size="9" font-weight="600">CHECK-IN</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">15 Oct 2026</text>
+      <text x="0" y="49" fill="#9ca3af" font-family="sans-serif" font-size="9">Thursday</text>
+    </g>
+
+    <line x1="165" y1="18" x2="165" y2="67" stroke="#134e4a" stroke-width="1" />
+
+    <g transform="translate(190, 20)">
+      <text x="0" y="14" fill="#5eead4" font-family="sans-serif" font-size="9" font-weight="600">CHECK-OUT</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">19 Oct 2026</text>
+      <text x="0" y="49" fill="#9ca3af" font-family="sans-serif" font-size="9">Monday (4 Nights)</text>
+    </g>
+
+    <line x1="345" y1="18" x2="345" y2="67" stroke="#134e4a" stroke-width="1" />
+
+    <g transform="translate(370, 20)">
+      <text x="0" y="14" fill="#5eead4" font-family="sans-serif" font-size="9" font-weight="600">GUESTS &amp; ROOMS</text>
+      <text x="0" y="36" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="13">2 Adults, 1 Villa</text>
+      <text x="0" y="49" fill="#9ca3af" font-family="sans-serif" font-size="9">Ocean View Preferred</text>
+    </g>
+
+    <rect x="540" y="18" width="155" height="48" rx="8" fill="url(#emeraldGrad)" />
+    <text x="568" y="47" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="12">SEARCH ROOMS</text>
+  </g>
+</svg>

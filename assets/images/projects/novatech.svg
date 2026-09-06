@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ntBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050d1a" />
+      <stop offset="50%" stop-color="#0a1628" />
+      <stop offset="100%" stop-color="#040912" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0" />
+    </linearGradient>
+    <linearGradient id="techCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#101d36" />
+      <stop offset="100%" stop-color="#0a1222" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" rx="16" fill="url(#ntBg)" />
+  <rect x="1" y="1" width="798" height="498" rx="15" fill="none" stroke="#06b6d4" stroke-opacity="0.3" stroke-width="1.5" />
+
+  <!-- Browser Header Bar -->
+  <rect x="0" y="0" width="800" height="42" rx="16" fill="#0c182e" />
+  <rect x="0" y="32" width="800" height="10" fill="#0c182e" />
+  <circle cx="24" cy="21" r="5" fill="#ef4444" />
+  <circle cx="40" cy="21" r="5" fill="#f59e0b" />
+  <circle cx="56" cy="21" r="5" fill="#10b981" />
+  <rect x="80" y="11" width="340" height="20" rx="6" fill="#152648" />
+  <text x="100" y="25" fill="#67e8f9" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="11">https://novatech-cloud.demo</text>
+
+  <!-- Navigation -->
+  <text x="40" y="76" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="19" letter-spacing="1">NOVATECH</text>
+  <text x="40" y="90" fill="#06b6d4" font-family="sans-serif" font-size="8.5" letter-spacing="1">NEXT-GEN CLOUD &amp; AI PLATFORMS</text>
+  
+  <text x="400" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Products</text>
+  <text x="475" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Solutions</text>
+  <text x="560" y="80" fill="#e2e8f0" font-family="sans-serif" font-size="11" opacity="0.8">Developers</text>
+  <rect x="635" y="62" width="125" height="30" rx="6" fill="url(#cyanGrad)" />
+  <text x="657" y="81" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="10.5">REQUEST DEMO</text>
+
+  <!-- Hero Content -->
+  <g transform="translate(40, 125)">
+    <rect x="0" y="0" width="155" height="20" rx="10" fill="#083344" stroke="#06b6d4" stroke-opacity="0.4" />
+    <text x="12" y="14" fill="#67e8f9" font-family="sans-serif" font-size="9" font-weight="600">ENTERPRISE CLOUD ARCHITECTURE</text>
+    
+    <text x="0" y="55" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28">Scale Your Systems</text>
+    <text x="0" y="90" fill="#38bdf8" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28">With Autonomous AI</text>
+    
+    <text x="0" y="125" fill="#94a3b8" font-family="sans-serif" font-size="12">
+      Deliver zero-latency data pipelines, Kubernetes orchestration,
+    </text>
+    <text x="0" y="145" fill="#94a3b8" font-family="sans-serif" font-size="12">
+      and bank-grade SOC-2 compliance across global clusters.
+    </text>
+
+    <!-- Buttons -->
+    <rect x="0" y="175" width="145" height="38" rx="8" fill="url(#cyanGrad)" />
+    <text x="24" y="199" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="11.5">START FREE TRIAL</text>
+
+    <rect x="160" y="175" width="125" height="38" rx="8" fill="none" stroke="#06b6d4" stroke-width="1.5" />
+    <text x="182" y="199" fill="#67e8f9" font-family="sans-serif" font-weight="600" font-size="11.5">VIEW API DOCS</text>
+  </g>
+
+  <!-- Visual Dashboard Card -->
+  <g transform="translate(430, 115)">
+    <rect x="0" y="0" width="330" height="230" rx="14" fill="url(#techCard)" stroke="#1a2f52" stroke-width="1.5" />
+    
+    <!-- Dashboard Screen inside -->
+    <rect x="15" y="15" width="300" height="195" rx="8" fill="#070d18" />
+    
+    <!-- Metrics header -->
+    <text x="30" y="40" fill="#64748b" font-family="sans-serif" font-size="9">GLOBAL QUERY THROUGHPUT</text>
+    <text x="30" y="62" fill="#38bdf8" font-family="sans-serif" font-weight="800" font-size="18">4.82B req/s</text>
+    <rect x="135" y="48" width="55" height="18" rx="4" fill="#065f46" />
+    <text x="142" y="61" fill="#34d399" font-family="sans-serif" font-size="9" font-weight="bold">▲ +28.4%</text>
+
+    <text x="210" y="40" fill="#64748b" font-family="sans-serif" font-size="9">LATENCY (P99)</text>
+    <text x="210" y="62" fill="#ffffff" font-family="sans-serif" font-weight="800" font-size="18">1.8 ms</text>
+
+    <!-- Mini Chart SVG -->
+    <path d="M30 150 C60 140, 90 120, 120 135 C150 150, 180 95, 210 110 C240 125, 270 80, 295 90 L295 165 L30 165 Z" fill="url(#chartGrad)" />
+    <path d="M30 150 C60 140, 90 120, 120 135 C150 150, 180 95, 210 110 C240 125, 270 80, 295 90" stroke="#06b6d4" stroke-width="2.5" fill="none" />
+    
+    <!-- Dots on chart -->
+    <circle cx="210" cy="110" r="3.5" fill="#38bdf8" />
+    <circle cx="295" cy="90" r="4" fill="#a5f3fc" />
+
+    <!-- Status bottom bar -->
+    <rect x="25" y="175" width="280" height="24" rx="4" fill="#0d182b" />
+    <circle cx="40" cy="187" r="4" fill="#10b981" />
+    <text x="50" y="190" fill="#94a3b8" font-family="sans-serif" font-size="8.5">All 24 Regional Edge Clusters Operational • Zero Anomalies</text>
+  </g>
+
+  <!-- Bottom Featured Modules -->
+  <g transform="translate(40, 375)">
+    <rect x="0" y="0" width="220" height="95" rx="10" fill="#0a1426" stroke="#162c52" stroke-width="1" />
+    <text x="18" y="28" fill="#38bdf8" font-family="sans-serif" font-weight="700" font-size="11">Serverless Compute</text>
+    <text x="18" y="46" fill="#94a3b8" font-family="sans-serif" font-size="9.5">Deploy microservices with instant</text>
+    <text x="18" y="60" fill="#94a3b8" font-family="sans-serif" font-size="9.5">cold-start under 12 milliseconds.</text>
+    <text x="18" y="80" fill="#06b6d4" font-family="sans-serif" font-size="9" font-weight="bold">Explore Compute →</text>
+
+    <rect x="250" y="0" width="220" height="95" rx="10" fill="#0a1426" stroke="#162c52" stroke-width="1" />
+    <text x="268" y="28" fill="#38bdf8" font-family="sans-serif" font-weight="700" font-size="11">Neural Data Lake</text>
+    <text x="268" y="46" fill="#94a3b8" font-family="sans-serif" font-size="9.5">Real-time vector embeddings and</text>
+    <text x="268" y="60" fill="#94a3b8" font-family="sans-serif" font-size="9.5">semantic clustering out of the box.</text>
+    <text x="268" y="80" fill="#06b6d4" font-family="sans-serif" font-size="9" font-weight="bold">AI Features →</text>
+
+    <rect x="500" y="0" width="260" height="95" rx="10" fill="#0a1426" stroke="#162c52" stroke-width="1" />
+    <text x="518" y="28" fill="#38bdf8" font-family="sans-serif" font-weight="700" font-size="11">Zero-Trust Shield</text>
+    <text x="518" y="46" fill="#94a3b8" font-family="sans-serif" font-size="9.5">End-to-end cryptographic tokenization,</text>
+    <text x="518" y="60" fill="#94a3b8" font-family="sans-serif" font-size="9.5">DDoS mitigation, and IAM policies.</text>
+    <text x="518" y="80" fill="#06b6d4" font-family="sans-serif" font-size="9" font-weight="bold">Security Specs →</text>
+  </g>
+</svg>
