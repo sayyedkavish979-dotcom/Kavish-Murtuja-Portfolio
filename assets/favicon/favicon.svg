@@ -1,33 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
   <defs>
-    <linearGradient id="kmBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#00d2ff" />
       <stop offset="100%" stop-color="#3b82f6" />
     </linearGradient>
-    <linearGradient id="kmBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="favBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#121624" />
-      <stop offset="100%" stop-color="#090b12" />
+      <stop offset="100%" stop-color="#07090e" />
     </linearGradient>
-    <filter id="kmBadgeGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2.5" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
   </defs>
-  <!-- Background Rounded Square with Luxury Border -->
-  <rect x="2" y="2" width="96" height="96" rx="24" fill="url(#kmBgGrad)" stroke="url(#kmBadgeGrad)" stroke-width="2.5" />
-  <!-- Interlocking KM Monogram -->
-  <!-- Letter K -->
-  <path d="M24 26V74M24 50L44 26M33 40L44 74" 
-        stroke="url(#kmBadgeGrad)" 
+  <!-- Background Badge with Crisp Border -->
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#favBg)" stroke="url(#favGrad)" stroke-width="3" />
+  <!-- Letter K: High-contrast stroke for crisp readability at small favicon size -->
+  <path d="M19 25V75 M37 25L19 50L37 75" 
+        stroke="url(#favGrad)" 
         stroke-width="7.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <!-- Letter M -->
-  <path d="M44 74V26L62 51L80 26V74" 
-        stroke="url(#kmBadgeGrad)" 
+  <!-- Letter M: High-contrast stroke for crisp readability at small favicon size -->
+  <path d="M51 75V25L66 50L81 25V75" 
+        stroke="url(#favGrad)" 
         stroke-width="7.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <!-- Subtle accent dot -->
-  <circle cx="80" cy="26" r="3.5" fill="#00d2ff" filter="url(#kmBadgeGlow)" />
+  <circle cx="81" cy="25" r="3.5" fill="#00d2ff" />
 </svg>

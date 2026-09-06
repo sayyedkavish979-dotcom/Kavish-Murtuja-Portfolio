@@ -14,20 +14,19 @@
     </filter>
   </defs>
   <!-- Background Rounded Square with Luxury Border -->
-  <rect x="2" y="2" width="96" height="96" rx="24" fill="url(#kmBgGrad)" stroke="url(#kmBadgeGrad)" stroke-width="2.5" />
-  <!-- Interlocking KM Monogram -->
-  <!-- Letter K -->
-  <path d="M24 26V74M24 50L44 26M33 40L44 74" 
+  <rect x="2.5" y="2.5" width="95" height="95" rx="22" fill="url(#kmBgGrad)" stroke="url(#kmBadgeGrad)" stroke-width="2.5" />
+  <!-- Letter K (Clearly separated from M) -->
+  <path d="M19.5 26V74 M37 26L19.5 50L37 74" 
         stroke="url(#kmBadgeGrad)" 
-        stroke-width="7.5" 
+        stroke-width="6.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <!-- Letter M -->
-  <path d="M44 74V26L62 51L80 26V74" 
+  <!-- Letter M (Clearly separated from K) -->
+  <path d="M50 74V26L65.25 51L80.5 26V74" 
         stroke="url(#kmBadgeGrad)" 
-        stroke-width="7.5" 
+        stroke-width="6.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <!-- Subtle accent dot -->
-  <circle cx="80" cy="26" r="3.5" fill="#00d2ff" filter="url(#kmBadgeGlow)" />
+  <!-- Subtle accent dot on top-right tip of M -->
+  <circle cx="80.5" cy="26" r="3.2" fill="#00d2ff" filter="url(#kmBadgeGlow)" />
 </svg>

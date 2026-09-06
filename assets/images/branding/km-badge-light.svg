@@ -5,16 +5,18 @@
       <stop offset="100%" stop-color="#1d4ed8" />
     </linearGradient>
   </defs>
-  <rect x="2" y="2" width="96" height="96" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" />
-  <path d="M24 26V74M24 50L44 26M33 40L44 74" 
+  <rect x="2.5" y="2.5" width="95" height="95" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2.5" />
+  <!-- Letter K (Clearly separated from M) -->
+  <path d="M19.5 26V74 M37 26L19.5 50L37 74" 
         stroke="url(#kmLightGrad)" 
-        stroke-width="7.5" 
+        stroke-width="6.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <path d="M44 74V26L62 51L80 26V74" 
+  <!-- Letter M (Clearly separated from K) -->
+  <path d="M50 74V26L65.25 51L80.5 26V74" 
         stroke="url(#kmLightGrad)" 
-        stroke-width="7.5" 
+        stroke-width="6.5" 
         stroke-linecap="round" 
         stroke-linejoin="round" />
-  <circle cx="80" cy="26" r="3.5" fill="#0284c7" />
+  <circle cx="80.5" cy="26" r="3.2" fill="#0284c7" />
 </svg>

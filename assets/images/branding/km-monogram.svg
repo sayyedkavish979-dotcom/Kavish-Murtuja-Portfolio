@@ -5,22 +5,23 @@
       <stop offset="100%" stop-color="#3b82f6" />
     </linearGradient>
     <filter id="kmGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feGaussianBlur stdDeviation="2" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  <!-- K Monogram Path -->
-  <path d="M22 24V76M22 50L44 24M31 40L44 76" 
+  <!-- Letter K (Clearly separated from M) -->
+  <path d="M19.5 26V74 M37 26L19.5 50L37 74" 
         stroke="url(#kmBrandGrad)" 
-        stroke-width="8" 
+        stroke-width="7" 
         stroke-linecap="round" 
         stroke-linejoin="round" 
         filter="url(#kmGlow)" />
-  <!-- M Monogram Path -->
-  <path d="M44 76V24L62 52L80 24V76" 
+  <!-- Letter M (Clearly separated from K) -->
+  <path d="M50 74V26L65.25 51L80.5 26V74" 
         stroke="url(#kmBrandGrad)" 
-        stroke-width="8" 
+        stroke-width="7" 
         stroke-linecap="round" 
         stroke-linejoin="round" 
         filter="url(#kmGlow)" />
+  <circle cx="80.5" cy="26" r="3.2" fill="#00d2ff" />
 </svg>
