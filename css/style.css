@@ -64,6 +64,21 @@
   --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+
+/* --- Phase 3: Scroll Progress Indicator --- */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--grad-primary);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+  z-index: 1200;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
 /* --- Base & Reset --- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -758,35 +773,319 @@ footer .brand-logo-img {
   font-weight: 700;
 }
 
-/* Hero Mockup Right */
-.hero-mockup-wrapper {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
+
+/* --- Phase 3: Hero Entrance Staggered Sequence --- */
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.hero-mockup-container {
+.hero-entrance-nav {
+  animation: heroEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-entrance-1 {
+  animation: heroEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.hero-entrance-2 {
+  animation: heroEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.hero-entrance-3 {
+  animation: heroEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.hero-entrance-4 {
+  animation: heroEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.hero-entrance-5 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+/* --- Phase 3: Premium 3D Hero Stage & Floating Device --- */
+.hero-3d-stage {
   position: relative;
   width: 100%;
   max-width: 580px;
-  animation: floatSlow 6s ease-in-out infinite alternate;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  z-index: 1;
 }
 
-@keyframes floatSlow {
+.hero-3d-card {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Ambient 3D Glow behind device */
+.hero-3d-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(-40px);
+  width: 115%;
+  height: 115%;
+  background: radial-gradient(circle at center, rgba(0, 210, 255, 0.16) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 3D Device Chassis */
+.device-3d-chassis {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, #182234 0%, #0d131f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  box-shadow:
+    0 35px 70px -15px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(0, 210, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform-style: preserve-3d;
+  z-index: 1;
+  overflow: hidden;
+  animation: heroFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes heroFloat {
   0% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
   }
   100% {
-    transform: translateY(-12px) rotate(0.5deg);
+    transform: translateY(-10px) rotateX(1.5deg) rotateY(-1.5deg);
   }
 }
 
-.hero-mockup-img {
+/* Device Top Bezel & Window Controls */
+.device-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  background: rgba(11, 15, 25, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.device-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.device-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.device-dots .dot.red { background: #ef4444; }
+.device-dots .dot.yellow { background: #f59e0b; }
+.device-dots .dot.green { background: #10b981; }
+
+.device-url-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.9rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.device-url-bar .lock-icon {
+  color: var(--primary-cyan);
+  display: flex;
+  align-items: center;
+}
+
+.device-url-bar .url-text {
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.device-header-status .status-live-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+  text-transform: uppercase;
+}
+
+/* Device Screen */
+.device-screen {
+  position: relative;
   width: 100%;
-  height: auto;
-  border-radius: var(--radius-lg);
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.7));
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #080a0f;
+}
+
+.device-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.device-3d-chassis:hover .device-screen-img {
+  transform: scale(1.025);
+}
+
+.device-screen-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(7, 9, 14, 0.85) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+
+.device-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  color: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Laptop Base Lip */
+.laptop-base-edge {
+  height: 14px;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-notch {
+  width: 60px;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Floating UI Glass Chips --- */
+.floating-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 1rem;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 210, 255, 0.1);
+  z-index: 3;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.floating-chip .chip-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(0, 210, 255, 0.12);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.floating-chip .chip-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.floating-chip .chip-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.floating-chip .chip-desc {
+  font-size: 0.68rem;
+  color: var(--primary-cyan);
+  font-weight: 500;
+}
+
+/* Chip Individual Placements & Floating Animations */
+.chip-perf {
+  top: -15px;
+  right: -20px;
+  transform: translateZ(35px);
+  animation: floatChip1 5s ease-in-out infinite alternate;
+}
+
+.chip-responsive {
+  bottom: 25px;
+  left: -25px;
+  transform: translateZ(45px);
+  animation: floatChip2 6s ease-in-out infinite alternate 0.5s;
+}
+
+.chip-ui {
+  bottom: -20px;
+  right: 15px;
+  transform: translateZ(30px);
+  animation: floatChip3 5.5s ease-in-out infinite alternate 1s;
+}
+
+@keyframes floatChip1 {
+  0% { transform: translateZ(35px) translateY(0px); }
+  100% { transform: translateZ(35px) translateY(-8px); }
+}
+
+@keyframes floatChip2 {
+  0% { transform: translateZ(45px) translateY(0px); }
+  100% { transform: translateZ(45px) translateY(-10px); }
+}
+
+@keyframes floatChip3 {
+  0% { transform: translateZ(30px) translateY(0px); }
+  100% { transform: translateZ(30px) translateY(-7px); }
 }
 
 /* --- ABOUT ME SECTION --- */
@@ -2789,5 +3088,213 @@ body:not([data-active-page="home"]) .navbar {
   .pulse-dot,
   .whatsapp-wave {
     animation: none !important;
+  }
+}
+
+
+/* ==============================================================================
+   PHASE 3: INTERACTIVE EXTENSIONS & RESPONSIVE RULES
+   ============================================================================== */
+
+/* --- Scroll Reveal Animations --- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays for Grid Items */
+.stagger-1 { transition-delay: 60ms; }
+.stagger-2 { transition-delay: 120ms; }
+.stagger-3 { transition-delay: 180ms; }
+.stagger-4 { transition-delay: 240ms; }
+.stagger-5 { transition-delay: 300ms; }
+.stagger-6 { transition-delay: 360ms; }
+
+/* --- Button Press / Click Micro-Interaction --- */
+.btn:active,
+.filter-btn:active,
+.social-icon-btn:active,
+.mobile-toggle:active {
+  transform: scale(0.97) translateY(0) !important;
+  transition: transform 0.08s ease !important;
+}
+
+/* --- Desktop Custom Cursor --- */
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-cyan);
+  box-shadow: 0 0 10px var(--brand-cyan);
+}
+
+.custom-cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0, 210, 255, 0.45);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-cursor-ring .cursor-text {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #07090e;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.custom-cursor-ring.is-hovering {
+  width: 48px;
+  height: 48px;
+  border-color: var(--brand-cyan);
+  background: rgba(0, 210, 255, 0.12);
+  backdrop-filter: blur(2px);
+}
+
+.custom-cursor-ring.is-view-hover {
+  width: 64px;
+  height: 64px;
+  background: var(--brand-cyan);
+  border-color: var(--brand-cyan);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+}
+
+.custom-cursor-ring.is-view-hover .cursor-text {
+  opacity: 1;
+}
+
+.custom-cursor-active .custom-cursor-dot,
+.custom-cursor-active .custom-cursor-ring {
+  opacity: 1;
+}
+
+/* --- Mobile Responsive 3D Stage Adjustments --- */
+@media (max-width: 992px) {
+  .hero-3d-stage {
+    max-width: 520px;
+  }
+  .chip-perf {
+    top: -10px;
+    right: 0;
+  }
+  .chip-responsive {
+    bottom: 10px;
+    left: 0;
+  }
+  .chip-ui {
+    display: none; /* Keep mobile clean and uncluttered */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-3d-stage {
+    max-width: 100%;
+  }
+  .device-3d-chassis {
+    border-radius: 14px;
+  }
+  .floating-chip {
+    padding: 0.45rem 0.75rem;
+    border-radius: 10px;
+  }
+  .floating-chip .chip-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+  .floating-chip .chip-title {
+    font-size: 0.75rem;
+  }
+  .floating-chip .chip-desc {
+    font-size: 0.6rem;
+  }
+  .chip-perf {
+    top: -12px;
+    right: 5px;
+  }
+  .chip-responsive {
+    bottom: 5px;
+    left: 5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .floating-chip {
+    padding: 0.35rem 0.6rem;
+    gap: 0.45rem;
+  }
+  .floating-chip .chip-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+  }
+  .floating-chip .chip-title {
+    font-size: 0.7rem;
+  }
+  .floating-chip .chip-desc {
+    display: none;
+  }
+}
+
+/* Touch & Mobile Cursor Disabling */
+@media (hover: none) or (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Strict Reduced Motion Accessibility Overrides */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+  .scroll-progress-bar {
+    display: none !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .device-3d-chassis,
+  .floating-chip,
+  .hero-3d-card,
+  .hero-entrance-nav,
+  .hero-entrance-1,
+  .hero-entrance-2,
+  .hero-entrance-3,
+  .hero-entrance-4,
+  .hero-entrance-5 {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
