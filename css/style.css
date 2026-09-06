@@ -1931,7 +1931,7 @@ footer .brand-logo-img {
   left: 50%;
   transform: translateX(-50%);
   background: var(--grad-primary);
-  color: #ffffff;
+  color: #07090e;
   padding: 0.35rem 1.25rem;
   border-radius: var(--radius-full);
   font-size: 0.775rem;
@@ -1939,6 +1939,29 @@ footer .brand-logo-img {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   box-shadow: 0 4px 15px var(--glow-primary);
+}
+
+.pricing-audience-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  color: var(--brand-cyan);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+  align-self: flex-start;
+}
+
+.pricing-card.featured .pricing-audience-tag {
+  background: rgba(0, 210, 255, 0.18);
+  border-color: rgba(0, 210, 255, 0.45);
+  color: #38bdf8;
 }
 
 .pricing-tier-name {
