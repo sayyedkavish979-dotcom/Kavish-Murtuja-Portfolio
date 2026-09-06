@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Phase 3: Premium 3D & Interactive Modules
   initScrollProgress();
   initHero3DParallax();
+  initPricing3D();
   initScrollReveal();
   initCustomCursor();
   initButtonMicroInteractions();
@@ -743,7 +744,9 @@ function initScrollProgress() {
 }
 
 /**
- * 10. Hero 3D Perspective Device & Mouse Parallax
+ * 10. Hero 3D Perspective Device & Mouse Parallax (Optimized & Battery-Friendly)
+ *     Features: Inertial damping, viewport-aware IntersectionObserver pausing,
+ *     and idle rAF loop cancellation when at rest.
  */
 function initHero3DParallax() {
   const stage = document.getElementById("hero3DStage");
@@ -763,9 +766,24 @@ function initHero3DParallax() {
   let currentTransX = 0;
   let currentTransY = 0;
   let isHovered = false;
+  let isIntersecting = true;
+  let rafId = null;
 
   const heroSection = document.getElementById("home") || stage.closest(".hero-section");
   const chips = card.querySelectorAll(".floating-chip");
+
+  const startLoop = () => {
+    if (!rafId && isIntersecting) {
+      rafId = requestAnimationFrame(updateLoop);
+    }
+  };
+
+  const stopLoop = () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
 
   const onMouseMove = (e) => {
     const rect = stage.getBoundingClientRect();
@@ -782,6 +800,7 @@ function initHero3DParallax() {
     targetTransX = normX * 10;
     targetTransY = normY * 6;
     isHovered = true;
+    startLoop();
   };
 
   const onMouseLeave = () => {
@@ -790,6 +809,7 @@ function initHero3DParallax() {
     targetTransX = 0;
     targetTransY = 0;
     isHovered = false;
+    startLoop();
   };
 
   const updateLoop = () => {
@@ -809,13 +829,48 @@ function initHero3DParallax() {
       chip.style.transform = `translate3d(${chipX}px, ${chipY}px, ${depth}px)`;
     });
 
-    requestAnimationFrame(updateLoop);
+    // Check if motion has settled to rest
+    const diff = Math.abs(targetRotX - currentRotX) +
+                 Math.abs(targetRotY - currentRotY) +
+                 Math.abs(targetTransX - currentTransX) +
+                 Math.abs(targetTransY - currentTransY);
+
+    if (!isHovered && diff < 0.01) {
+      // Snap cleanly to rest and terminate rAF loop (0% idle resource waste)
+      currentRotX = 0;
+      currentRotY = 0;
+      currentTransX = 0;
+      currentTransY = 0;
+      card.style.transform = "";
+      chips.forEach(chip => {
+        const depth = parseFloat(chip.dataset.parallaxDepth || "25");
+        chip.style.transform = `translateZ(${depth}px)`;
+      });
+      rafId = null;
+      return;
+    }
+
+    rafId = requestAnimationFrame(updateLoop);
   };
+
+  // Pause loop when Hero section is out of viewport
+  if ("IntersectionObserver" in window && heroSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isIntersecting = entry.isIntersecting;
+        if (!isIntersecting) {
+          stopLoop();
+        } else if (isHovered) {
+          startLoop();
+        }
+      });
+    }, { threshold: 0.05 });
+    observer.observe(heroSection);
+  }
 
   if (heroSection) {
     heroSection.addEventListener("mousemove", onMouseMove, { passive: true });
     heroSection.addEventListener("mouseleave", onMouseLeave, { passive: true });
-    requestAnimationFrame(updateLoop);
   }
 }
 
@@ -949,6 +1004,82 @@ function initButtonMicroInteractions() {
         const targetPos = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 16;
         window.scrollTo({ top: targetPos, behavior: 'smooth' });
       }
+    });
+  });
+}
+
+/**
+ * 14. Pricing Cards 3D Interactive Parallax & Dynamic Ambient Glare
+ *     Harmonizes Starter, Professional, and Premium cards with identical
+ *     subtle mouse tilt, depth elevation, and responsive safety.
+ */
+function initPricing3D() {
+  const pricingCards = document.querySelectorAll(".pricing-card");
+  if (!pricingCards.length) return;
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isDesktop = window.matchMedia("(pointer: fine) and (min-width: 992px)").matches;
+  if (prefersReduced || !isDesktop) return;
+
+  const pricingSection = document.getElementById("pricing") || document.querySelector(".pricing-section");
+  let isIntersecting = true;
+
+  // Viewport intersection observer: suspend updates when pricing section is off-screen
+  if ("IntersectionObserver" in window && pricingSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isIntersecting = entry.isIntersecting;
+      });
+    }, { threshold: 0.05 });
+    observer.observe(pricingSection);
+  }
+
+  pricingCards.forEach(card => {
+    let ticking = false;
+    let targetTiltX = 0;
+    let targetTiltY = 0;
+    let mousePctX = 50;
+    let mousePctY = 50;
+
+    const applyTransform = () => {
+      card.style.setProperty("--tilt-x", `${targetTiltX.toFixed(2)}deg`);
+      card.style.setProperty("--tilt-y", `${targetTiltY.toFixed(2)}deg`);
+      card.style.setProperty("--elevate-z", "10px");
+      card.style.setProperty("--mouse-x", `${mousePctX.toFixed(1)}%`);
+      card.style.setProperty("--mouse-y", `${mousePctY.toFixed(1)}%`);
+      card.style.setProperty("--glare-opacity", "1");
+      ticking = false;
+    };
+
+    card.addEventListener("mousemove", (e) => {
+      if (!isIntersecting) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Normalized coordinates (-1 to 1)
+      const normX = Math.max(-1, Math.min(1, (x / rect.width - 0.5) * 2));
+      const normY = Math.max(-1, Math.min(1, (y / rect.height - 0.5) * 2));
+
+      // Subtle, controlled tilt boundaries: max 4.5 deg
+      targetTiltX = -normY * 4.5;
+      targetTiltY = normX * 4.5;
+
+      mousePctX = (x / rect.width) * 100;
+      mousePctY = (y / rect.height) * 100;
+
+      if (!ticking) {
+        requestAnimationFrame(applyTransform);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+      card.style.setProperty("--elevate-z", "0px");
+      card.style.setProperty("--glare-opacity", "0");
+      ticking = false;
     });
   });
 }

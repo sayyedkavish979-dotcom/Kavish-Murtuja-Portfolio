@@ -1889,12 +1889,14 @@ footer .brand-logo-img {
   flex-shrink: 0;
 }
 
-/* --- PRICING SECTION --- */
+/* --- PRICING SECTION (3D Optimized & Harmonized) --- */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 2rem;
   margin-bottom: 2.5rem;
+  perspective: 1200px;
+  transform-style: preserve-3d;
 }
 
 .pricing-card {
@@ -1903,26 +1905,55 @@ footer .brand-logo-img {
   border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
   position: relative;
-  transition: all var(--transition-normal);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(var(--elevate-z, 0px));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* Ambient Glass Lighting Glare on Pricing Cards */
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 210, 255, 0.12), transparent 70%);
+  opacity: var(--glare-opacity, 0);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .pricing-card.featured {
-  background: linear-gradient(180deg, rgba(30, 41, 75, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border-color: rgba(99, 102, 241, 0.5);
+  background: linear-gradient(180deg, rgba(24, 34, 60, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border-color: rgba(0, 210, 255, 0.4);
   box-shadow: 0 10px 30px var(--glow-primary);
-  transform: scale(1.02);
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(calc(var(--elevate-z, 0px) + 8px)) translateY(-4px);
 }
 
-.pricing-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(0, 210, 255, 0.35);
-  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 210, 255, 0.08);
+/* Desktop Hover Elevation & Illumination */
+@media (hover: hover) and (pointer: fine) {
+  .pricing-card:hover {
+    border-color: rgba(0, 210, 255, 0.45);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 210, 255, 0.12);
+  }
+  .pricing-card.featured:hover {
+    border-color: rgba(0, 210, 255, 0.6);
+    box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 210, 255, 0.2);
+  }
 }
 
-.pricing-card.featured:hover {
-  transform: scale(1.02) translateY(-6px);
+/* Internal Layers 3D Pop on Cards */
+.pricing-tier-name,
+.pricing-audience-tag,
+.popular-badge,
+.pricing-price-box {
+  transform: translateZ(10px);
+  transform-style: preserve-3d;
 }
 
 .popular-badge {
@@ -3285,11 +3316,33 @@ body:not([data-active-page="home"]) .navbar {
   }
 }
 
-/* Touch & Mobile Cursor Disabling */
+/* Touch & Mobile 3D Safety & Cursor Disabling */
 @media (hover: none) or (pointer: coarse) {
   .custom-cursor-dot,
   .custom-cursor-ring {
     display: none !important;
+  }
+  .pricing-grid {
+    perspective: none !important;
+  }
+  .pricing-card {
+    transform: none !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+  .pricing-card.featured {
+    transform: none !important;
+  }
+  .pricing-card:active {
+    transform: scale(0.98) !important;
+  }
+  .pricing-card::before {
+    display: none !important;
+  }
+  .pricing-tier-name,
+  .pricing-audience-tag,
+  .popular-badge,
+  .pricing-price-box {
+    transform: none !important;
   }
 }
 
@@ -3310,6 +3363,13 @@ body:not([data-active-page="home"]) .navbar {
   .device-3d-chassis,
   .floating-chip,
   .hero-3d-card,
+  .pricing-grid,
+  .pricing-card,
+  .pricing-card.featured,
+  .pricing-tier-name,
+  .pricing-audience-tag,
+  .popular-badge,
+  .pricing-price-box,
   .hero-entrance-nav,
   .hero-entrance-1,
   .hero-entrance-2,
@@ -3319,5 +3379,8 @@ body:not([data-active-page="home"]) .navbar {
     animation: none !important;
     transform: none !important;
     transition: none !important;
+  }
+  .pricing-card::before {
+    display: none !important;
   }
 }
