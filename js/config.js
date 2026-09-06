@@ -40,7 +40,7 @@ const SITE_CONFIG = {
     whatsapp: "https://wa.me/917355568493",
     
     // Pre-filled WhatsApp message when visitors click floating button or contact CTA
-    whatsappInquiry: "https://wa.me/917355568493?text=Hello%20Kavish%2C%20I%20am%20interested%20in%20getting%20a%20professional%20website.%20I%20would%20like%20to%20discuss%20my%20requirements",
+    whatsappInquiry: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20website%20project.",
     
     // 2. Instagram Profile (Replace with your actual handle, e.g. https://instagram.com/yourhandle)
     instagram: "https://instagram.com/kavishmurtuja",
@@ -66,7 +66,7 @@ const SITE_CONFIG = {
         "Fast Doorstep Delivery Integration & WhatsApp Quick-Order"
       ],
       techStack: ["HTML5", "CSS3", "JavaScript", "Responsive UI", "Local SEO Schema"],
-      results: "Engineered to boost table bookings by over 40% with an intuitive, mouth-watering user experience.",
+      results: "Engineered to facilitate direct table reservations and online orders with an intuitive user experience.",
       whatsappText: "Hello Kavish, I saw your Royal Spice restaurant demo project and I would like a similar website for my restaurant/food business."
     },
     "luxestay": {
@@ -156,7 +156,7 @@ const SITE_CONFIG = {
         "Client Roster, Industry Awards (Awwwards, FWA), and Project Brief form"
       ],
       techStack: ["HTML5", "Advanced CSS3", "JavaScript", "Micro-Interactions", "Creative Typography"],
-      results: "Showcases creative capability with award-winning visual impact to attract high-ticket retainer clients.",
+      results: "Showcases creative capability with distinctive visual impact to attract high-value agency clients.",
       whatsappText: "Hello Kavish, I love the Creative Studio agency portfolio demo and want a bespoke agency website."
     }
   }

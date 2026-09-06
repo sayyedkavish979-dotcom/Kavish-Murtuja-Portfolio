@@ -1116,14 +1116,20 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
   color: #ffffff;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
 .view-project-btn:hover {
   color: var(--primary-cyan);
+  transform: translateX(3px);
 }
 
 /* --- PROJECT DETAILS MODAL --- */
@@ -1612,11 +1618,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .pricing-price-box {
   display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-subtle);
+}
+
+.price-sub {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-cyan);
 }
 
 .price-val {
@@ -1624,11 +1639,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 800;
   color: #ffffff;
-}
-
-.price-sub {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  line-height: 1.1;
 }
 
 .pricing-features-list {
