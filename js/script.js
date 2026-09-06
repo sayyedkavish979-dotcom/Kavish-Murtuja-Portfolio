@@ -323,10 +323,21 @@ function initFaqAccordion() {
  */
 function initContactForm() {
   const form = document.getElementById("leadContactForm");
-  const toast = document.getElementById("formToast");
+  const successToast = document.getElementById("formToast");
+  const errorToast = document.getElementById("formErrorToast");
+  const successToastText = document.getElementById("formToastText");
+  const errorToastText = document.getElementById("formErrorToastText");
   const sendViaWhatsAppBtn = document.getElementById("sendViaWhatsAppBtn");
 
   if (!form) return;
+
+  const showToast = (toastEl, duration = 4500) => {
+    if (!toastEl) return;
+    toastEl.classList.add("show");
+    setTimeout(() => {
+      toastEl.classList.remove("show");
+    }, duration);
+  };
 
   const validateField = (field, condition) => {
     const group = field.closest(".form-group");
@@ -339,7 +350,7 @@ function initContactForm() {
     }
   };
 
-  // Real-time error removal
+  // Real-time error removal on user input
   form.querySelectorAll("input, select, textarea").forEach(input => {
     input.addEventListener("input", () => {
       const group = input.closest(".form-group");
@@ -347,12 +358,21 @@ function initContactForm() {
     });
   });
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // Anti-spam Honeypot Check
+    const botField = form.querySelector('input[name="bot-field"]');
+    const honeyField = form.querySelector('input[name="_honey"]');
+    if ((botField && botField.value) || (honeyField && honeyField.value)) {
+      console.warn("Spam bot detected. Submission ignored.");
+      return;
+    }
 
     const name = document.getElementById("clientName");
     const email = document.getElementById("clientEmail");
     const phone = document.getElementById("clientPhone");
+    const business = document.getElementById("clientBusiness");
     const service = document.getElementById("clientService");
     const message = document.getElementById("clientMessage");
 
@@ -365,33 +385,121 @@ function initContactForm() {
     const isServiceValid = validateField(service, service.value.trim() !== "");
     const isMsgValid = validateField(message, message.value.trim().length >= 8);
 
-    if (isNameValid && isEmailValid && isPhoneValid && isServiceValid && isMsgValid) {
-      // Simulate form submission / Ready for Formspree endpoint
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = "Sending Inquiry...";
-      submitBtn.disabled = true;
+    if (!isNameValid || !isEmailValid || !isPhoneValid || !isServiceValid || !isMsgValid) {
+      // Focus the first invalid field for accessibility
+      const firstInvalid = form.querySelector(".form-group.has-error input, .form-group.has-error select, .form-group.has-error textarea");
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
 
-      setTimeout(() => {
-        submitBtn.innerHTML = "Inquiry Sent Successfully ✓";
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    // Prevent accidental duplicate submissions
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Sending Enquiry...";
+    submitBtn.style.opacity = "0.8";
+
+    // Determine deployment environment & service endpoint
+    const formConfig = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.formConfig) ? SITE_CONFIG.formConfig : {};
+    const isNetlifyHost = formConfig.autoDetectNetlify && (window.location.hostname.includes("netlify.app") || window.location.hostname.includes("netlify.com"));
+
+    try {
+      let isSuccess = false;
+      let responseMessage = "";
+
+      if (isNetlifyHost) {
+        // Submit via native Netlify Forms
+        const formData = new FormData(form);
+        formData.set("form-name", "contact");
+        const res = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
+        });
+        isSuccess = res.ok;
+      } else {
+        // Submit via secure FormSubmit AJAX (direct email dispatch to website owner)
+        const endpoint = formConfig.formSubmitUrl || "https://formsubmit.co/ajax/sayyedkavish979@gmail.com";
+        const payload = {
+          name: name.value.trim(),
+          email: email.value.trim(),
+          phone: phone.value.trim(),
+          business: (business && business.value.trim()) ? business.value.trim() : "Not provided",
+          service: service.value,
+          message: message.value.trim(),
+          _subject: formConfig.emailSubject || `New Website Enquiry: ${service.value} — ${name.value.trim()}`,
+          _template: "table",
+          _captcha: "false"
+        };
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12-second network timeout
+
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await res.json().catch(() => ({}));
+        isSuccess = res.ok && (data.success === "true" || data.success === true || (data.message && data.message.includes("Activation")));
+        responseMessage = data.message || "";
+      }
+
+      if (isSuccess) {
+        submitBtn.innerHTML = "Enquiry Sent Successfully ✓";
         submitBtn.style.background = "#10b981";
+        submitBtn.style.opacity = "1";
 
-        // Show toast notification
-        if (toast) {
-          toast.classList.add("show");
-          setTimeout(() => {
-            toast.classList.remove("show");
-          }, 4500);
+        if (responseMessage.includes("Activation")) {
+          if (successToastText) {
+            successToastText.textContent = "Enquiry received! (Check sayyedkavish979@gmail.com to confirm form activation).";
+          }
+        } else {
+          if (successToastText) {
+            successToastText.textContent = "Thank you! Your enquiry has been received. Kavish will respond within 24 hours.";
+          }
         }
 
-        // Reset form after delay
+        showToast(successToast, 5000);
+        form.reset();
+
+        // Restore button state after delay
         setTimeout(() => {
-          form.reset();
           submitBtn.innerHTML = originalText;
           submitBtn.style.background = "";
+          submitBtn.style.opacity = "1";
           submitBtn.disabled = false;
-        }, 3000);
-      }, 900);
+        }, 4000);
+      } else {
+        throw new Error(responseMessage || "Submission failed");
+      }
+
+    } catch (error) {
+      console.error("Enquiry submission error:", error);
+      submitBtn.innerHTML = "Failed to Send — Please Try Again";
+      submitBtn.style.background = "#ef4444";
+      submitBtn.style.opacity = "1";
+
+      if (errorToastText) {
+        errorToastText.textContent = "Could not send enquiry. Please try again or reach out on WhatsApp (+91 7355568493).";
+      }
+      showToast(errorToast, 5000);
+
+      // Re-enable button after 3 seconds so user can retry
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = "";
+        submitBtn.style.opacity = "1";
+        submitBtn.disabled = false;
+      }, 3000);
     }
   });
 

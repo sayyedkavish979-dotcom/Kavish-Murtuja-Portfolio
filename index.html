@@ -1440,7 +1440,13 @@
 
         <!-- Right Column: Modern High-Converting Lead Form -->
         <div class="contact-form-box">
-          <form id="leadContactForm" novalidate>
+          <form id="leadContactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contact">
+            <!-- Anti-Spam Honeypots (Invisible to Humans) -->
+            <div style="display:none !important;" aria-hidden="true">
+              <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off">
+            </div>
             <!-- Name & Email Row -->
             <div class="form-group-row">
               <div class="form-group">
@@ -1516,7 +1522,15 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#10b981" width="22" height="22">
       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
     </svg>
-    <span>Thank you! Your enquiry has been received. Kavish will respond within 24 hours.</span>
+    <span id="formToastText">Thank you! Your enquiry has been received. Kavish will respond within 24 hours.</span>
+  </div>
+
+  <!-- Form Error Toast Notification -->
+  <div class="toast-msg toast-error" id="formErrorToast" role="alert" aria-live="polite">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#f87171" width="22" height="22">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+    </svg>
+    <span id="formErrorToastText">Could not send enquiry right now. Please reach out via WhatsApp or call +91 7355568493 directly.</span>
   </div>
 
   <!-- ==============================================================================

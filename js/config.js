@@ -22,6 +22,18 @@ const SITE_CONFIG = {
   email: "sayyedkavish979@gmail.com",
   emailLink: "mailto:sayyedkavish979@gmail.com",
 
+  // Email & Enquiry Form Configuration
+  formConfig: {
+    // FormSubmit endpoint: delivers directly to your email without exposing private keys or passwords
+    formSubmitUrl: "https://formsubmit.co/ajax/sayyedkavish979@gmail.com",
+    // Subject for incoming enquiry notification emails
+    emailSubject: "New Website Lead — Kavish Murtuja Portfolio",
+    // Auto-detect Netlify Forms if deployed on Netlify
+    autoDetectNetlify: true,
+    // Optional custom Formspree URL if preferred
+    formspreeUrl: ""
+  },
+
   // Social Media Links (EDIT YOUR INSTAGRAM & FACEBOOK HANDLES HERE)
   social: {
     // 1. WhatsApp Profile / Chat
