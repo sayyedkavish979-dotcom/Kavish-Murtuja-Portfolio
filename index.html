@@ -84,6 +84,9 @@
   </script>
 </head>
 <body>
+  <!-- Accessibility Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
 
   <!-- ==============================================================================
        NAVBAR (STICKY LUXURY GLASS)
@@ -180,6 +183,7 @@
   <!-- ==============================================================================
        HERO SECTION
        ============================================================================== -->
+  <main id="main-content">
   <section class="hero-section" id="home">
     <div class="container hero-grid">
       <!-- Left Content Column -->
@@ -475,13 +479,13 @@
 
       <!-- Filter Tabs -->
       <div class="portfolio-filter-bar" role="tablist" aria-label="Filter portfolio projects">
-        <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="restaurant">Restaurant</button>
-        <button class="filter-btn" data-filter="hotel">Hotel &amp; Resort</button>
-        <button class="filter-btn" data-filter="real-estate">Real Estate</button>
-        <button class="filter-btn" data-filter="fitness">Fitness</button>
-        <button class="filter-btn" data-filter="business">Business</button>
-        <button class="filter-btn" data-filter="agency">Agency</button>
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" aria-pressed="true">All Projects</button>
+        <button class="filter-btn" data-filter="restaurant" role="tab" aria-selected="false" aria-pressed="false">Restaurant</button>
+        <button class="filter-btn" data-filter="hotel" role="tab" aria-selected="false" aria-pressed="false">Hotel &amp; Resort</button>
+        <button class="filter-btn" data-filter="real-estate" role="tab" aria-selected="false" aria-pressed="false">Real Estate</button>
+        <button class="filter-btn" data-filter="fitness" role="tab" aria-selected="false" aria-pressed="false">Fitness</button>
+        <button class="filter-btn" data-filter="business" role="tab" aria-selected="false" aria-pressed="false">Business</button>
+        <button class="filter-btn" data-filter="agency" role="tab" aria-selected="false" aria-pressed="false">Agency</button>
       </div>
 
       <!-- Projects Grid -->
@@ -660,7 +664,7 @@
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close project modal">&times;</button>
       
       <div class="modal-image-preview">
-        <img src="assets/images/projects/royal-spice.svg" alt="Demo Project Mockup" id="modalImg">
+        <img src="assets/images/projects/royal-spice.svg" alt="Demo Project Mockup" id="modalImg" loading="lazy">
       </div>
 
       <div class="modal-body">
@@ -1214,13 +1218,13 @@
       <div class="faq-accordion">
         <!-- Q1 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-1" aria-expanded="false" aria-controls="faq-ans-1">
             <span>How much does a website cost?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-1" role="region" aria-labelledby="faq-btn-1">
             <div class="faq-content-inner">
               Website costs vary depending on the scope, number of pages, and specific features needed (such as booking engines, product catalogs, or custom animations). Starter packages begin at accessible rates, and I provide transparent, fixed-price quotes with zero hidden fees after our initial requirement discussion.
             </div>
@@ -1229,13 +1233,13 @@
 
         <!-- Q2 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-2" aria-expanded="false" aria-controls="faq-ans-2">
             <span>How long does a website take?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-2" role="region" aria-labelledby="faq-btn-2">
             <div class="faq-content-inner">
               A standard 3 to 5-page business website typically takes between <strong>5 to 10 working days</strong> from initial briefing to final launch. More extensive projects with custom catalogs, complex interactions, or e-commerce capabilities generally take <strong>2 to 3 weeks</strong>. I share an exact milestone calendar before starting.
             </div>
@@ -1244,13 +1248,13 @@
 
         <!-- Q3 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-3" aria-expanded="false" aria-controls="faq-ans-3">
             <span>Will my website work on mobile?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-3" role="region" aria-labelledby="faq-btn-3">
             <div class="faq-content-inner">
               <strong>Yes, 100%.</strong> Every website I design follows a strict mobile-first philosophy. Your website will be rigorously tested on iOS and Android smartphones, iPads, tablets, laptops, and wide desktop screens to guarantee zero horizontal scroll, crisp typography, and touch-friendly navigation.
             </div>
@@ -1259,13 +1263,13 @@
 
         <!-- Q4 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-4" aria-expanded="false" aria-controls="faq-ans-4">
             <span>Can you redesign my existing website?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-4" role="region" aria-labelledby="faq-btn-4">
             <div class="faq-content-inner">
               Absolutely. If your current website looks dated, loads slowly, or isn't generating customer inquiries, I can completely rebuild it with modern aesthetics, faster loading code, optimized mobile responsiveness, and high-converting calls to action while preserving your existing domain and SEO equity.
             </div>
@@ -1274,13 +1278,13 @@
 
         <!-- Q5 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-5" aria-expanded="false" aria-controls="faq-ans-5">
             <span>Can you add custom features?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-5" role="region" aria-labelledby="faq-btn-5">
             <div class="faq-content-inner">
               Yes. Whether you need WhatsApp direct order buttons, interactive restaurant menus, table reservation calendars, property filter widgets, Google Maps integration, or multi-step quote estimators, I code custom lightweight solutions tailored precisely to your workflow.
             </div>
@@ -1289,13 +1293,13 @@
 
         <!-- Q6 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-6" aria-expanded="false" aria-controls="faq-ans-6">
             <span>Do you provide website maintenance?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-6" role="region" aria-labelledby="faq-btn-6">
             <div class="faq-content-inner">
               Yes, I provide complimentary 30-day post-launch support with every project to ensure everything runs smoothly. In addition, I offer flexible monthly maintenance plans covering content updates, image additions, speed monitoring, and backup management.
             </div>
@@ -1304,13 +1308,13 @@
 
         <!-- Q7 -->
         <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
+          <button class="faq-trigger" id="faq-btn-7" aria-expanded="false" aria-controls="faq-ans-7">
             <span>Can you help with domain and hosting?</span>
             <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <div class="faq-content">
+          <div class="faq-content" id="faq-ans-7" role="region" aria-labelledby="faq-btn-7">
             <div class="faq-content-inner">
               Yes! If you don't already have domain and hosting, I guide you step-by-step in choosing the best, cost-effective provider (e.g., Hostinger, Cloudflare, Netlify, or Vercel), configure the DNS records, enable free SSL security certificates, and launch the website under your own name.
             </div>
@@ -1441,13 +1445,13 @@
             <div class="form-group-row">
               <div class="form-group">
                 <label for="clientName" class="form-label">Your Name *</label>
-                <input type="text" id="clientName" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required>
-                <div class="form-error-msg">Please enter your name (at least 2 characters).</div>
+                <input type="text" id="clientName" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required aria-describedby="clientNameError">
+                <div id="clientNameError" class="form-error-msg">Please enter your name (at least 2 characters).</div>
               </div>
               <div class="form-group">
                 <label for="clientEmail" class="form-label">Email Address *</label>
-                <input type="email" id="clientEmail" name="email" class="form-input" placeholder="e.g. rahul@example.com" required>
-                <div class="form-error-msg">Please enter a valid email address.</div>
+                <input type="email" id="clientEmail" name="email" class="form-input" placeholder="e.g. rahul@example.com" required aria-describedby="clientEmailError">
+                <div id="clientEmailError" class="form-error-msg">Please enter a valid email address.</div>
               </div>
             </div>
 
@@ -1455,8 +1459,8 @@
             <div class="form-group-row">
               <div class="form-group">
                 <label for="clientPhone" class="form-label">Phone / WhatsApp Number *</label>
-                <input type="tel" id="clientPhone" name="phone" class="form-input" placeholder="e.g. +91 9876543210" required>
-                <div class="form-error-msg">Please enter a valid phone number.</div>
+                <input type="tel" id="clientPhone" name="phone" class="form-input" placeholder="e.g. +91 9876543210" required aria-describedby="clientPhoneError">
+                <div id="clientPhoneError" class="form-error-msg">Please enter a valid phone number.</div>
               </div>
               <div class="form-group">
                 <label for="clientBusiness" class="form-label">Business Name (Optional)</label>
@@ -1467,7 +1471,7 @@
             <!-- Website Type Selection -->
             <div class="form-group">
               <label for="clientService" class="form-label">Website Type / Requirement *</label>
-              <select id="clientService" name="service" class="form-select" required>
+              <select id="clientService" name="service" class="form-select" required aria-describedby="clientServiceError">
                 <option value="" disabled selected>Select the type of website you need...</option>
                 <option value="Business Website Design">Business Website Design</option>
                 <option value="Restaurant Website Design">Restaurant Website Design</option>
@@ -1479,14 +1483,14 @@
                 <option value="Website Maintenance">Website Maintenance</option>
                 <option value="Custom Project Consultation">Custom Project Consultation</option>
               </select>
-              <div class="form-error-msg">Please choose a website service.</div>
+              <div id="clientServiceError" class="form-error-msg">Please choose a website service.</div>
             </div>
 
             <!-- Message Box -->
             <div class="form-group">
               <label for="clientMessage" class="form-label">Project Details / Message *</label>
-              <textarea id="clientMessage" name="message" class="form-textarea" placeholder="Tell me about your business, features you need, or questions you have..." required></textarea>
-              <div class="form-error-msg">Please share a brief message (at least 8 characters).</div>
+              <textarea id="clientMessage" name="message" class="form-textarea" placeholder="Tell me about your business, features you need, or questions you have..." required aria-describedby="clientMessageError"></textarea>
+              <div id="clientMessageError" class="form-error-msg">Please share a brief message (at least 8 characters).</div>
             </div>
 
             <!-- Action Buttons -->
@@ -1505,6 +1509,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Form Success Toast Notification -->
   <div class="toast-msg" id="formToast" role="alert" aria-live="polite">

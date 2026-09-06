@@ -85,12 +85,17 @@ function initMobileMenu() {
 
   if (!toggleBtn || !drawer || !backdrop) return;
 
+  let lastNavToggleFocus = null;
+
   const openDrawer = () => {
+    lastNavToggleFocus = document.activeElement;
     toggleBtn.classList.add("open");
     drawer.classList.add("open");
     backdrop.classList.add("open");
     document.body.style.overflow = "hidden";
     toggleBtn.setAttribute("aria-expanded", "true");
+    const firstLink = drawer.querySelector(".mobile-nav-link");
+    if (firstLink) setTimeout(() => firstLink.focus(), 100);
   };
 
   const closeDrawer = () => {
@@ -99,6 +104,9 @@ function initMobileMenu() {
     backdrop.classList.remove("open");
     document.body.style.overflow = "";
     toggleBtn.setAttribute("aria-expanded", "false");
+    if (lastNavToggleFocus && typeof lastNavToggleFocus.focus === "function") {
+      lastNavToggleFocus.focus();
+    }
   };
 
   toggleBtn.addEventListener("click", () => {
@@ -137,9 +145,15 @@ function initPortfolioFilter() {
     btn.addEventListener("click", () => {
       const filter = btn.getAttribute("data-filter");
 
-      // Update active button state
-      filterBtns.forEach(b => b.classList.remove("active"));
+      // Update active button state and ARIA attributes
+      filterBtns.forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      btn.setAttribute("aria-pressed", "true");
 
       // Animate card filtering
       projectCards.forEach(card => {
@@ -173,6 +187,8 @@ function initProjectModal() {
 
   if (!modal || !modalBackdrop || !closeBtn) return;
 
+  let lastFocusedElement = null;
+
   // Elements inside modal
   const modalImg = document.getElementById("modalImg");
   const modalCategory = document.getElementById("modalCategory");
@@ -187,6 +203,8 @@ function initProjectModal() {
   const openModal = (projectId) => {
     const project = SITE_CONFIG && SITE_CONFIG.demoProjects ? SITE_CONFIG.demoProjects[projectId] : null;
     if (!project) return;
+
+    lastFocusedElement = document.activeElement;
 
     modalImg.src = project.image;
     modalImg.alt = `${project.title} - ${project.tagline}`;
@@ -229,11 +247,17 @@ function initProjectModal() {
     // Show modal
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      closeBtn.focus();
+    }, 50);
   };
 
   const closeModal = () => {
     modal.classList.remove("open");
     document.body.style.overflow = "";
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
+    }
   };
 
   viewButtons.forEach(btn => {
