@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProjectModal();
   initFaqAccordion();
   initContactForm();
-  initSmoothScroll();
+  initRouter();
 });
 
 /**
@@ -108,6 +108,9 @@ function initMobileMenu() {
       lastNavToggleFocus.focus();
     }
   };
+
+  // Expose close drawer method for router
+  window.closeMobileDrawer = closeDrawer;
 
   toggleBtn.addEventListener("click", () => {
     const isOpen = drawer.classList.contains("open");
@@ -519,32 +522,181 @@ function initContactForm() {
 }
 
 /**
- * 8. Smooth Scrolling for Internal Links & Active Section Spy
+ * 8. Professional Multi-Page Client-Side Router
+ *    Features: Separate page views, history API (pushState/popstate),
+ *              active nav highlighting, refresh-to-home redirect,
+ *              and automatic drawer close.
  */
-function initSmoothScroll() {
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-link");
+function initRouter() {
+  const VALID_PAGES = [
+    'home',
+    'about',
+    'services',
+    'portfolio',
+    'process',
+    'testimonials',
+    'pricing',
+    'faq',
+    'contact'
+  ];
 
-  const observerOptions = {
-    root: null,
-    rootMargin: "-20% 0px -70% 0px",
-    threshold: 0
+  const PAGE_TITLES = {
+    home: 'Kavish Murtuja — Freelance Website Designer & Developer in Kanpur, India',
+    about: 'About Kavish Murtuja — Freelance Website Designer & Developer',
+    services: 'Website Design & Development Services — Kavish Murtuja',
+    portfolio: 'Portfolio & Live Website Projects — Kavish Murtuja',
+    process: '5-Step Work Process & Modern Tech Stack — Kavish Murtuja',
+    testimonials: 'What Clients Can Expect — Kavish Murtuja',
+    pricing: 'Transparent Pricing Packages — Kavish Murtuja',
+    faq: 'Frequently Asked Questions — Kavish Murtuja',
+    contact: 'Contact Kavish Murtuja — Start Your Website Project'
   };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-        navLinks.forEach(link => {
-          if (link.getAttribute("href") === `#${id}`) {
-            link.classList.add("active");
-          } else {
-            link.classList.remove("active");
-          }
-        });
+  function getBasePath() {
+    const path = window.location.pathname;
+    if (path.includes('/Kavish-Murtuja-Portfolio')) {
+      return '/Kavish-Murtuja-Portfolio';
+    }
+    return '';
+  }
+
+  function getPageUrl(page) {
+    const base = getBasePath();
+    if (page === 'home') {
+      return base ? base + '/' : '/';
+    }
+    return base ? `${base}/${page}` : `/${page}`;
+  }
+
+  function isPageReload() {
+    try {
+      const navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0) {
+        return navEntries[0].type === 'reload';
+      }
+      if (window.performance && window.performance.navigation) {
+        return window.performance.navigation.type === 1;
+      }
+    } catch (e) {
+      // ignore
+    }
+    return false;
+  }
+
+  function getPageFromLocation() {
+    const base = getBasePath();
+    let relPath = window.location.pathname;
+    if (base && relPath.startsWith(base)) {
+      relPath = relPath.substring(base.length);
+    }
+    relPath = relPath.replace(/^\/+|\/+$/g, '');
+    if (!relPath || relPath === 'index.html') {
+      const hash = window.location.hash.replace(/^#/, '');
+      if (hash && VALID_PAGES.includes(hash)) {
+        return hash;
+      }
+      return 'home';
+    }
+    if (VALID_PAGES.includes(relPath)) {
+      return relPath;
+    }
+    return 'home';
+  }
+
+  function activatePage(pageName, pushToHistory = true) {
+    if (!VALID_PAGES.includes(pageName)) {
+      pageName = 'home';
+    }
+
+    // 1. Hide all page-views, activate targeted view
+    const pageViews = document.querySelectorAll('.page-view');
+    pageViews.forEach(view => {
+      const viewPage = view.getAttribute('data-page');
+      if (viewPage === pageName) {
+        view.classList.add('active');
+      } else {
+        view.classList.remove('active');
       }
     });
-  }, observerOptions);
 
-  sections.forEach(sec => observer.observe(sec));
+    // 2. Set body attribute for navbar & background styling
+    document.body.setAttribute('data-active-page', pageName);
+
+    // 3. Update nav links active state (both desktop and mobile)
+    document.querySelectorAll('[data-nav-page]').forEach(link => {
+      const linkPage = link.getAttribute('data-nav-page');
+      if (link.classList.contains('nav-link') || link.classList.contains('mobile-nav-link')) {
+        if (linkPage === pageName) {
+          link.classList.add('active');
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.classList.remove('active');
+          link.removeAttribute('aria-current');
+        }
+      }
+    });
+
+    // 4. Update document title
+    if (PAGE_TITLES[pageName]) {
+      document.title = PAGE_TITLES[pageName];
+    }
+
+    // 5. Update browser history if requested
+    if (pushToHistory) {
+      const targetUrl = getPageUrl(pageName);
+      if (window.location.pathname !== targetUrl) {
+        window.history.pushState({ page: pageName }, '', targetUrl);
+      }
+    }
+
+    // 6. Reset scroll position to top
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // 7. Auto-close mobile drawer if open
+    if (typeof window.closeMobileDrawer === 'function') {
+      window.closeMobileDrawer();
+    }
+  }
+
+  // Global navigation method
+  window.navigateTo = (page) => activatePage(page, true);
+
+  // Handle Browser Back & Forward buttons
+  window.addEventListener('popstate', (e) => {
+    const page = (e.state && e.state.page) || getPageFromLocation();
+    activatePage(page, false);
+  });
+
+  // Global link interception for routing
+  document.addEventListener('click', (e) => {
+    const navLink = e.target.closest('[data-nav-page]');
+    if (!navLink) return;
+
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.which === 2) return;
+
+    const targetPage = navLink.getAttribute('data-nav-page');
+    if (VALID_PAGES.includes(targetPage)) {
+      e.preventDefault();
+      activatePage(targetPage, true);
+    }
+  });
+
+  // CRITICAL REQUIREMENT: Refresh on ANY page MUST return to Home (/)
+  const isReload = isPageReload();
+  const currentPage = getPageFromLocation();
+
+  if (isReload) {
+    // If refreshed on any page, redirect immediately to Home (/)
+    const base = getBasePath();
+    const homeUrl = base ? base + '/' : '/';
+    window.history.replaceState({ page: 'home' }, '', homeUrl);
+    activatePage('home', false);
+  } else {
+    // Initial normal page load: Home is always the main landing page
+    if (currentPage !== 'home') {
+      activatePage(currentPage, false);
+    } else {
+      activatePage('home', false);
+    }
+  }
 }

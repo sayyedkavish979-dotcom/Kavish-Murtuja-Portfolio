@@ -11,3 +11,5 @@ desktop.ini
 # Editor / IDE
 .vscode/
 .idea/
+# Scratch & Test Scripts
+scratch/

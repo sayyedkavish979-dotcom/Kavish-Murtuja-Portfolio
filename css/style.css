@@ -2678,6 +2678,51 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ==============================================================================
+   MULTI-PAGE ROUTER VIEW STYLES
+   ============================================================================== */
+.page-view {
+  display: none;
+  width: 100%;
+  opacity: 0;
+}
+
+.page-view.active {
+  display: block;
+  opacity: 1;
+  animation: pageFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-view:not(#page-home) {
+  padding-top: calc(var(--nav-height) + 1rem);
+  min-height: calc(100vh - var(--nav-height) - 140px);
+}
+
+body:not([data-active-page="home"]) .navbar {
+  background: rgba(10, 11, 14, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 768px) {
+  .page-view:not(#page-home) {
+    padding-top: calc(var(--nav-height) + 0.5rem);
+    min-height: calc(100vh - var(--nav-height) - 100px);
+  }
+}
+
 /* Eco-Friendly: Respect User Preferences for Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
