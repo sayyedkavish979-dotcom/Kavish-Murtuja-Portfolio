@@ -1,0 +1,23 @@
+{
+  "name": "Kavish Murtuja — Web Designer & Developer in Kanpur",
+  "short_name": "Kavish Murtuja",
+  "description": "Kavish Murtuja is a freelance web designer & developer in Kanpur, Uttar Pradesh, creating modern, responsive websites for businesses, brands, and entrepreneurs.",
+  "start_url": "/Kavish-Murtuja-Portfolio/",
+  "display": "standalone",
+  "background_color": "#07090e",
+  "theme_color": "#080a0f",
+  "icons": [
+    {
+      "src": "assets/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/branding/km-social-avatar.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

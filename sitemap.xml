@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://kavishmurtuja.com/</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://kavishmurtuja.com/#about</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kavishmurtuja.com/#services</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kavishmurtuja.com/#portfolio</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://kavishmurtuja.com/#pricing</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kavishmurtuja.com/#contact</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/hero-mockup.svg</image:loc>
+      <image:title>Kavish Murtuja Web Design and Development Showcase</image:title>
+      <image:caption>Modern responsive web design showcase by Kavish Murtuja in Kanpur, India</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/royal-spice.svg</image:loc>
+      <image:title>Royal Spice Indian Restaurant Website Design Demo</image:title>
+      <image:caption>Modern responsive fine dining restaurant website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/luxestay.svg</image:loc>
+      <image:title>LuxeStay Boutique Resort and Hotel Website Design Demo</image:title>
+      <image:caption>Luxury boutique hospitality resort website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/urban-estate.svg</image:loc>
+      <image:title>Urban Estate Luxury Real Estate Website Design Demo</image:title>
+      <image:caption>Modern real estate property showcase website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/fitzone.svg</image:loc>
+      <image:title>FitZone Modern Fitness Studio and Gym Website Design Demo</image:title>
+      <image:caption>Modern fitness studio and CrossFit gym website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/novatech.svg</image:loc>
+      <image:title>NovaTech Cloud and SaaS Technology Business Website Design Demo</image:title>
+      <image:caption>SaaS and modern software cloud business website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/creative-studio.svg</image:loc>
+      <image:title>Creative Studio Brand Agency Website Design Demo</image:title>
+      <image:caption>Creative brand agency and design studio portfolio mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
   </url>
 </urlset>

@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initRouter();
 
   // Phase 3: Premium 3D & Interactive Modules
+  init3DIntroExperience();
   initScrollProgress();
+  initHeroSpatialCanvas();
   initHero3DParallax();
   initPricing3D();
   initScrollReveal();
@@ -664,6 +666,13 @@ function initRouter() {
     if (typeof window.closeMobileDrawer === 'function') {
       window.closeMobileDrawer();
     }
+
+    // 8. 3D Engine Battery & GPU Management (Pause when leaving home, resume when returning)
+    if (pageName === 'home') {
+      if (typeof window.resume3D === 'function') window.resume3D();
+    } else {
+      if (typeof window.pause3D === 'function') window.pause3D();
+    }
   }
 
   // Global navigation method
@@ -707,12 +716,181 @@ function initRouter() {
       activatePage('home', false);
     }
   }
+
+  // Battery & GPU conservation: pause 3D loops when switching browser tabs
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (typeof window.pause3D === "function") window.pause3D();
+    } else {
+      const activePage = document.body.getAttribute("data-active-page") || "home";
+      if (activePage === "home" && typeof window.resume3D === "function") {
+        window.resume3D();
+      }
+    }
+  });
 }
 
 
 /* ==============================================================================
    PHASE 3: PREMIUM 3D & INTERACTION MODULES
    ============================================================================== */
+
+/**
+ * 8b. Premium 3D Opening Intro Experience
+ *     Sequence:
+ *     - STEP 1: 3D KM Logo emblem rises with realistic lighting, depth & shadow
+ *     - STEP 2: Fluid typography reveals "Kavish Murtuja" & "Freelance Website Designer & Developer"
+ *     - STEP 3: Cinematic transition zooms out & dissolves smoothly into the homepage
+ *     - Full responsive adaptation (clamp, 100dvh, safe-area-inset)
+ *     - Accessible skip button, keyboard Escape handler, and hard failsafe timer (3.5s)
+ *     - 0% idle CPU/GPU consumption after dismissal
+ */
+function init3DIntroExperience() {
+  const overlay = document.getElementById("kmIntroOverlay");
+  if (!overlay) return;
+
+  const skipBtn = document.getElementById("introSkipBtn");
+  const logoCard = document.getElementById("introLogoCard");
+  const logoShadow = document.getElementById("introLogoShadow");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let isDismissed = false;
+  let animTimer = null;
+  let failsafeTimer = null;
+
+  // Pause Hero 3D background loop during intro to prioritize intro rendering & save battery
+  if (typeof window.pause3D === "function") {
+    window.pause3D();
+  }
+
+  const dismissIntro = (immediate = false) => {
+    if (isDismissed) return;
+    isDismissed = true;
+
+    // Clear all pending timers
+    if (animTimer) clearTimeout(animTimer);
+    if (failsafeTimer) clearTimeout(failsafeTimer);
+
+    // Remove event listeners
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("keydown", onKeyDown);
+
+    if (immediate || prefersReduced) {
+      overlay.classList.add("intro-dismissed");
+      if (typeof window.resume3D === "function") {
+        window.resume3D();
+      }
+      return;
+    }
+
+    // Cinematic exit transition
+    overlay.classList.add("intro-exiting");
+
+    // Once CSS transition completes (650ms), remove overlay completely from DOM tree rendering
+    setTimeout(() => {
+      overlay.classList.add("intro-dismissed");
+      // Resume hero 3D rendering smoothly
+      if (typeof window.resume3D === "function") {
+        window.resume3D();
+      }
+    }, 650);
+  };
+
+  // Immediate dismiss if user prefers reduced motion
+  if (prefersReduced) {
+    setTimeout(() => dismissIntro(false), 350);
+    return;
+  }
+
+  // Interactive subtle micro-tilt while intro is visible
+  let targetTiltX = 0;
+  let targetTiltY = 0;
+  let currentTiltX = 0;
+  let currentTiltY = 0;
+  let isTicking = false;
+
+  const applyTilt = () => {
+    if (isDismissed || !logoCard) return;
+    currentTiltX += (targetTiltX - currentTiltX) * 0.15;
+    currentTiltY += (targetTiltY - currentTiltY) * 0.15;
+
+    logoCard.style.transform = `translateZ(0px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg)`;
+
+    if (logoShadow) {
+      const shadowX = (-currentTiltY * 1.5).toFixed(1);
+      const shadowY = (currentTiltX * 1.2).toFixed(1);
+      logoShadow.style.setProperty("--intro-shadow-x", `${shadowX}px`);
+      logoShadow.style.setProperty("--intro-shadow-y", `${shadowY}px`);
+    }
+
+    if (Math.abs(targetTiltX - currentTiltX) > 0.02 || Math.abs(targetTiltY - currentTiltY) > 0.02) {
+      requestAnimationFrame(applyTilt);
+    } else {
+      isTicking = false;
+    }
+  };
+
+  const onMouseMove = (e) => {
+    if (isDismissed) return;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const normX = Math.max(-1, Math.min(1, (e.clientX - centerX) / (window.innerWidth * 0.5)));
+    const normY = Math.max(-1, Math.min(1, (e.clientY - centerY) / (window.innerHeight * 0.5)));
+
+    targetTiltX = -normY * 4.5;
+    targetTiltY = normX * 4.5;
+
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(applyTilt);
+    }
+  };
+
+  const onTouchMove = (e) => {
+    if (isDismissed || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const normX = Math.max(-1, Math.min(1, (touch.clientX - centerX) / (window.innerWidth * 0.5)));
+    const normY = Math.max(-1, Math.min(1, (touch.clientY - centerY) / (window.innerHeight * 0.5)));
+
+    targetTiltX = -normY * 3.0;
+    targetTiltY = normX * 3.0;
+
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(applyTilt);
+    }
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") {
+      dismissIntro(false);
+    }
+  };
+
+  window.addEventListener("mousemove", onMouseMove, { passive: true });
+  window.addEventListener("touchmove", onTouchMove, { passive: true });
+  window.addEventListener("keydown", onKeyDown, { passive: true });
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => dismissIntro(false));
+  }
+
+  // Automatic sequence:
+  // Step 1 (Logo) -> Step 2 (Name & Tagline reveal at 650-900ms) -> Step 3 (Cinematic transition starts at 2400ms)
+  animTimer = setTimeout(() => {
+    dismissIntro(false);
+  }, 2400);
+
+  // Hard Failsafe: Ensures website is NEVER blocked even on slow/throttled devices
+  failsafeTimer = setTimeout(() => {
+    if (!isDismissed) {
+      dismissIntro(true);
+    }
+  }, 3500);
+}
 
 /**
  * 9. Top Minimal Scroll Progress Indicator
@@ -744,36 +922,333 @@ function initScrollProgress() {
 }
 
 /**
- * 10. Hero 3D Perspective Device & Mouse Parallax (Optimized & Battery-Friendly)
- *     Features: Inertial damping, viewport-aware IntersectionObserver pausing,
- *     and idle rAF loop cancellation when at rest.
+ * 10a. Adaptive 3D Quality Controller
+ *      Detects device hardware concurrency, GPU WebGL capability, touch environment,
+ *      and user motion preferences to dynamically assign 'HIGH', 'MEDIUM', 'LOW', or 'OFF'.
+ */
+function detect3DQualityTier() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return 'OFF';
+  }
+
+  // Check WebGL context support
+  let hasWebGL = false;
+  try {
+    const testCanvas = document.createElement("canvas");
+    hasWebGL = Boolean(
+      window.WebGLRenderingContext &&
+      (testCanvas.getContext("webgl") || testCanvas.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    hasWebGL = false;
+  }
+
+  const cores = navigator.hardwareConcurrency || 4;
+  const memory = navigator.deviceMemory || 4;
+  const isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+  const isDesktop = window.matchMedia("(pointer: fine) and (min-width: 992px)").matches;
+
+  if (!hasWebGL) {
+    return isDesktop ? 'LOW' : 'OFF';
+  }
+
+  if (cores < 4 || memory < 4) {
+    return 'LOW';
+  }
+
+  if (isTouch || !isDesktop) {
+    return 'MEDIUM'; // Balanced 3D on mobile/tablets with optimized particle counts
+  }
+
+  if (cores >= 8 && memory >= 6) {
+    return 'HIGH';
+  }
+
+  return 'MEDIUM';
+}
+
+/**
+ * 10b. Ambient 3D Spatial Canvas (Zero-Dependency High Performance Depth Field)
+ *      Creates a celestial 3D star-field constellation with dynamic camera projection,
+ *      depth attenuation, and interactive inverse parallax behind the hero device.
+ */
+function initHeroSpatialCanvas() {
+  const canvas = document.getElementById("hero3DCanvas");
+  if (!canvas) return;
+
+  const tier = detect3DQualityTier();
+  window.hero3DQualityTier = tier;
+
+  if (tier === 'OFF') {
+    canvas.style.display = "none";
+    return;
+  }
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let rafId = null;
+  let isIntersecting = true;
+  let isPaused = false;
+  let lastTime = performance.now();
+
+  // Particle counts per tier
+  const particleCount = tier === 'HIGH' ? 52 : (tier === 'MEDIUM' ? 28 : 14);
+  const enableConstellationLines = tier === 'HIGH' || tier === 'MEDIUM';
+  const particles = [];
+
+  const resize = () => {
+    const rect = canvas.getBoundingClientRect();
+    width = rect.width || 600;
+    height = rect.height || 450;
+    dpr = Math.min(window.devicePixelRatio || 1, 2); // Clamp DPR to 2 to avoid GPU fill-rate waste
+
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+  };
+
+  // Seed 3D particles in a volume (x, y, z)
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: (Math.random() - 0.5) * 800,
+      y: (Math.random() - 0.5) * 600,
+      z: 50 + Math.random() * 750, // Depth range from 50 to 800
+      vx: (Math.random() - 0.5) * 6,
+      vy: (Math.random() - 0.5) * 6,
+      vz: -(12 + Math.random() * 20), // Drift toward camera
+      baseRadius: 1.0 + Math.random() * 1.8,
+      color: Math.random() > 0.4 ? 'rgba(0, 210, 255,' : 'rgba(99, 102, 241,',
+      projX: 0,
+      projY: 0,
+      scale: 1,
+      visible: false
+    });
+  }
+
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+
+  const fov = 320;
+  let camX = 0;
+  let camY = 0;
+
+  const render = (now) => {
+    const dt = Math.min((now - lastTime) / 1000, 0.08);
+    lastTime = now;
+
+    if (!isIntersecting || isPaused) {
+      rafId = null;
+      return;
+    }
+
+    // Read camera orientation offset from Hero 3D state if available
+    const heroState = window.hero3DState;
+    const targetCamX = heroState ? (-heroState.rotY * 4.5) : 0;
+    const targetCamY = heroState ? (heroState.rotX * 4.0) : 0;
+    camX += (targetCamX - camX) * Math.min(1, 6.0 * dt);
+    camY += (targetCamY - camY) * Math.min(1, 6.0 * dt);
+
+    ctx.clearRect(0, 0, width, height);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    // 1. Update and project particles
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+
+      // Drift in 3D space
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.z += p.vz * dt;
+
+      // Wrap-around in depth
+      if (p.z < 20) {
+        p.z = 800;
+        p.x = (Math.random() - 0.5) * 800;
+        p.y = (Math.random() - 0.5) * 600;
+      } else if (p.z > 800) {
+        p.z = 20;
+      }
+
+      // 3D Perspective Projection
+      const scale = fov / (fov + p.z);
+      p.projX = centerX + (p.x + camX) * scale;
+      p.projY = centerY + (p.y + camY) * scale;
+      p.scale = scale;
+
+      p.visible = (p.projX >= -20 && p.projX <= width + 20 && p.projY >= -20 && p.projY <= height + 20);
+
+      if (p.visible) {
+        const radius = Math.max(0.6, p.baseRadius * scale);
+        const alpha = Math.min(0.85, Math.max(0.08, (1 - p.z / 800) * 0.95));
+
+        ctx.beginPath();
+        ctx.arc(p.projX, p.projY, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color} ${alpha.toFixed(2)})`;
+        ctx.fill();
+
+        // High tier: subtle glow halos on closer nodes
+        if (tier === 'HIGH' && scale > 0.45) {
+          ctx.beginPath();
+          ctx.arc(p.projX, p.projY, radius * 2.4, 0, Math.PI * 2);
+          ctx.fillStyle = `${p.color} ${(alpha * 0.18).toFixed(2)})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    // 2. Proximity constellation connecting lines
+    if (enableConstellationLines) {
+      const maxDist = tier === 'HIGH' ? 88 : 68;
+      const maxDistSq = maxDist * maxDist;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
+        if (!p1.visible) continue;
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          if (!p2.visible) continue;
+
+          if (Math.abs(p1.z - p2.z) > 180) continue;
+
+          const dx = p1.projX - p2.projX;
+          const dy = p1.projY - p2.projY;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < maxDistSq) {
+            const dist = Math.sqrt(distSq);
+            const lineAlpha = (1 - dist / maxDist) * 0.18 * Math.min(p1.scale, p2.scale);
+
+            if (lineAlpha > 0.015) {
+              ctx.beginPath();
+              ctx.moveTo(p1.projX, p1.projY);
+              ctx.lineTo(p2.projX, p2.projY);
+              ctx.strokeStyle = `rgba(0, 210, 255, ${lineAlpha.toFixed(3)})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+    }
+
+    rafId = requestAnimationFrame(render);
+  };
+
+  const startLoop = () => {
+    if (!rafId && isIntersecting && !isPaused) {
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(render);
+    }
+  };
+
+  const stopLoop = () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
+
+  // IntersectionObserver: stop canvas when hero is out of view
+  const heroSection = document.getElementById("home") || canvas.closest(".hero-section");
+  if ("IntersectionObserver" in window && heroSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      });
+    }, { threshold: 0.05 });
+    observer.observe(heroSection);
+  }
+
+  // Expose API for external route pausing
+  window.heroSpatialCanvasApi = {
+    pause: () => {
+      isPaused = true;
+      stopLoop();
+    },
+    resume: () => {
+      isPaused = false;
+      startLoop();
+    }
+  };
+
+  startLoop();
+}
+
+/**
+ * 10c. Hero 3D Perspective Device & Multi-Layer Parallax Engine
+ *      Features:
+ *      - Delta-time normalized exponential decay lerp (fluid at 60Hz, 90Hz, 120Hz, 144Hz+)
+ *      - Differential Z-depth for floating metric chips
+ *      - Dynamic specular glass glare sheen with variable angle & opacity
+ *      - Dynamic spatial cast shadow with perspective offsets and scaling
+ *      - Full touch interaction on mobile & tablet with gesture slop protection
+ *      - Ambient breathing oscillation when idle
+ *      - Power-saving idle sleep (0% CPU/GPU waste after settled)
+ *      - Viewport IntersectionObserver & route-aware lifecycle hooks
  */
 function initHero3DParallax() {
   const stage = document.getElementById("hero3DStage");
   const card = document.getElementById("hero3DCard");
   if (!stage || !card) return;
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isDesktop = window.matchMedia("(pointer: fine) and (min-width: 992px)").matches;
-  if (prefersReduced || !isDesktop) return;
+  const tier = detect3DQualityTier();
+  if (tier === 'OFF') {
+    stage.style.perspective = 'none';
+    card.style.transform = 'none';
+    return;
+  }
+
+  const shadow = document.getElementById("hero3DShadow");
+  const glare = document.getElementById("heroScreenGlare");
+  const chips = card.querySelectorAll(".floating-chip");
+  const heroSection = document.getElementById("home") || stage.closest(".hero-section");
+
+  const isTouchDevice = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
 
   let targetRotX = 0;
   let targetRotY = 0;
   let targetTransX = 0;
   let targetTransY = 0;
+
   let currentRotX = 0;
   let currentRotY = 0;
   let currentTransX = 0;
   let currentTransY = 0;
+
+  let currentShadowX = 0;
+  let currentShadowY = 0;
+  let currentShadowScale = 1;
+
+  let currentGlareAngle = 135;
+  let currentGlareOpacity = 0.35;
+
   let isHovered = false;
+  let isTouching = false;
   let isIntersecting = true;
+  let isPaused = false;
   let rafId = null;
 
-  const heroSection = document.getElementById("home") || stage.closest(".hero-section");
-  const chips = card.querySelectorAll(".floating-chip");
+  let lastTime = performance.now();
+  let idleStartTime = performance.now();
+  let isIdleSleeping = false;
 
   const startLoop = () => {
-    if (!rafId && isIntersecting) {
+    if (!rafId && isIntersecting && !isPaused) {
+      lastTime = performance.now();
+      isIdleSleeping = false;
       rafId = requestAnimationFrame(updateLoop);
     }
   };
@@ -785,93 +1260,248 @@ function initHero3DParallax() {
     }
   };
 
-  const onMouseMove = (e) => {
-    const rect = stage.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+  const updateLoop = (now) => {
+    // Delta-time normalization
+    const dt = Math.min((now - lastTime) / 1000, 0.08);
+    lastTime = now;
 
-    // Normalized mouse offsets (-1 to 1)
-    const normX = Math.max(-1, Math.min(1, (e.clientX - centerX) / (window.innerWidth / 2)));
-    const normY = Math.max(-1, Math.min(1, (e.clientY - centerY) / (window.innerHeight / 2)));
+    // Ambient floating breathing when not actively controlled
+    const isInteracting = isHovered || isTouching;
+    if (!isInteracting) {
+      const elapsedIdle = (now - idleStartTime) * 0.001;
 
-    // Subtle tilt boundaries: max 6deg X, 8deg Y, 10px translate
-    targetRotX = -normY * 6;
-    targetRotY = normX * 8;
-    targetTransX = normX * 10;
-    targetTransY = normY * 6;
-    isHovered = true;
-    startLoop();
-  };
+      // On mobile devices, after 4.5 seconds of untouched idle, put 3D loop to sleep to save 100% battery
+      if (isTouchDevice && elapsedIdle > 4.5) {
+        targetRotX = 0;
+        targetRotY = 0;
+        targetTransX = 0;
+        targetTransY = 0;
 
-  const onMouseLeave = () => {
-    targetRotX = 0;
-    targetRotY = 0;
-    targetTransX = 0;
-    targetTransY = 0;
-    isHovered = false;
-    startLoop();
-  };
+        const diffRest = Math.abs(currentRotX) + Math.abs(currentRotY) +
+                         Math.abs(currentTransX) + Math.abs(currentTransY);
 
-  const updateLoop = () => {
-    // Smooth lerp damping factor 0.08
-    currentRotX += (targetRotX - currentRotX) * 0.08;
-    currentRotY += (targetRotY - currentRotY) * 0.08;
-    currentTransX += (targetTransX - currentTransX) * 0.08;
-    currentTransY += (targetTransY - currentTransY) * 0.08;
+        if (diffRest < 0.02) {
+          currentRotX = 0;
+          currentRotY = 0;
+          currentTransX = 0;
+          currentTransY = 0;
+          card.style.transform = "";
+          chips.forEach(chip => {
+            const depth = parseFloat(chip.dataset.parallaxDepth || "25");
+            chip.style.transform = `translateZ(${depth}px)`;
+          });
+          if (shadow) {
+            shadow.style.setProperty("--shadow-x", "0px");
+            shadow.style.setProperty("--shadow-y", "0px");
+            shadow.style.setProperty("--shadow-scale", "1");
+          }
+          if (glare) {
+            glare.style.setProperty("--glare-opacity", "0.35");
+          }
+          isIdleSleeping = true;
+          rafId = null;
+          return;
+        }
+      } else {
+        // Smooth luxury breathing oscillation
+        targetRotX = Math.sin(elapsedIdle * 0.95) * 1.5;
+        targetRotY = Math.cos(elapsedIdle * 0.75) * 2.0;
+        targetTransX = Math.sin(elapsedIdle * 0.6) * 2.5;
+        targetTransY = Math.sin(elapsedIdle * 1.1) * 3.5;
+      }
+    }
 
+    // Frame-rate independent exponential decay interpolation
+    const decayRate = isInteracting ? 8.5 : 4.5;
+    const lerpFactor = 1 - Math.exp(-decayRate * dt);
+
+    currentRotX += (targetRotX - currentRotX) * lerpFactor;
+    currentRotY += (targetRotY - currentRotY) * lerpFactor;
+    currentTransX += (targetTransX - currentTransX) * lerpFactor;
+    currentTransY += (targetTransY - currentTransY) * lerpFactor;
+
+    // Apply primary 3D transform to card chassis
     card.style.transform = `translate3d(${currentTransX.toFixed(2)}px, ${currentTransY.toFixed(2)}px, 0) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg)`;
 
     // Differential depth for floating chips
     chips.forEach(chip => {
       const depth = parseFloat(chip.dataset.parallaxDepth || "25");
-      const chipX = (currentRotY * (depth / 16)).toFixed(1);
-      const chipY = (-currentRotX * (depth / 16)).toFixed(1);
+      const chipX = (currentRotY * (depth / 14)).toFixed(1);
+      const chipY = (-currentRotX * (depth / 14)).toFixed(1);
       chip.style.transform = `translate3d(${chipX}px, ${chipY}px, ${depth}px)`;
     });
 
-    // Check if motion has settled to rest
-    const diff = Math.abs(targetRotX - currentRotX) +
-                 Math.abs(targetRotY - currentRotY) +
-                 Math.abs(targetTransX - currentTransX) +
-                 Math.abs(targetTransY - currentTransY);
+    // Dynamic Specular Glare update
+    if (glare) {
+      const tiltMag = Math.sqrt(currentRotX * currentRotX + currentRotY * currentRotY);
+      const targetGlareOpacity = Math.min(0.65, 0.22 + (tiltMag / 10) * 0.35);
+      const targetGlareAngle = 135 + currentRotY * 4.2 + currentRotX * 2.8;
 
-    if (!isHovered && diff < 0.01) {
-      // Snap cleanly to rest and terminate rAF loop (0% idle resource waste)
-      currentRotX = 0;
-      currentRotY = 0;
-      currentTransX = 0;
-      currentTransY = 0;
-      card.style.transform = "";
-      chips.forEach(chip => {
-        const depth = parseFloat(chip.dataset.parallaxDepth || "25");
-        chip.style.transform = `translateZ(${depth}px)`;
-      });
-      rafId = null;
-      return;
+      currentGlareOpacity += (targetGlareOpacity - currentGlareOpacity) * lerpFactor;
+      currentGlareAngle += (targetGlareAngle - currentGlareAngle) * lerpFactor;
+
+      glare.style.setProperty("--glare-angle", `${currentGlareAngle.toFixed(1)}deg`);
+      glare.style.setProperty("--glare-opacity", currentGlareOpacity.toFixed(2));
     }
+
+    // Dynamic 3D Spatial Cast Shadow update
+    if (shadow) {
+      const targetShadowX = -currentRotY * 2.6;
+      const targetShadowY = currentRotX * 2.0;
+      const tiltMag = Math.sqrt(currentRotX * currentRotX + currentRotY * currentRotY);
+      const targetShadowScale = Math.max(0.85, 1 - (tiltMag * 0.012));
+
+      currentShadowX += (targetShadowX - currentShadowX) * lerpFactor;
+      currentShadowY += (targetShadowY - currentShadowY) * lerpFactor;
+      currentShadowScale += (targetShadowScale - currentShadowScale) * lerpFactor;
+
+      shadow.style.setProperty("--shadow-x", `${currentShadowX.toFixed(1)}px`);
+      shadow.style.setProperty("--shadow-y", `${currentShadowY.toFixed(1)}px`);
+      shadow.style.setProperty("--shadow-scale", currentShadowScale.toFixed(3));
+    }
+
+    // Broadcast 3D orientation for background spatial canvas
+    window.hero3DState = {
+      rotX: currentRotX,
+      rotY: currentRotY,
+      transX: currentTransX,
+      transY: currentTransY
+    };
 
     rafId = requestAnimationFrame(updateLoop);
   };
 
-  // Pause loop when Hero section is out of viewport
+  // Desktop Mouse Movement
+  const onMouseMove = (e) => {
+    if (!isIntersecting || isPaused) return;
+    const rect = stage.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const normX = Math.max(-1, Math.min(1, (e.clientX - centerX) / (window.innerWidth * 0.45)));
+    const normY = Math.max(-1, Math.min(1, (e.clientY - centerY) / (window.innerHeight * 0.45)));
+
+    targetRotX = -normY * 7.5;
+    targetRotY = normX * 9.5;
+    targetTransX = normX * 12;
+    targetTransY = normY * 7;
+    isHovered = true;
+    idleStartTime = performance.now();
+    startLoop();
+  };
+
+  const onMouseLeave = () => {
+    isHovered = false;
+    idleStartTime = performance.now();
+    startLoop();
+  };
+
+  // Mobile / Tablet Touch Gestures with Non-blocking Scroll Safety
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let gestureDirectionDetermined = false;
+  let isTracking3D = false;
+
+  const onTouchStart = (e) => {
+    if (e.touches.length !== 1 || !isIntersecting || isPaused) return;
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    gestureDirectionDetermined = false;
+    isTracking3D = false;
+    isTouching = true;
+    idleStartTime = performance.now();
+    startLoop();
+  };
+
+  const onTouchMove = (e) => {
+    if (!isTouching || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+
+    if (!gestureDirectionDetermined) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+        gestureDirectionDetermined = true;
+        // If horizontal delta exceeds vertical delta, user is intentionally tilting the 3D card!
+        if (Math.abs(dx) > Math.abs(dy) + 4) {
+          isTracking3D = true;
+        } else {
+          // Vertical movement dominates: user wants to scroll page. Relinquish touch immediately!
+          isTracking3D = false;
+          isTouching = false;
+          return;
+        }
+      }
+    }
+
+    if (isTracking3D) {
+      if (e.cancelable) e.preventDefault();
+      const rect = stage.getBoundingClientRect();
+      const normX = Math.max(-1, Math.min(1, dx / (rect.width * 0.45)));
+      const normY = Math.max(-1, Math.min(1, dy / (rect.height * 0.45)));
+
+      targetRotX = -normY * 4.5;
+      targetRotY = normX * 6.5;
+      targetTransX = normX * 8;
+      targetTransY = normY * 5;
+      idleStartTime = performance.now();
+      startLoop();
+    }
+  };
+
+  const onTouchEnd = () => {
+    isTouching = false;
+    isTracking3D = false;
+    gestureDirectionDetermined = false;
+    idleStartTime = performance.now();
+    startLoop();
+  };
+
+  if (heroSection) {
+    heroSection.addEventListener("mousemove", onMouseMove, { passive: true });
+    heroSection.addEventListener("mouseleave", onMouseLeave, { passive: true });
+  }
+
+  stage.addEventListener("touchstart", onTouchStart, { passive: true });
+  stage.addEventListener("touchmove", onTouchMove, { passive: false });
+  stage.addEventListener("touchend", onTouchEnd, { passive: true });
+  stage.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
+  // IntersectionObserver: pause 3D loop when hero is off-screen
   if ("IntersectionObserver" in window && heroSection) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         isIntersecting = entry.isIntersecting;
-        if (!isIntersecting) {
-          stopLoop();
-        } else if (isHovered) {
+        if (isIntersecting) {
           startLoop();
+        } else {
+          stopLoop();
         }
       });
     }, { threshold: 0.05 });
     observer.observe(heroSection);
   }
 
-  if (heroSection) {
-    heroSection.addEventListener("mousemove", onMouseMove, { passive: true });
-    heroSection.addEventListener("mouseleave", onMouseLeave, { passive: true });
-  }
+  // Global Pause / Resume hooks for routing & battery conservation
+  window.pause3D = () => {
+    isPaused = true;
+    stopLoop();
+    if (window.heroSpatialCanvasApi && typeof window.heroSpatialCanvasApi.pause === "function") {
+      window.heroSpatialCanvasApi.pause();
+    }
+  };
+
+  window.resume3D = () => {
+    isPaused = false;
+    lastTime = performance.now();
+    startLoop();
+    if (window.heroSpatialCanvasApi && typeof window.heroSpatialCanvasApi.resume === "function") {
+      window.heroSpatialCanvasApi.resume();
+    }
+  };
+
+  startLoop();
 }
 
 /**
@@ -1010,16 +1640,18 @@ function initButtonMicroInteractions() {
 
 /**
  * 14. Pricing Cards 3D Interactive Parallax & Dynamic Ambient Glare
- *     Harmonizes Starter, Professional, and Premium cards with identical
- *     subtle mouse tilt, depth elevation, and responsive safety.
+ *     Harmonizes Starter, Professional, and Premium cards with delta-time
+ *     exponential smoothing, depth elevation, and touch safety.
  */
 function initPricing3D() {
   const pricingCards = document.querySelectorAll(".pricing-card");
   if (!pricingCards.length) return;
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const tier = detect3DQualityTier();
+  if (tier === 'OFF') return;
+
   const isDesktop = window.matchMedia("(pointer: fine) and (min-width: 992px)").matches;
-  if (prefersReduced || !isDesktop) return;
+  if (!isDesktop) return;
 
   const pricingSection = document.getElementById("pricing") || document.querySelector(".pricing-section");
   let isIntersecting = true;
@@ -1035,20 +1667,49 @@ function initPricing3D() {
   }
 
   pricingCards.forEach(card => {
-    let ticking = false;
     let targetTiltX = 0;
     let targetTiltY = 0;
+    let currentTiltX = 0;
+    let currentTiltY = 0;
     let mousePctX = 50;
     let mousePctY = 50;
+    let isHovered = false;
+    let rafId = null;
+    let lastTime = performance.now();
 
-    const applyTransform = () => {
-      card.style.setProperty("--tilt-x", `${targetTiltX.toFixed(2)}deg`);
-      card.style.setProperty("--tilt-y", `${targetTiltY.toFixed(2)}deg`);
-      card.style.setProperty("--elevate-z", "10px");
+    const updateCard = (now) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.08);
+      lastTime = now;
+
+      const lerpFactor = 1 - Math.exp(-9.0 * dt);
+      currentTiltX += (targetTiltX - currentTiltX) * lerpFactor;
+      currentTiltY += (targetTiltY - currentTiltY) * lerpFactor;
+
+      card.style.setProperty("--tilt-x", `${currentTiltX.toFixed(2)}deg`);
+      card.style.setProperty("--tilt-y", `${currentTiltY.toFixed(2)}deg`);
+      card.style.setProperty("--elevate-z", isHovered ? "10px" : "0px");
       card.style.setProperty("--mouse-x", `${mousePctX.toFixed(1)}%`);
       card.style.setProperty("--mouse-y", `${mousePctY.toFixed(1)}%`);
-      card.style.setProperty("--glare-opacity", "1");
-      ticking = false;
+      card.style.setProperty("--glare-opacity", isHovered ? "1" : "0");
+
+      const diff = Math.abs(targetTiltX - currentTiltX) + Math.abs(targetTiltY - currentTiltY);
+      if (!isHovered && diff < 0.02) {
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+        card.style.setProperty("--elevate-z", "0px");
+        card.style.setProperty("--glare-opacity", "0");
+        rafId = null;
+        return;
+      }
+
+      rafId = requestAnimationFrame(updateCard);
+    };
+
+    const startCardLoop = () => {
+      if (!rafId && isIntersecting) {
+        lastTime = performance.now();
+        rafId = requestAnimationFrame(updateCard);
+      }
     };
 
     card.addEventListener("mousemove", (e) => {
@@ -1067,19 +1728,16 @@ function initPricing3D() {
 
       mousePctX = (x / rect.width) * 100;
       mousePctY = (y / rect.height) * 100;
+      isHovered = true;
 
-      if (!ticking) {
-        requestAnimationFrame(applyTransform);
-        ticking = true;
-      }
+      startCardLoop();
     }, { passive: true });
 
     card.addEventListener("mouseleave", () => {
-      card.style.setProperty("--tilt-x", "0deg");
-      card.style.setProperty("--tilt-y", "0deg");
-      card.style.setProperty("--elevate-z", "0px");
-      card.style.setProperty("--glare-opacity", "0");
-      ticking = false;
+      targetTiltX = 0;
+      targetTiltY = 0;
+      isHovered = false;
+      startCardLoop();
     });
   });
 }

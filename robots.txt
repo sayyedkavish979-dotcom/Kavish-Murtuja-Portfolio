@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kavishmurtuja.com/sitemap.xml
+# XML Sitemaps
+Sitemap: https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/sitemap.xml
