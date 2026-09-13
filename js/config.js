@@ -21,14 +21,14 @@ const SITE_CONFIG = {
   
   email: "kavishwebsitedesigner@gmail.com",
   emailLink: "mailto:kavishwebsitedesigner@gmail.com",
-  gmailComposeUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=kavishwebsitedesigner@gmail.com",
+  gmailComposeUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=kavishwebsitedesigner@gmail.com&su=New%20Website%20Enquiry%20%E2%80%94%20Kavish%20Murtuja&body=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20know%20more%20about%20your%20website%20services%20and%20packages.",
 
   // Email & Enquiry Form Configuration
   formConfig: {
     // FormSubmit endpoint: delivers directly to your email without exposing private keys or passwords
     formSubmitUrl: "https://formsubmit.co/ajax/kavishwebsitedesigner@gmail.com",
     // Subject for incoming enquiry notification emails
-    emailSubject: "New Website Lead — Kavish Murtuja",
+    emailSubject: "New Website Enquiry — Kavish Murtuja",
     // Auto-detect Netlify Forms if deployed on Netlify
     autoDetectNetlify: true,
     // Optional custom Formspree URL if preferred
@@ -37,11 +37,11 @@ const SITE_CONFIG = {
 
   // Social Media Links (Verified Official Profiles)
   social: {
-    // 1. WhatsApp Profile / Chat
-    whatsapp: "https://wa.me/917355568493",
+    // 1. WhatsApp Profile / Chat (with pre-filled business enquiry message)
+    whatsapp: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20know%20more%20about%20your%20website%20services%20and%20packages.",
     
-    // Pre-filled WhatsApp message when visitors click floating button or contact CTA
-    whatsappInquiry: "https://wa.me/917355568493?text=Hello%20Kavish%2C%20I%20would%20like%20to%20discuss%20a%20website%20project%20for%20my%20business.",
+    // Pre-filled WhatsApp message when visitors click contact CTA or enquiry button
+    whatsappInquiry: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20know%20more%20about%20your%20website%20services%20and%20packages.",
     
     // 2. Instagram Profile (Official: https://www.instagram.com/kavishwebdesign/)
     instagram: "https://www.instagram.com/kavishwebdesign/"

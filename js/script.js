@@ -40,26 +40,37 @@ function initSiteConfigSync() {
   const baseWaNumber = SITE_CONFIG.phoneRaw || "7355568493";
   const fullWaNum = baseWaNumber.startsWith("91") ? baseWaNumber : ("91" + baseWaNumber);
   const waBaseUrl = `https://wa.me/${fullWaNum}`;
+  const defaultInquiry = (SITE_CONFIG.social && SITE_CONFIG.social.whatsappInquiry)
+    ? SITE_CONFIG.social.whatsappInquiry
+    : `${waBaseUrl}?text=${encodeURIComponent("Hi Kavish, I’m interested in getting a website for my business. I’d like to know more about your website services and packages.")}`;
 
   // Sync general WhatsApp links while preserving custom query parameters (?text=...)
   document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
-    const currentHref = el.getAttribute("href") || "";
-    if (el.dataset.social === "whatsapp-inquiry" && SITE_CONFIG.social && SITE_CONFIG.social.whatsappInquiry) {
-      el.href = SITE_CONFIG.social.whatsappInquiry;
-    } else if (currentHref.includes("?text=")) {
-      try {
-        const url = new URL(el.href);
-        const text = url.searchParams.get("text");
-        if (text) {
-          el.href = `${waBaseUrl}?text=${encodeURIComponent(text)}`;
-        } else {
-          el.href = waBaseUrl;
+    // 1. Preserve floating reference button explicitly
+    if (el.dataset.social === "whatsapp-floating") {
+      return;
+    }
+    // 2. Specific inquiry buttons or generic whatsapp links
+    if (el.dataset.social === "whatsapp-inquiry") {
+      el.href = defaultInquiry;
+    } else {
+      const currentHref = el.getAttribute("href") || "";
+      if (currentHref.includes("?text=")) {
+        try {
+          const url = new URL(el.href);
+          const text = url.searchParams.get("text");
+          if (text) {
+            el.href = `${waBaseUrl}?text=${encodeURIComponent(text)}`;
+          } else {
+            el.href = defaultInquiry;
+          }
+        } catch (e) {
+          el.href = currentHref.replace(/https:\/\/wa\.me\/\d+/, waBaseUrl);
         }
-      } catch (e) {
-        el.href = currentHref.replace(/https:\/\/wa\.me\/\d+/, waBaseUrl);
+      } else {
+        // Any WhatsApp contact link without ?text= must open with prefilled inquiry message
+        el.href = defaultInquiry;
       }
-    } else if (SITE_CONFIG.social && SITE_CONFIG.social.whatsapp) {
-      el.href = SITE_CONFIG.social.whatsapp;
     }
   });
 
@@ -495,6 +506,61 @@ function initContactForm() {
     return `https://wa.me/${fullWaNum}?text=${encodeURIComponent(text)}`;
   };
 
+  // Helper to generate structured email body text for Gmail and mailto
+  const generateEmailBodyText = (leadData) => {
+    let body = `New Website Enquiry — Kavish Murtuja\n`;
+    body += `====================================\n\n`;
+    body += `• Client Name: ${leadData.name}\n`;
+    body += `• Business Name: ${leadData.business}\n`;
+    body += `• Business Type: ${leadData.businessType}\n`;
+    body += `• WhatsApp / Contact: ${leadData.phone}\n`;
+    body += `• Website Requirement: ${leadData.requirement}\n`;
+    body += `• Email: ${leadData.email || "Not provided"}\n\n`;
+    body += `====================================\n`;
+    body += `Sent via kavishmurtuja.com portfolio contact form`;
+    return body;
+  };
+
+  // Helper to get verified Gmail Compose URL
+  const getGmailComposeUrl = (subject, bodyText) => {
+    const recipient = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.email) ? SITE_CONFIG.email : "kavishwebsitedesigner@gmail.com";
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+  };
+
+  // Helper to get verified mailto URL
+  const getMailtoUrl = (subject, bodyText) => {
+    const recipient = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.email) ? SITE_CONFIG.email : "kavishwebsitedesigner@gmail.com";
+    return `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+  };
+
+  // Dynamic attachment for "Open in Gmail" button in Get in Touch
+  const btnOpenGmailQuick = document.getElementById("btnOpenGmailQuick");
+  if (btnOpenGmailQuick) {
+    btnOpenGmailQuick.addEventListener("click", () => {
+      const nameVal = form.querySelector('[name="name"]')?.value.trim() || "";
+      const businessVal = form.querySelector('[name="business"]')?.value.trim() || "";
+      const typeVal = form.querySelector('[name="business_type"]')?.value || "";
+      const phoneVal = form.querySelector('[name="phone"]')?.value.trim() || "";
+      const reqVal = form.querySelector('[name="service"]')?.value || "";
+      const emailVal = form.querySelector('[name="email"]')?.value.trim() || "";
+
+      let bodyText;
+      if (nameVal || businessVal || phoneVal) {
+        bodyText = generateEmailBodyText({
+          name: nameVal || "Not specified",
+          business: businessVal || "Not specified",
+          businessType: typeVal || "Not specified",
+          phone: phoneVal || "Not specified",
+          requirement: reqVal || "Website Consultation",
+          email: emailVal || "Not provided"
+        });
+      } else {
+        bodyText = "Hi Kavish, I’m interested in getting a website for my business. I’d like to know more about your website services and packages.";
+      }
+      btnOpenGmailQuick.href = getGmailComposeUrl("New Website Enquiry — Kavish Murtuja", bodyText);
+    });
+  }
+
   // 1. PRIMARY INDIA FLOW: "Get Your Website on WhatsApp"
   if (btnSubmitWhatsApp) {
     btnSubmitWhatsApp.addEventListener("click", () => {
@@ -540,6 +606,12 @@ function initContactForm() {
 
     const formConfig = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.formConfig) ? SITE_CONFIG.formConfig : {};
     const isNetlifyHost = formConfig.autoDetectNetlify && (window.location.hostname.includes("netlify.app") || window.location.hostname.includes("netlify.com"));
+    const enquirySubject = "New Website Enquiry — Kavish Murtuja";
+    const emailBodyText = generateEmailBodyText(data);
+    const gmailUrl = getGmailComposeUrl(enquirySubject, emailBodyText);
+    const mailtoUrl = getMailtoUrl(enquirySubject, emailBodyText);
+    const waText = generateWhatsAppText(data);
+    const waUrl = getWhatsAppUrl(waText);
 
     try {
       let isSuccess = false;
@@ -563,13 +635,16 @@ function initContactForm() {
           phone: data.phone,
           service: data.requirement,
           email: data.email || "Not provided",
-          _subject: formConfig.emailSubject || `New Website Enquiry: ${data.requirement} — ${data.business}`,
+          _subject: enquirySubject,
           _template: "table",
           _captcha: "false"
         };
+        if (data.email) {
+          payload._replyto = data.email;
+        }
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
         const res = await fetch(endpoint, {
           method: "POST",
@@ -584,7 +659,8 @@ function initContactForm() {
         clearTimeout(timeoutId);
 
         const resData = await res.json().catch(() => ({}));
-        isSuccess = res.ok && (resData.success === "true" || resData.success === true || (resData.message && resData.message.includes("Activation")));
+        // CRITICAL: DO NOT fake success. Only mark success if FormSubmit confirmed delivery (not pending activation)
+        isSuccess = res.ok && (resData.success === "true" || resData.success === true) && !String(resData.message || "").includes("Activation");
         responseMessage = resData.message || "";
       }
 
@@ -597,11 +673,7 @@ function initContactForm() {
         }
 
         if (successToastText) {
-          if (responseMessage.includes("Activation")) {
-            successToastText.textContent = "Enquiry received! (Check kavishwebsitedesigner@gmail.com to confirm form activation).";
-          } else {
-            successToastText.textContent = "Thank you! Your enquiry has been received. Kavish will respond within 24 hours.";
-          }
+          successToastText.textContent = "Thank you! Your enquiry has been received. Kavish will respond within 24 hours.";
         }
 
         showToast(successToast, 5000);
@@ -623,23 +695,15 @@ function initContactForm() {
       }
 
     } catch (error) {
-      console.warn("Mail dispatch gateway unavailable:", error.message);
+      console.warn("Form gateway notice:", error.message);
 
       if (submitBtn) {
-        submitBtn.innerHTML = "<span>Select Action Below</span>";
+        submitBtn.innerHTML = "<span>Send via Gmail / WhatsApp</span>";
         submitBtn.style.background = "";
         submitBtn.disabled = false;
       }
 
-      // DO NOT claim email was sent. Provide transparent, zero-failure 1-click direct options:
-      const formattedText = generateWhatsAppText(data);
-      const waUrl = getWhatsAppUrl(formattedText);
-      const recipient = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.email) ? SITE_CONFIG.email : "kavishwebsitedesigner@gmail.com";
-      const mailtoSubject = encodeURIComponent(`Website Enquiry: ${data.requirement} — ${data.business}`);
-      const mailtoBody = encodeURIComponent(formattedText);
-      const mailtoUrl = `mailto:${recipient}?subject=${mailtoSubject}&body=${mailtoBody}`;
-      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${mailtoSubject}&body=${mailtoBody}`;
-
+      // DO NOT claim email was sent. Truthfully provide immediate direct options and launch Gmail compose:
       if (fallbackBox) {
         fallbackBox.style.display = "block";
         if (fallbackWaBtn) fallbackWaBtn.href = waUrl;
@@ -648,10 +712,18 @@ function initContactForm() {
         if (fallbackGmailBtn) fallbackGmailBtn.href = gmailUrl;
       }
 
+      // Truthful explanation toast
       if (errorToastText) {
-        errorToastText.textContent = "Direct mail gateway was unreachable. Please send via 1-click WhatsApp or Email App below.";
+        errorToastText.textContent = "Opening Gmail compose with your enquiry details to send directly to Kavish.";
       }
       showToast(errorToast, 6000);
+
+      // Open Gmail compose with complete enquiry so message is delivered without data loss
+      try {
+        window.open(gmailUrl, "_blank");
+      } catch (e) {
+        console.warn("Popup blocked, user can click Open in Gmail below:", e);
+      }
     }
   });
 
