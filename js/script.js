@@ -42,35 +42,36 @@ function initSiteConfigSync() {
   const waBaseUrl = `https://wa.me/${fullWaNum}`;
   const defaultInquiry = (SITE_CONFIG.social && SITE_CONFIG.social.whatsappInquiry)
     ? SITE_CONFIG.social.whatsappInquiry
-    : `${waBaseUrl}?text=${encodeURIComponent("Hi Kavish, I’m interested in getting a website for my business. I’d like to know more about your website services and packages.")}`;
+    : `${waBaseUrl}?text=${encodeURIComponent("Hi Kavish, I’m interested in getting a professional website for my business. I’d like to discuss my requirements, available packages, and pricing. Please let me know how we can get started.")}`;
 
   // Sync general WhatsApp links while preserving custom query parameters (?text=...)
   document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
-    // 1. Preserve floating reference button explicitly
+    // 1. WhatsApp floating button and inquiry buttons get the exact lead-generation URL
     if (el.dataset.social === "whatsapp-floating") {
+      el.href = (SITE_CONFIG.social && SITE_CONFIG.social.whatsapp) || defaultInquiry;
       return;
     }
     // 2. Specific inquiry buttons or generic whatsapp links
     if (el.dataset.social === "whatsapp-inquiry") {
       el.href = defaultInquiry;
-    } else {
-      const currentHref = el.getAttribute("href") || "";
-      if (currentHref.includes("?text=")) {
-        try {
-          const url = new URL(el.href);
-          const text = url.searchParams.get("text");
-          if (text) {
-            el.href = `${waBaseUrl}?text=${encodeURIComponent(text)}`;
-          } else {
-            el.href = defaultInquiry;
-          }
-        } catch (e) {
-          el.href = currentHref.replace(/https:\/\/wa\.me\/\d+/, waBaseUrl);
+      return;
+    }
+    const currentHref = el.getAttribute("href") || "";
+    if (currentHref.includes("?text=")) {
+      try {
+        const url = new URL(el.href);
+        const text = url.searchParams.get("text");
+        if (text) {
+          el.href = `${waBaseUrl}?text=${encodeURIComponent(text)}`;
+        } else {
+          el.href = defaultInquiry;
         }
-      } else {
-        // Any WhatsApp contact link without ?text= must open with prefilled inquiry message
-        el.href = defaultInquiry;
+      } catch (e) {
+        el.href = currentHref.replace(/https:\/\/wa\.me\/\d+/, waBaseUrl);
       }
+    } else {
+      // Any WhatsApp contact link without ?text= must open with prefilled inquiry message
+      el.href = defaultInquiry;
     }
   });
 

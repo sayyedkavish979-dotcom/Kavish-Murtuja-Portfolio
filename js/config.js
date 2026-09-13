@@ -38,10 +38,10 @@ const SITE_CONFIG = {
   // Social Media Links (Verified Official Profiles)
   social: {
     // 1. WhatsApp Profile / Chat (with pre-filled business enquiry message)
-    whatsapp: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20know%20more%20about%20your%20website%20services%20and%20packages.",
+    whatsapp: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20professional%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20discuss%20my%20requirements%2C%20available%20packages%2C%20and%20pricing.%20Please%20let%20me%20know%20how%20we%20can%20get%20started.",
     
     // Pre-filled WhatsApp message when visitors click contact CTA or enquiry button
-    whatsappInquiry: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20know%20more%20about%20your%20website%20services%20and%20packages.",
+    whatsappInquiry: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20professional%20website%20for%20my%20business.%20I%E2%80%99d%20like%20to%20discuss%20my%20requirements%2C%20available%20packages%2C%20and%20pricing.%20Please%20let%20me%20know%20how%20we%20can%20get%20started.",
     
     // 2. Instagram Profile (Official: https://www.instagram.com/kavishwebdesign/)
     instagram: "https://www.instagram.com/kavishwebdesign/"
