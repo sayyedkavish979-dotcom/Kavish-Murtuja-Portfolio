@@ -11,7 +11,7 @@
 const SITE_CONFIG = {
   // Personal Information
   name: "Kavish Murtuja",
-  title: "Freelance Website Designer & Developer",
+  title: "Web Designer & Developer",
   location: "Kanpur, Uttar Pradesh, India",
 
   // Contact Details
@@ -19,80 +19,96 @@ const SITE_CONFIG = {
   phoneRaw: "7355568493",
   phoneLink: "tel:+917355568493",
   
-  email: "sayyedkavish979@gmail.com",
-  emailLink: "mailto:sayyedkavish979@gmail.com",
+  email: "kavishwebsitedesigner@gmail.com",
+  emailLink: "mailto:kavishwebsitedesigner@gmail.com",
+  gmailComposeUrl: "https://mail.google.com/mail/?view=cm&fs=1&to=kavishwebsitedesigner@gmail.com",
 
   // Email & Enquiry Form Configuration
   formConfig: {
     // FormSubmit endpoint: delivers directly to your email without exposing private keys or passwords
-    formSubmitUrl: "https://formsubmit.co/ajax/sayyedkavish979@gmail.com",
+    formSubmitUrl: "https://formsubmit.co/ajax/kavishwebsitedesigner@gmail.com",
     // Subject for incoming enquiry notification emails
-    emailSubject: "New Website Lead — Kavish Murtuja Portfolio",
+    emailSubject: "New Website Lead — Kavish Murtuja",
     // Auto-detect Netlify Forms if deployed on Netlify
     autoDetectNetlify: true,
     // Optional custom Formspree URL if preferred
     formspreeUrl: ""
   },
 
-  // Social Media Links (EDIT YOUR INSTAGRAM & FACEBOOK HANDLES HERE)
+  // Social Media Links (Verified Official Profiles)
   social: {
     // 1. WhatsApp Profile / Chat
     whatsapp: "https://wa.me/917355568493",
     
     // Pre-filled WhatsApp message when visitors click floating button or contact CTA
-    whatsappInquiry: "https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20website%20project.",
+    whatsappInquiry: "https://wa.me/917355568493?text=Hello%20Kavish%2C%20I%20would%20like%20to%20discuss%20a%20website%20project%20for%20my%20business.",
     
-    // 2. Instagram Profile (Replace with your actual handle, e.g. https://instagram.com/yourhandle)
-    instagram: "https://instagram.com/kavishmurtuja",
-    
-    // 3. Facebook Profile / Page (Replace with your actual handle, e.g. https://facebook.com/yourpage)
-    facebook: "https://facebook.com/kavishmurtuja"
+    // 2. Instagram Profile (Official: https://www.instagram.com/kavishwebdesign/)
+    instagram: "https://www.instagram.com/kavishwebdesign/"
   },
 
-  // Project Modal Data (Details shown when clicking 'View Project' on demo cards)
+  // Project Modal Data (Details shown when clicking 'View Live Demo' on demo cards)
   demoProjects: {
     "royal-spice": {
       id: "royal-spice",
       title: "Royal Spice",
       category: "Restaurant",
-      tagline: "Premium Indian Restaurant & Fine Dining Website",
-      status: "Demo Project",
+      tagline: "Fine Dining & Heritage Cuisine Website Concept",
+      status: "Demo Website",
       image: "assets/images/projects/royal-spice.svg",
-      overview: "A rich, regal digital dining experience engineered for upscale Indian restaurants. Features an interactive food menu, high-conversion table reservation widget, private banquet hall showcase, and seamless mobile-first layout.",
+      overview: "A rich, regal digital dining experience engineered for upscale restaurants and cafes. Features a visual digital food menu, high-conversion table reservation widget, banquet event showcase, and 1-click WhatsApp order integration.",
       deliverables: [
         "Interactive Digital Menu with dietary tags (Spicy, Vegan, Chef's Special)",
-        "Table Reservation & Event Booking System",
-        "Curated Food Photography Gallery & Reviews Integration",
-        "Fast Doorstep Delivery Integration & WhatsApp Quick-Order"
+        "Direct Table Reservation & Party Booking System",
+        "Curated Food Photography Showcase & Google Reviews Integration",
+        "Fast Doorstep Delivery Integration & 1-Click WhatsApp Quick-Order"
       ],
       techStack: ["HTML5", "CSS3", "JavaScript", "Responsive UI", "Local SEO Schema"],
-      results: "Engineered to facilitate direct table reservations and online orders with an intuitive user experience.",
-      whatsappText: "Hello Kavish, I saw your Royal Spice restaurant demo project and I would like a similar website for my restaurant/food business."
+      results: "Built to drive direct table bookings, eliminate third-party ordering commissions, and showcase authentic culinary craft.",
+      whatsappText: "Hello Kavish, I saw your Royal Spice restaurant demo website and I want a website like this for my restaurant/food business."
     },
-    "luxestay": {
-      id: "luxestay",
-      title: "LuxeStay",
-      category: "Hotel",
-      tagline: "Luxury Hotel & Boutique Resort Website",
-      status: "Demo Project",
-      image: "assets/images/projects/luxestay.svg",
-      overview: "An opulent boutique hospitality website designed to showcase luxury resort villas, presidential suites, wellness spas, and curated oceanfront experiences with an integrated date-picker booking engine simulation.",
+    "aura-salon": {
+      id: "aura-salon",
+      title: "Aura Luxe Salon",
+      category: "Salon",
+      tagline: "Luxury Salon & Skincare Wellness Website Concept",
+      status: "Concept Website",
+      image: "assets/images/projects/aura-salon.svg",
+      overview: "An opulent, boutique salon and spa digital experience built for hairstylists, beauty salons, and wellness clinics. Features interactive service price menus, stylist portfolio showcases, customer reviews, and direct WhatsApp appointment booking.",
       deliverables: [
-        "Room & Suite Filter with interactive 360° virtual tour triggers",
-        "Direct Date & Guest Picker Booking Console",
-        "Wellness Spa, Infinity Pool & Dining Experiences showcase",
-        "Multilingual readiness and high-resolution media optimization"
+        "Visual Service Menu & Transparent Pricing Guide",
+        "Direct WhatsApp Appointment Scheduling Calendar",
+        "Bridal Makeover Packages & Transformation Gallery",
+        "Stylist Profiles, Certifications, and Verified Client Reviews"
       ],
-      techStack: ["HTML5", "Modern CSS Grid", "Vanilla JS", "Luxury Aesthetics", "Schema.org Hotel"],
-      results: "Designed to drive direct room reservations and lower dependency on third-party booking commissions.",
-      whatsappText: "Hello Kavish, I am interested in building a luxury resort/hotel website like your LuxeStay demo."
+      techStack: ["HTML5", "Modern CSS", "JavaScript", "Luxury Aesthetics", "Mobile First"],
+      results: "Designed to help beauty salons build premium brand authority, eliminate booking friction, and attract high-ticket clients.",
+      whatsappText: "Hello Kavish, I saw your Aura Luxe salon demo website and I want a website like this for my salon/spa business."
+    },
+    "apex-clinic": {
+      id: "apex-clinic",
+      title: "Apex Clinic",
+      category: "Clinic",
+      tagline: "Healthcare & Dental Excellence Website Concept",
+      status: "Concept Website",
+      image: "assets/images/projects/apex-clinic.svg",
+      overview: "A clean, modern, and reassuring medical website tailored for doctors, specialized dental clinics, and healthcare practices. Features doctor credentials, patient consultation booking, treatment guides, and health FAQs.",
+      deliverables: [
+        "Online Doctor Appointment & Consultation Request Form",
+        "Specialized Treatment Overviews with Before/After Case Previews",
+        "Doctor Credentials, Medical Accreditations, and Clinic Facility Tour",
+        "Patient FAQs, Clinic Hours, and Google Maps Location Integration"
+      ],
+      techStack: ["HTML5", "CSS3 Grid", "Vanilla JS", "Healthcare Schema", "Fast Load Speed"],
+      results: "Engineered to establish immediate patient trust, communicate medical authority, and streamline appointment inquiries.",
+      whatsappText: "Hello Kavish, I saw your Apex Clinic demo website and I want a website like this for my clinic/healthcare practice."
     },
     "urban-estate": {
       id: "urban-estate",
       title: "Urban Estate",
       category: "Real Estate",
-      tagline: "Modern Real Estate & Property Showcase Website",
-      status: "Demo Project",
+      tagline: "Modern Real Estate & Property Showcase Concept",
+      status: "Demo Website",
       image: "assets/images/projects/urban-estate.svg",
       overview: "A sleek, architectural property platform tailored for real estate developers, brokerage agencies, and luxury home sellers. Includes property filter by price, beds, and location with high-converting private tour scheduling.",
       deliverables: [
@@ -102,62 +118,44 @@ const SITE_CONFIG = {
         "Neighborhood highlights and Google Maps proximity guide"
       ],
       techStack: ["HTML5", "CSS3 Flexbox/Grid", "JavaScript", "Real Estate Schema", "Mobile Optimized"],
-      results: "Empowers real estate agents to capture high-intent property inquiries and qualified homebuyer leads.",
-      whatsappText: "Hello Kavish, I want a modern real estate website like your Urban Estate demo for my property listings."
+      results: "Empowers real estate agents and builders to capture high-intent buyer inquiries and VIP site visit requests.",
+      whatsappText: "Hello Kavish, I saw your Urban Estate real estate demo website and I want a website like this for my property listings."
     },
-    "fitzone": {
-      id: "fitzone",
-      title: "FitZone",
-      category: "Fitness",
-      tagline: "Modern Fitness Studio & CrossFit Website",
-      status: "Demo Project",
-      image: "assets/images/projects/fitzone.svg",
-      overview: "A high-energy, athletic website built for gym owners, fitness clubs, and personal trainers. Features dynamic weekly class schedules, membership pricing tiers, trainer bio cards, and a free trial pass lead capture form.",
+    "elevate-coaching": {
+      id: "elevate-coaching",
+      title: "Elevate Coaching",
+      category: "Coaching",
+      tagline: "Executive Leadership & Mentorship Website Concept",
+      status: "Concept Website",
+      image: "assets/images/projects/elevate-coaching.svg",
+      overview: "An authoritative personal brand platform designed for business coaches, executive mentors, and management consultants. Features program syllabus showcases, student case studies, free strategy call scheduling, and lead magnet integration.",
       deliverables: [
-        "Weekly Workout Schedule & Real-time Class Timetable",
-        "Tiered Membership Pricing Comparison Cards",
-        "Trainer Profiles, Certifications, and 1-on-1 Consultation booking",
-        "Lead Generation Funnel for 3-Day Free Studio Pass"
+        "Coaching Program Breakdown & Tiered Cohort Enrollment",
+        "1-on-1 Free Strategy Call Booking Integration",
+        "Client Transformation Case Studies & Video Testimonials",
+        "Downloadable Resource Funnel for High-Value Lead Capture"
       ],
-      techStack: ["HTML5", "CSS3 Animation", "JavaScript", "Lead Capture UX", "Performance Tuned"],
-      results: "Engineered to convert local gym searchers into active paying members with compelling CTA funnels.",
-      whatsappText: "Hello Kavish, I need a modern gym and fitness studio website like your FitZone demo project."
+      techStack: ["HTML5", "Modern CSS", "JavaScript", "Lead Gen UX", "Personal Branding"],
+      results: "Structured to position the coach as an industry authority and convert cold visitors into high-ticket mentorship clients.",
+      whatsappText: "Hello Kavish, I saw your Elevate Coaching demo website and I want a website like this for my coaching/consulting practice."
     },
-    "novatech": {
-      id: "novatech",
-      title: "NovaTech",
-      category: "Business",
-      tagline: "Technology Business & SaaS Platform Website",
-      status: "Demo Project",
-      image: "assets/images/projects/novatech.svg",
-      overview: "An enterprise B2B technology website designed to present cloud infrastructure, AI platforms, and SaaS products. Features interactive metric dashboards, API documentation previews, and a book-a-demo enterprise funnel.",
+    "metrocraft": {
+      id: "metrocraft",
+      title: "MetroCraft Works",
+      category: "Local Business",
+      tagline: "Custom Woodwork & Home Renovations Website Concept",
+      status: "Concept Website",
+      image: "assets/images/projects/metrocraft.svg",
+      overview: "A dependable, craftsman-grade digital storefront designed for local contractors, carpentry studios, and home improvement businesses. Features before-and-after project galleries, verified local reviews, and 24-hour instant estimate requests.",
       deliverables: [
-        "Product Feature Matrix with interactive dashboard simulations",
-        "Enterprise Security, Compliance (SOC-2, GDPR) & Cloud Architecture showcase",
-        "Developer Documentation & API Sandbox preview",
-        "B2B Demo Request and Free Trial lead generation workflow"
+        "Project Gallery with Before/After Renovation Sliders",
+        "24-Hour Quick Quote & Estimate Form",
+        "Local Service Area Radius & Workmanship Guarantee Showcase",
+        "Verified Customer Testimonials & Direct WhatsApp Consultation"
       ],
-      techStack: ["HTML5", "Modern CSS Glassmorphism", "JavaScript", "B2B SaaS UX", "Fast Core Web Vitals"],
-      results: "Built to convey world-class enterprise authority and drive demo bookings for tech startups.",
-      whatsappText: "Hello Kavish, I would like to discuss building a technology/SaaS business website like NovaTech."
-    },
-    "creative-studio": {
-      id: "creative-studio",
-      title: "Creative Studio",
-      category: "Agency",
-      tagline: "Creative Agency & Digital Brand Portfolio",
-      status: "Demo Project",
-      image: "assets/images/projects/creative-studio.svg",
-      overview: "An avant-garde portfolio website engineered for creative design studios, advertising agencies, and video production houses. Emphasizes bold typography, awards showcases, case studies, and interactive showreel playback.",
-      deliverables: [
-        "Immersive Case Study Grid with category filtering",
-        "Fullscreen Showreel Video Player modal",
-        "Brand Identity, 3D CGI & Design services breakdown",
-        "Client Roster, Industry Awards (Awwwards, FWA), and Project Brief form"
-      ],
-      techStack: ["HTML5", "Advanced CSS3", "JavaScript", "Micro-Interactions", "Creative Typography"],
-      results: "Showcases creative capability with distinctive visual impact to attract high-value agency clients.",
-      whatsappText: "Hello Kavish, I love the Creative Studio agency portfolio demo and want a bespoke agency website."
+      techStack: ["HTML5", "CSS3", "JavaScript", "Local Business Schema", "Mobile First"],
+      results: "Built to generate reliable local inbound inquiries and prove craftsmanship quality to neighborhood homeowners.",
+      whatsappText: "Hello Kavish, I saw your MetroCraft local business demo website and I want a website like this for my local trade/service business."
     }
   }
 };

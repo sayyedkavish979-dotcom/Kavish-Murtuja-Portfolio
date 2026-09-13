@@ -94,7 +94,7 @@ All contact and social links are managed from one central file:
 social: {
   whatsapp: "https://wa.me/917355568493",
   whatsappInquiry: "https://wa.me/917355568493?text=...",
-  instagram: "https://instagram.com/your_handle",  // <-- UPDATE HERE
+  instagram: "https://www.instagram.com/kavishwebdesign/",
   facebook: "https://facebook.com/your_page"       // <-- UPDATE HERE
 }
 ```
@@ -121,7 +121,7 @@ Updating this file automatically updates links across the navbar, contact sectio
 
 - **Phone**: [+91 7355568493](tel:+917355568493)
 - **WhatsApp**: [+91 7355568493](https://wa.me/917355568493)
-- **Email**: [sayyedkavish979@gmail.com](mailto:sayyedkavish979@gmail.com)
+- **Email**: [kavishwebsitedesigner@gmail.com](mailto:kavishwebsitedesigner@gmail.com)
 - **Location**: Kanpur, Uttar Pradesh, India
 
 ---

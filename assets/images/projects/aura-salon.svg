@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="salonBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#180d14" />
+      <stop offset="50%" stop-color="#120810" />
+      <stop offset="100%" stop-color="#080307" />
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f472b6" />
+      <stop offset="50%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+    <linearGradient id="salonCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1221" />
+      <stop offset="100%" stop-color="#1a0914" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" rx="16" fill="url(#salonBg)" />
+  <rect x="1" y="1" width="798" height="498" rx="15" fill="none" stroke="#f472b6" stroke-opacity="0.25" stroke-width="1.5" />
+
+  <!-- Browser Header Bar -->
+  <rect x="0" y="0" width="800" height="42" rx="16" fill="#1c0e17" />
+  <rect x="0" y="32" width="800" height="10" fill="#1c0e17" />
+  <circle cx="24" cy="21" r="5" fill="#ef4444" />
+  <circle cx="40" cy="21" r="5" fill="#f59e0b" />
+  <circle cx="56" cy="21" r="5" fill="#10b981" />
+  <rect x="80" y="11" width="340" height="20" rx="6" fill="#2d1425" />
+  <text x="100" y="25" fill="#f472b6" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="11">https://auraluxe-salon.demo</text>
+
+  <!-- Navigation -->
+  <text x="40" y="76" fill="#f472b6" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="18" letter-spacing="2">AURA LUXE</text>
+  <text x="40" y="90" fill="#fb7185" font-family="sans-serif" font-size="8.5" letter-spacing="1">PREMIUM SALON &amp; WELLNESS SPA</text>
+  
+  <text x="420" y="80" fill="#fbcfe8" font-family="sans-serif" font-size="11" opacity="0.8">Services</text>
+  <text x="485" y="80" fill="#fbcfe8" font-family="sans-serif" font-size="11" opacity="0.8">Bridal Packages</text>
+  <text x="590" y="80" fill="#fbcfe8" font-family="sans-serif" font-size="11" opacity="0.8">Stylists</text>
+  <rect x="650" y="62" width="115" height="30" rx="15" fill="url(#roseGrad)" />
+  <text x="668" y="81" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="10.5">BOOK APPT</text>
+
+  <!-- Hero Content -->
+  <g transform="translate(40, 125)">
+    <rect x="0" y="0" width="155" height="20" rx="10" fill="#3b0724" stroke="#f472b6" stroke-opacity="0.4" />
+    <text x="12" y="14" fill="#fbcfe8" font-family="sans-serif" font-size="9" font-weight="600">LUXURY HAIR &amp; SKINCARE</text>
+    
+    <text x="0" y="55" fill="#ffffff" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="28">Refined Beauty Crafted</text>
+    <text x="0" y="90" fill="#f472b6" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="28">For the Modern You</text>
+    
+    <text x="0" y="125" fill="#e2e8f0" font-family="sans-serif" font-size="12" opacity="0.8">
+      Award-winning hair artistry, organic facial therapies,
+    </text>
+    <text x="0" y="145" fill="#e2e8f0" font-family="sans-serif" font-size="12" opacity="0.8">
+      and exclusive bridal makeover rituals tailored to your skin.
+    </text>
+
+    <!-- Buttons -->
+    <rect x="0" y="175" width="150" height="38" rx="8" fill="url(#roseGrad)" />
+    <text x="22" y="199" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="11.5">VIEW MENU &amp; PRICES</text>
+    
+    <rect x="162" y="175" width="145" height="38" rx="8" fill="none" stroke="#f472b6" stroke-width="1.5" />
+    <text x="182" y="199" fill="#fbcfe8" font-family="sans-serif" font-weight="600" font-size="11.5">WHATSAPP BOOKING</text>
+  </g>
+
+  <!-- Right Visual Cards Simulation -->
+  <g transform="translate(450, 125)">
+    <!-- Service Card 1 -->
+    <rect x="0" y="0" width="310" height="100" rx="12" fill="url(#salonCard)" stroke="#f472b6" stroke-opacity="0.2" />
+    <circle cx="45" cy="50" r="24" fill="#3b0724" />
+    <text x="36" y="56" fill="#f472b6" font-size="18">✂️</text>
+    <text x="85" y="42" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="14">Signature Hair Styling</text>
+    <text x="85" y="60" fill="#94a3b8" font-family="sans-serif" font-size="11">Balayage, Keratin, Precision Cuts</text>
+    <text x="85" y="80" fill="#f472b6" font-family="sans-serif" font-weight="700" font-size="12">From ₹1,499 • 45 Mins</text>
+
+    <!-- Service Card 2 -->
+    <rect x="0" y="115" width="310" height="100" rx="12" fill="url(#salonCard)" stroke="#f472b6" stroke-opacity="0.2" />
+    <circle cx="45" cy="165" r="24" fill="#3b0724" />
+    <text x="36" y="171" fill="#f472b6" font-size="18">✨</text>
+    <text x="85" y="157" fill="#ffffff" font-family="sans-serif" font-weight="700" font-size="14">Bridal &amp; Event Makeover</text>
+    <text x="85" y="175" fill="#94a3b8" font-family="sans-serif" font-size="11">HD Airbrush, Saree Draping, Nails</text>
+    <text x="85" y="195" fill="#f472b6" font-family="sans-serif" font-weight="700" font-size="12">Custom Packages Available</text>
+
+    <!-- Social Proof Badge -->
+    <rect x="0" y="230" width="310" height="42" rx="8" fill="#180d14" stroke="#f472b6" stroke-opacity="0.3" />
+    <text x="20" y="256" fill="#fbbf24" font-size="12">★★★★★</text>
+    <text x="78" y="256" fill="#cbd5e1" font-family="sans-serif" font-size="11" font-weight="500">4.9/5 Rating from 350+ Happy Clients</text>
+  </g>
+</svg>

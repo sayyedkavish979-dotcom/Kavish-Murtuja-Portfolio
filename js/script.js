@@ -16,10 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initProjectModal();
   initFaqAccordion();
   initContactForm();
-  initRouter();
 
-  // Phase 3: Premium 3D & Interactive Modules
-  init3DIntroExperience();
+  // Phase 3: Premium 3D & Interactive Modules (Initialize 3D Canvas & Parallax before Intro)
   initScrollProgress();
   initHeroSpatialCanvas();
   initHero3DParallax();
@@ -27,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
   initCustomCursor();
   initButtonMicroInteractions();
+  init3DIntroExperience();
+
+  // Router initializes after 3D hooks are registered
+  initRouter();
 });
 
 /**
@@ -35,33 +37,46 @@ document.addEventListener("DOMContentLoaded", () => {
 function initSiteConfigSync() {
   if (typeof SITE_CONFIG === "undefined") return;
 
-  // Sync social links
-  document.querySelectorAll('[data-social="whatsapp"]').forEach(el => {
-    el.href = SITE_CONFIG.social.whatsapp;
-  });
+  const baseWaNumber = SITE_CONFIG.phoneRaw || "7355568493";
+  const fullWaNum = baseWaNumber.startsWith("91") ? baseWaNumber : ("91" + baseWaNumber);
+  const waBaseUrl = `https://wa.me/${fullWaNum}`;
 
-  document.querySelectorAll('[data-social="whatsapp-inquiry"]').forEach(el => {
-    el.href = SITE_CONFIG.social.whatsappInquiry;
+  // Sync general WhatsApp links while preserving custom query parameters (?text=...)
+  document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+    const currentHref = el.getAttribute("href") || "";
+    if (el.dataset.social === "whatsapp-inquiry" && SITE_CONFIG.social && SITE_CONFIG.social.whatsappInquiry) {
+      el.href = SITE_CONFIG.social.whatsappInquiry;
+    } else if (currentHref.includes("?text=")) {
+      try {
+        const url = new URL(el.href);
+        const text = url.searchParams.get("text");
+        if (text) {
+          el.href = `${waBaseUrl}?text=${encodeURIComponent(text)}`;
+        } else {
+          el.href = waBaseUrl;
+        }
+      } catch (e) {
+        el.href = currentHref.replace(/https:\/\/wa\.me\/\d+/, waBaseUrl);
+      }
+    } else if (SITE_CONFIG.social && SITE_CONFIG.social.whatsapp) {
+      el.href = SITE_CONFIG.social.whatsapp;
+    }
   });
 
   document.querySelectorAll('[data-social="instagram"]').forEach(el => {
-    el.href = SITE_CONFIG.social.instagram;
-  });
-
-  document.querySelectorAll('[data-social="facebook"]').forEach(el => {
-    el.href = SITE_CONFIG.social.facebook;
+    if (SITE_CONFIG.social && SITE_CONFIG.social.instagram) el.href = SITE_CONFIG.social.instagram;
   });
 
   // Sync phone links
   document.querySelectorAll('[data-contact="phone"]').forEach(el => {
-    el.href = SITE_CONFIG.phoneLink;
-    if (el.dataset.type === "text") el.textContent = SITE_CONFIG.phone;
+    if (SITE_CONFIG.phoneLink) el.href = SITE_CONFIG.phoneLink;
+    if (el.dataset.type === "text" && SITE_CONFIG.phone) el.textContent = SITE_CONFIG.phone;
   });
 
   // Sync email links
   document.querySelectorAll('[data-contact="email"]').forEach(el => {
-    el.href = SITE_CONFIG.emailLink;
-    if (el.dataset.type === "text") el.textContent = SITE_CONFIG.email;
+    if (SITE_CONFIG.emailLink) el.href = SITE_CONFIG.emailLink;
+    if (el.dataset.type === "text" && SITE_CONFIG.email) el.textContent = SITE_CONFIG.email;
   });
 }
 
@@ -168,20 +183,27 @@ function initPortfolioFilter() {
       btn.setAttribute("aria-selected", "true");
       btn.setAttribute("aria-pressed", "true");
 
-      // Animate card filtering
+      // Animate card filtering safely without race conditions
       projectCards.forEach(card => {
+        if (card._filterTimeout) {
+          clearTimeout(card._filterTimeout);
+          card._filterTimeout = null;
+        }
+
         const category = card.getAttribute("data-category");
         if (filter === "all" || category === filter) {
           card.style.display = "flex";
-          setTimeout(() => {
+          card._filterTimeout = setTimeout(() => {
             card.style.opacity = "1";
             card.style.transform = "translateY(0)";
+            card._filterTimeout = null;
           }, 10);
         } else {
           card.style.opacity = "0";
           card.style.transform = "translateY(15px)";
-          setTimeout(() => {
+          card._filterTimeout = setTimeout(() => {
             card.style.display = "none";
+            card._filterTimeout = null;
           }, 250);
         }
       });
@@ -204,6 +226,7 @@ function initProjectModal() {
 
   // Elements inside modal
   const modalImg = document.getElementById("modalImg");
+  const modalStatus = document.getElementById("modalStatus");
   const modalCategory = document.getElementById("modalCategory");
   const modalTitle = document.getElementById("modalTitle");
   const modalTagline = document.getElementById("modalTagline");
@@ -221,6 +244,9 @@ function initProjectModal() {
 
     modalImg.src = project.image;
     modalImg.alt = `${project.title} - ${project.tagline}`;
+    if (modalStatus && project.status) {
+      modalStatus.innerHTML = `<span class="dot"></span> ${project.status}`;
+    }
     modalCategory.textContent = project.category;
     modalTitle.textContent = project.title;
     modalTagline.textContent = project.tagline;
@@ -281,6 +307,20 @@ function initProjectModal() {
     });
   });
 
+  // Enable clicking on the preview frame as well
+  const previews = document.querySelectorAll(".project-preview");
+  previews.forEach(preview => {
+    preview.style.cursor = "pointer";
+    preview.addEventListener("click", () => {
+      const card = preview.closest(".project-card");
+      const btn = card ? card.querySelector(".view-project-btn") : null;
+      if (btn) {
+        const projectId = btn.getAttribute("data-project-id");
+        openModal(projectId);
+      }
+    });
+  });
+
   closeBtn.addEventListener("click", closeModal);
   modalBackdrop.addEventListener("click", closeModal);
 
@@ -329,6 +369,16 @@ function initFaqAccordion() {
       }
     });
   });
+
+  // Dynamic window resize recalculation to prevent text clipping
+  window.addEventListener("resize", () => {
+    faqItems.forEach(item => {
+      if (item.classList.contains("active")) {
+        const content = item.querySelector(".faq-content");
+        if (content) content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  }, { passive: true });
 }
 
 /**
@@ -340,11 +390,14 @@ function initContactForm() {
   const errorToast = document.getElementById("formErrorToast");
   const successToastText = document.getElementById("formToastText");
   const errorToastText = document.getElementById("formErrorToastText");
-  const sendViaWhatsAppBtn = document.getElementById("sendViaWhatsAppBtn");
+  const btnSubmitWhatsApp = document.getElementById("btnSubmitWhatsApp");
+  const fallbackBox = document.getElementById("formFallbackBox");
+  const fallbackWaBtn = document.getElementById("fallbackWaBtn");
+  const fallbackMailBtn = document.getElementById("fallbackMailBtn");
 
   if (!form) return;
 
-  const showToast = (toastEl, duration = 4500) => {
+  const showToast = (toastEl, duration = 5000) => {
     if (!toastEl) return;
     toastEl.classList.add("show");
     setTimeout(() => {
@@ -353,24 +406,115 @@ function initContactForm() {
   };
 
   const validateField = (field, condition) => {
+    if (!field) return true;
     const group = field.closest(".form-group");
     if (!condition) {
-      group.classList.add("has-error");
+      if (group) group.classList.add("has-error");
       return false;
     } else {
-      group.classList.remove("has-error");
+      if (group) group.classList.remove("has-error");
       return true;
     }
   };
 
-  // Real-time error removal on user input
-  form.querySelectorAll("input, select, textarea").forEach(input => {
-    input.addEventListener("input", () => {
-      const group = input.closest(".form-group");
-      if (group) group.classList.remove("has-error");
-    });
+  // Real-time error removal on user input and select change
+  const clearError = (input) => {
+    const group = input.closest(".form-group");
+    if (group) group.classList.remove("has-error");
+  };
+
+  form.querySelectorAll("input, select").forEach(input => {
+    input.addEventListener("input", () => clearError(input));
+    input.addEventListener("change", () => clearError(input));
   });
 
+  // Helper to validate the 5 short form fields
+  const validateLeadForm = () => {
+    const name = document.getElementById("clientName");
+    const business = document.getElementById("clientBusiness");
+    const businessType = document.getElementById("clientBusinessType");
+    const phone = document.getElementById("clientPhone");
+    const requirement = document.getElementById("clientRequirement");
+    const email = document.getElementById("clientEmail");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const cleanDigits = phone ? phone.value.replace(/\D/g, "") : "";
+
+    const isNameValid = validateField(name, name && name.value.trim().length >= 2);
+    const isBusinessValid = validateField(business, business && business.value.trim().length >= 2);
+    const isTypeValid = validateField(businessType, businessType && businessType.value.trim() !== "");
+    const isPhoneValid = validateField(phone, cleanDigits.length >= 7 && cleanDigits.length <= 15);
+    const isReqValid = validateField(requirement, requirement && requirement.value.trim() !== "");
+    
+    // Email is optional, but if provided, must be valid
+    let isEmailValid = true;
+    if (email && email.value.trim().length > 0) {
+      isEmailValid = validateField(email, emailRegex.test(email.value.trim()));
+    } else if (email) {
+      clearError(email);
+    }
+
+    const isValid = isNameValid && isBusinessValid && isTypeValid && isPhoneValid && isReqValid && isEmailValid;
+
+    if (!isValid) {
+      const firstInvalid = form.querySelector(".form-group.has-error input, .form-group.has-error select");
+      if (firstInvalid) firstInvalid.focus();
+    }
+
+    return {
+      isValid,
+      data: {
+        name: name ? name.value.trim() : "",
+        business: business ? business.value.trim() : "",
+        businessType: businessType ? businessType.value : "",
+        phone: phone ? phone.value.trim() : "",
+        requirement: requirement ? requirement.value : "",
+        email: email ? email.value.trim() : ""
+      }
+    };
+  };
+
+  // Helper to generate formatted WhatsApp inquiry text
+  const generateWhatsAppText = (leadData) => {
+    let msg = `Hello Kavish, I would like to get a website:\n\n`;
+    msg += `• Name: ${leadData.name}\n`;
+    msg += `• Business Name: ${leadData.business}\n`;
+    msg += `• Business Type: ${leadData.businessType}\n`;
+    msg += `• WhatsApp: ${leadData.phone}\n`;
+    msg += `• Website Requirement: ${leadData.requirement}\n`;
+    if (leadData.email) {
+      msg += `• Email: ${leadData.email}\n`;
+    }
+    return msg;
+  };
+
+  // Helper to get verified WhatsApp destination URL
+  const getWhatsAppUrl = (text) => {
+    const baseWaNum = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.phoneRaw) ? SITE_CONFIG.phoneRaw : "7355568493";
+    const fullWaNum = baseWaNum.startsWith("91") ? baseWaNum : ("91" + baseWaNum);
+    return `https://wa.me/${fullWaNum}?text=${encodeURIComponent(text)}`;
+  };
+
+  // 1. PRIMARY INDIA FLOW: "Get Your Website on WhatsApp"
+  if (btnSubmitWhatsApp) {
+    btnSubmitWhatsApp.addEventListener("click", () => {
+      const { isValid, data } = validateLeadForm();
+      if (!isValid) return;
+
+      const formattedText = generateWhatsAppText(data);
+      const waUrl = getWhatsAppUrl(formattedText);
+
+      window.open(waUrl, "_blank");
+
+      if (successToastText) {
+        successToastText.textContent = "Opening WhatsApp with your enquiry! Kavish will reply shortly.";
+      }
+      showToast(successToast, 5000);
+      if (fallbackBox) fallbackBox.style.display = "none";
+    });
+  }
+
+  // 2. EMAIL FLOW: Form submission with verified delivery checking
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -382,38 +526,18 @@ function initContactForm() {
       return;
     }
 
-    const name = document.getElementById("clientName");
-    const email = document.getElementById("clientEmail");
-    const phone = document.getElementById("clientPhone");
-    const business = document.getElementById("clientBusiness");
-    const service = document.getElementById("clientService");
-    const message = document.getElementById("clientMessage");
+    const { isValid, data } = validateLeadForm();
+    if (!isValid) return;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9+\s-]{8,15}$/;
+    const submitBtn = document.getElementById("btnSubmitForm") || form.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.innerHTML : "Submit";
 
-    const isNameValid = validateField(name, name.value.trim().length >= 2);
-    const isEmailValid = validateField(email, emailRegex.test(email.value.trim()));
-    const isPhoneValid = validateField(phone, phoneRegex.test(phone.value.trim()));
-    const isServiceValid = validateField(service, service.value.trim() !== "");
-    const isMsgValid = validateField(message, message.value.trim().length >= 8);
-
-    if (!isNameValid || !isEmailValid || !isPhoneValid || !isServiceValid || !isMsgValid) {
-      // Focus the first invalid field for accessibility
-      const firstInvalid = form.querySelector(".form-group.has-error input, .form-group.has-error select, .form-group.has-error textarea");
-      if (firstInvalid) firstInvalid.focus();
-      return;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "<span>Sending Enquiry...</span>";
+      submitBtn.style.opacity = "0.8";
     }
 
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    
-    // Prevent accidental duplicate submissions
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = "Sending Enquiry...";
-    submitBtn.style.opacity = "0.8";
-
-    // Determine deployment environment & service endpoint
     const formConfig = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.formConfig) ? SITE_CONFIG.formConfig : {};
     const isNetlifyHost = formConfig.autoDetectNetlify && (window.location.hostname.includes("netlify.app") || window.location.hostname.includes("netlify.com"));
 
@@ -422,7 +546,6 @@ function initContactForm() {
       let responseMessage = "";
 
       if (isNetlifyHost) {
-        // Submit via native Netlify Forms
         const formData = new FormData(form);
         formData.set("form-name", "contact");
         const res = await fetch("/", {
@@ -432,22 +555,21 @@ function initContactForm() {
         });
         isSuccess = res.ok;
       } else {
-        // Submit via secure FormSubmit AJAX (direct email dispatch to website owner)
-        const endpoint = formConfig.formSubmitUrl || "https://formsubmit.co/ajax/sayyedkavish979@gmail.com";
+        const endpoint = formConfig.formSubmitUrl || "https://formsubmit.co/ajax/kavishwebsitedesigner@gmail.com";
         const payload = {
-          name: name.value.trim(),
-          email: email.value.trim(),
-          phone: phone.value.trim(),
-          business: (business && business.value.trim()) ? business.value.trim() : "Not provided",
-          service: service.value,
-          message: message.value.trim(),
-          _subject: formConfig.emailSubject || `New Website Enquiry: ${service.value} — ${name.value.trim()}`,
+          name: data.name,
+          business: data.business,
+          business_type: data.businessType,
+          phone: data.phone,
+          service: data.requirement,
+          email: data.email || "Not provided",
+          _subject: formConfig.emailSubject || `New Website Enquiry: ${data.requirement} — ${data.business}`,
           _template: "table",
           _captcha: "false"
         };
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12-second network timeout
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
         const res = await fetch(endpoint, {
           method: "POST",
@@ -461,74 +583,95 @@ function initContactForm() {
 
         clearTimeout(timeoutId);
 
-        const data = await res.json().catch(() => ({}));
-        isSuccess = res.ok && (data.success === "true" || data.success === true || (data.message && data.message.includes("Activation")));
-        responseMessage = data.message || "";
+        const resData = await res.json().catch(() => ({}));
+        isSuccess = res.ok && (resData.success === "true" || resData.success === true || (resData.message && resData.message.includes("Activation")));
+        responseMessage = resData.message || "";
       }
 
       if (isSuccess) {
-        submitBtn.innerHTML = "Enquiry Sent Successfully ✓";
-        submitBtn.style.background = "#10b981";
-        submitBtn.style.opacity = "1";
+        if (submitBtn) {
+          submitBtn.innerHTML = "<span>Enquiry Sent Successfully ✓</span>";
+          submitBtn.style.background = "#10b981";
+          submitBtn.style.borderColor = "#10b981";
+          submitBtn.style.opacity = "1";
+        }
 
-        if (responseMessage.includes("Activation")) {
-          if (successToastText) {
-            successToastText.textContent = "Enquiry received! (Check sayyedkavish979@gmail.com to confirm form activation).";
-          }
-        } else {
-          if (successToastText) {
+        if (successToastText) {
+          if (responseMessage.includes("Activation")) {
+            successToastText.textContent = "Enquiry received! (Check kavishwebsitedesigner@gmail.com to confirm form activation).";
+          } else {
             successToastText.textContent = "Thank you! Your enquiry has been received. Kavish will respond within 24 hours.";
           }
         }
 
         showToast(successToast, 5000);
         form.reset();
+        if (fallbackBox) fallbackBox.style.display = "none";
 
-        // Restore button state after delay
         setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.style.background = "";
-          submitBtn.style.opacity = "1";
-          submitBtn.disabled = false;
+          if (submitBtn) {
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.background = "";
+            submitBtn.style.borderColor = "";
+            submitBtn.style.opacity = "1";
+            submitBtn.disabled = false;
+          }
         }, 4000);
+
       } else {
-        throw new Error(responseMessage || "Submission failed");
+        throw new Error(responseMessage || "Mail gateway did not confirm delivery");
       }
 
     } catch (error) {
-      console.error("Enquiry submission error:", error);
-      submitBtn.innerHTML = "Failed to Send — Please Try Again";
-      submitBtn.style.background = "#ef4444";
-      submitBtn.style.opacity = "1";
+      console.warn("Mail dispatch gateway unavailable:", error.message);
+
+      if (submitBtn) {
+        submitBtn.innerHTML = "<span>Select Action Below</span>";
+        submitBtn.style.background = "";
+        submitBtn.disabled = false;
+      }
+
+      // DO NOT claim email was sent. Provide transparent, zero-failure 1-click direct options:
+      const formattedText = generateWhatsAppText(data);
+      const waUrl = getWhatsAppUrl(formattedText);
+      const recipient = (typeof SITE_CONFIG !== "undefined" && SITE_CONFIG.email) ? SITE_CONFIG.email : "kavishwebsitedesigner@gmail.com";
+      const mailtoSubject = encodeURIComponent(`Website Enquiry: ${data.requirement} — ${data.business}`);
+      const mailtoBody = encodeURIComponent(formattedText);
+      const mailtoUrl = `mailto:${recipient}?subject=${mailtoSubject}&body=${mailtoBody}`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${mailtoSubject}&body=${mailtoBody}`;
+
+      if (fallbackBox) {
+        fallbackBox.style.display = "block";
+        if (fallbackWaBtn) fallbackWaBtn.href = waUrl;
+        if (fallbackMailBtn) fallbackMailBtn.href = mailtoUrl;
+        const fallbackGmailBtn = document.getElementById("fallbackGmailBtn");
+        if (fallbackGmailBtn) fallbackGmailBtn.href = gmailUrl;
+      }
 
       if (errorToastText) {
-        errorToastText.textContent = "Could not send enquiry. Please try again or reach out on WhatsApp (+91 7355568493).";
+        errorToastText.textContent = "Direct mail gateway was unreachable. Please send via 1-click WhatsApp or Email App below.";
       }
-      showToast(errorToast, 5000);
-
-      // Re-enable button after 3 seconds so user can retry
-      setTimeout(() => {
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.background = "";
-        submitBtn.style.opacity = "1";
-        submitBtn.disabled = false;
-      }, 3000);
+      showToast(errorToast, 6000);
     }
   });
 
-  // Alternative: Send Form Data Directly to WhatsApp
-  if (sendViaWhatsAppBtn) {
-    sendViaWhatsAppBtn.addEventListener("click", () => {
-      const name = document.getElementById("clientName").value.trim() || "Prospective Client";
-      const phone = document.getElementById("clientPhone").value.trim() || "Not provided";
-      const service = document.getElementById("clientService").value || "General Website Project";
-      const message = document.getElementById("clientMessage").value.trim() || "I would like to discuss a new website.";
-
-      const text = `Hello Kavish,\n\nName: ${name}\nPhone: ${phone}\nWebsite Requirement: ${service}\nMessage: ${message}`;
-      const url = `https://wa.me/917355568493?text=${encodeURIComponent(text)}`;
-      window.open(url, "_blank");
+  // Pre-selection integration: Auto-select requirement when navigating from service or pricing cards
+  document.querySelectorAll('[data-service-preselect]').forEach(cta => {
+    cta.addEventListener('click', (e) => {
+      const targetService = cta.getAttribute('data-service-preselect');
+      const reqSelect = document.getElementById('clientRequirement');
+      if (reqSelect && targetService) {
+        for (let i = 0; i < reqSelect.options.length; i++) {
+          if (reqSelect.options[i].text.toLowerCase().includes(targetService.toLowerCase()) ||
+              reqSelect.options[i].value.toLowerCase().includes(targetService.toLowerCase())) {
+            reqSelect.selectedIndex = i;
+            clearError(reqSelect);
+            break;
+          }
+        }
+      }
     });
-  }
+  });
 }
 
 /**
@@ -551,8 +694,8 @@ function initRouter() {
   ];
 
   const PAGE_TITLES = {
-    home: 'Kavish Murtuja — Freelance Website Designer & Developer in Kanpur, India',
-    about: 'About Kavish Murtuja — Freelance Website Designer & Developer',
+    home: 'Kavish Murtuja — Web Designer & Developer',
+    about: 'About Kavish Murtuja — Web Designer & Developer',
     services: 'Website Design & Development Services — Kavish Murtuja',
     portfolio: 'Portfolio & Live Website Projects — Kavish Murtuja',
     process: '5-Step Work Process & Modern Tech Stack — Kavish Murtuja',
@@ -571,6 +714,9 @@ function initRouter() {
   }
 
   function getPageUrl(page) {
+    if (window.location.protocol === 'file:') {
+      return page === 'home' ? '#' : `#${page}`;
+    }
     const base = getBasePath();
     if (page === 'home') {
       return base ? base + '/' : '/';
@@ -578,39 +724,37 @@ function initRouter() {
     return base ? `${base}/${page}` : `/${page}`;
   }
 
-  function isPageReload() {
-    try {
-      const navEntries = performance.getEntriesByType('navigation');
-      if (navEntries.length > 0) {
-        return navEntries[0].type === 'reload';
-      }
-      if (window.performance && window.performance.navigation) {
-        return window.performance.navigation.type === 1;
-      }
-    } catch (e) {
-      // ignore
+  function getPageFromLocation() {
+    // 1. Check hash first (essential for static subpage redirects and file: protocol)
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash && VALID_PAGES.includes(hash)) {
+      return hash;
     }
-    return false;
+
+    // 2. Check path-based routing (for Netlify/custom domain SPA rewrites)
+    if (window.location.protocol !== 'file:') {
+      const base = getBasePath();
+      let relPath = window.location.pathname;
+      if (base && relPath.startsWith(base)) {
+        relPath = relPath.substring(base.length);
+      }
+      relPath = relPath.replace(/^\/+|\/+$/g, '');
+      if (VALID_PAGES.includes(relPath)) {
+        return relPath;
+      }
+    }
+
+    return 'home';
   }
 
-  function getPageFromLocation() {
-    const base = getBasePath();
-    let relPath = window.location.pathname;
-    if (base && relPath.startsWith(base)) {
-      relPath = relPath.substring(base.length);
-    }
-    relPath = relPath.replace(/^\/+|\/+$/g, '');
-    if (!relPath || relPath === 'index.html') {
-      const hash = window.location.hash.replace(/^#/, '');
-      if (hash && VALID_PAGES.includes(hash)) {
-        return hash;
+  function refreshScrollReveal(container = document) {
+    const elements = container.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('is-revealed');
       }
-      return 'home';
-    }
-    if (VALID_PAGES.includes(relPath)) {
-      return relPath;
-    }
-    return 'home';
+    });
   }
 
   function activatePage(pageName, pushToHistory = true) {
@@ -620,10 +764,12 @@ function initRouter() {
 
     // 1. Hide all page-views, activate targeted view
     const pageViews = document.querySelectorAll('.page-view');
+    let targetView = null;
     pageViews.forEach(view => {
       const viewPage = view.getAttribute('data-page');
       if (viewPage === pageName) {
         view.classList.add('active');
+        targetView = view;
       } else {
         view.classList.remove('active');
       }
@@ -651,23 +797,49 @@ function initRouter() {
       document.title = PAGE_TITLES[pageName];
     }
 
-    // 5. Update browser history if requested
+    // 5. Update browser history safely (protect against file: protocol SecurityError)
     if (pushToHistory) {
       const targetUrl = getPageUrl(pageName);
-      if (window.location.pathname !== targetUrl) {
-        window.history.pushState({ page: pageName }, '', targetUrl);
+      try {
+        if (window.location.protocol === 'file:') {
+          if (pageName === 'home') {
+            if (window.location.hash) {
+              window.history.replaceState({ page: 'home' }, '', window.location.pathname);
+            }
+          } else {
+            window.location.hash = pageName;
+          }
+        } else if (window.location.pathname !== targetUrl) {
+          window.history.pushState({ page: pageName }, '', targetUrl);
+        }
+      } catch (e) {
+        try {
+          window.location.hash = pageName;
+        } catch (ignored) {}
       }
     }
 
     // 6. Reset scroll position to top
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    // 7. Auto-close mobile drawer if open
+    // 7. Auto-close mobile drawer and project modal if open
     if (typeof window.closeMobileDrawer === 'function') {
       window.closeMobileDrawer();
     }
+    const modal = document.getElementById("projectModal");
+    if (modal && modal.classList.contains("open")) {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
 
-    // 8. 3D Engine Battery & GPU Management (Pause when leaving home, resume when returning)
+    // 8. Refresh scroll reveal for newly activated view
+    if (targetView) {
+      requestAnimationFrame(() => {
+        refreshScrollReveal(targetView);
+      });
+    }
+
+    // 9. 3D Engine Battery & GPU Management (Pause when leaving home, resume when returning)
     if (pageName === 'home') {
       if (typeof window.resume3D === 'function') window.resume3D();
     } else {
@@ -681,6 +853,12 @@ function initRouter() {
   // Handle Browser Back & Forward buttons
   window.addEventListener('popstate', (e) => {
     const page = (e.state && e.state.page) || getPageFromLocation();
+    activatePage(page, false);
+  });
+
+  // Handle Hash Changes (for deep linking, file: protocol, and static subpath redirects)
+  window.addEventListener('hashchange', () => {
+    const page = getPageFromLocation();
     activatePage(page, false);
   });
 
@@ -698,24 +876,9 @@ function initRouter() {
     }
   });
 
-  // CRITICAL REQUIREMENT: Refresh on ANY page MUST return to Home (/)
-  const isReload = isPageReload();
+  // Initial page load: activate user's requested page or refresh location
   const currentPage = getPageFromLocation();
-
-  if (isReload) {
-    // If refreshed on any page, redirect immediately to Home (/)
-    const base = getBasePath();
-    const homeUrl = base ? base + '/' : '/';
-    window.history.replaceState({ page: 'home' }, '', homeUrl);
-    activatePage('home', false);
-  } else {
-    // Initial normal page load: Home is always the main landing page
-    if (currentPage !== 'home') {
-      activatePage(currentPage, false);
-    } else {
-      activatePage('home', false);
-    }
-  }
+  activatePage(currentPage, false);
 
   // Battery & GPU conservation: pause 3D loops when switching browser tabs
   document.addEventListener("visibilitychange", () => {
@@ -1303,11 +1466,45 @@ function initHero3DParallax() {
           return;
         }
       } else {
-        // Smooth luxury breathing oscillation
-        targetRotX = Math.sin(elapsedIdle * 0.95) * 1.5;
-        targetRotY = Math.cos(elapsedIdle * 0.75) * 2.0;
-        targetTransX = Math.sin(elapsedIdle * 0.6) * 2.5;
-        targetTransY = Math.sin(elapsedIdle * 1.1) * 3.5;
+        // Desktop idle energy saver: after 20 seconds of no interaction, smoothly settle to rest and sleep RAF
+        if (elapsedIdle > 20) {
+          targetRotX = 0;
+          targetRotY = 0;
+          targetTransX = 0;
+          targetTransY = 0;
+
+          const diffRest = Math.abs(currentRotX) + Math.abs(currentRotY) +
+                           Math.abs(currentTransX) + Math.abs(currentTransY);
+
+          if (diffRest < 0.02) {
+            currentRotX = 0;
+            currentRotY = 0;
+            currentTransX = 0;
+            currentTransY = 0;
+            card.style.transform = "";
+            chips.forEach(chip => {
+              const depth = parseFloat(chip.dataset.parallaxDepth || "25");
+              chip.style.transform = `translateZ(${depth}px)`;
+            });
+            if (shadow) {
+              shadow.style.setProperty("--shadow-x", "0px");
+              shadow.style.setProperty("--shadow-y", "0px");
+              shadow.style.setProperty("--shadow-scale", "1");
+            }
+            if (glare) {
+              glare.style.setProperty("--glare-opacity", "0.35");
+            }
+            isIdleSleeping = true;
+            rafId = null;
+            return;
+          }
+        } else {
+          // Smooth luxury breathing oscillation
+          targetRotX = Math.sin(elapsedIdle * 0.95) * 1.5;
+          targetRotY = Math.cos(elapsedIdle * 0.75) * 2.0;
+          targetTransX = Math.sin(elapsedIdle * 0.6) * 2.5;
+          targetTransY = Math.sin(elapsedIdle * 1.1) * 3.5;
+        }
       }
     }
 
@@ -1556,6 +1753,35 @@ function initCustomCursor() {
   let ringX = -100;
   let ringY = -100;
   let isVisible = false;
+  let isMoving = false;
+  let rafId = null;
+
+  const renderRing = () => {
+    const dx = mouseX - ringX;
+    const dy = mouseY - ringY;
+    ringX += dx * 0.18;
+    ringY += dy * 0.18;
+
+    ring.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0) translate(-50%, -50%)`;
+
+    // Only continue animation loop if ring is still traveling toward cursor
+    if (Math.abs(dx) > 0.25 || Math.abs(dy) > 0.25) {
+      rafId = requestAnimationFrame(renderRing);
+    } else {
+      ringX = mouseX;
+      ringY = mouseY;
+      ring.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0) translate(-50%, -50%)`;
+      isMoving = false;
+      rafId = null;
+    }
+  };
+
+  const startCursorLoop = () => {
+    if (!isMoving && !document.hidden) {
+      isMoving = true;
+      rafId = requestAnimationFrame(renderRing);
+    }
+  };
 
   window.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
@@ -1568,18 +1794,19 @@ function initCustomCursor() {
       isVisible = true;
     }
 
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
+    // Compositor-only transform for zero layout/reflow overhead
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    startCursorLoop();
   }, { passive: true });
 
-  const renderRing = () => {
-    ringX += (mouseX - ringX) * 0.16;
-    ringY += (mouseY - ringY) * 0.16;
-    ring.style.left = `${ringX.toFixed(1)}px`;
-    ring.style.top = `${ringY.toFixed(1)}px`;
-    requestAnimationFrame(renderRing);
-  };
-  requestAnimationFrame(renderRing);
+  // Suspend cursor rendering when window loses visibility to conserve 100% CPU
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+      isMoving = false;
+    }
+  });
 
   // Hover states on interactive elements
   const interactiveSelector = 'a, button, [role="button"], input, textarea, select, .filter-btn, .social-icon-btn, .faq-trigger, .why-card';
@@ -1620,9 +1847,10 @@ function initCustomCursor() {
  * 13. Button Micro-Interactions & Accessible Press Feedback
  */
 function initButtonMicroInteractions() {
-  // Enhanced smooth in-page navigation
+  // Enhanced smooth in-page navigation (only for anchors that do not handle multi-page routing)
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      if (this.hasAttribute('data-nav-page')) return;
       const targetId = this.getAttribute('href').slice(1);
       if (!targetId) return;
 

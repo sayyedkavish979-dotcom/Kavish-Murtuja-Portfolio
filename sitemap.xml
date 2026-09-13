@@ -3,13 +3,13 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/hero-mockup.svg</image:loc>
-      <image:title>Kavish Murtuja Web Design and Development Showcase</image:title>
-      <image:caption>Modern responsive web design showcase by Kavish Murtuja in Kanpur, India</image:caption>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/branding/km-badge.svg</image:loc>
+      <image:title>Kavish Murtuja — Website Designer &amp; Developer</image:title>
+      <image:caption>Professional website designer in India building modern, responsive business websites</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/royal-spice.svg</image:loc>
@@ -17,29 +17,29 @@
       <image:caption>Modern responsive fine dining restaurant website mockup designed by Kavish Murtuja</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/luxestay.svg</image:loc>
-      <image:title>LuxeStay Boutique Resort and Hotel Website Design Demo</image:title>
-      <image:caption>Luxury boutique hospitality resort website mockup designed by Kavish Murtuja</image:caption>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/aura-salon.svg</image:loc>
+      <image:title>Aura Luxe Salon and Spa Small Business Website Concept</image:title>
+      <image:caption>Modern beauty salon and wellness spa business website mockup designed by Kavish Murtuja</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/apex-clinic.svg</image:loc>
+      <image:title>Apex Healthcare Clinic and Dental Website Concept</image:title>
+      <image:caption>Healthcare medical clinic and dental doctor appointment website mockup designed by Kavish Murtuja</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/urban-estate.svg</image:loc>
-      <image:title>Urban Estate Luxury Real Estate Website Design Demo</image:title>
-      <image:caption>Modern real estate property showcase website mockup designed by Kavish Murtuja</image:caption>
+      <image:title>Urban Estate Luxury Real Estate Website Demo</image:title>
+      <image:caption>Modern real estate property showcase and broker website mockup designed by Kavish Murtuja</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/fitzone.svg</image:loc>
-      <image:title>FitZone Modern Fitness Studio and Gym Website Design Demo</image:title>
-      <image:caption>Modern fitness studio and CrossFit gym website mockup designed by Kavish Murtuja</image:caption>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/elevate-coaching.svg</image:loc>
+      <image:title>Elevate Executive Coaching and Mentorship Website Concept</image:title>
+      <image:caption>Professional coaching, consulting, and mentor website mockup designed by Kavish Murtuja</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/novatech.svg</image:loc>
-      <image:title>NovaTech Cloud and SaaS Technology Business Website Design Demo</image:title>
-      <image:caption>SaaS and modern software cloud business website mockup designed by Kavish Murtuja</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/creative-studio.svg</image:loc>
-      <image:title>Creative Studio Brand Agency Website Design Demo</image:title>
-      <image:caption>Creative brand agency and design studio portfolio mockup designed by Kavish Murtuja</image:caption>
+      <image:loc>https://sayyedkavish979-dotcom.github.io/Kavish-Murtuja-Portfolio/assets/images/projects/metrocraft.svg</image:loc>
+      <image:title>MetroCraft Local Business Trade and Renovation Website Concept</image:title>
+      <image:caption>Local trade contractor and home renovation business website mockup designed by Kavish Murtuja</image:caption>
     </image:image>
   </url>
 </urlset>
