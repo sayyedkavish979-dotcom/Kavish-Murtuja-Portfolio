@@ -978,14 +978,13 @@ function initRouter() {
  *     - STEP 2: Fluid typography reveals "Kavish Murtuja" & "Freelance Website Designer & Developer"
  *     - STEP 3: Cinematic transition zooms out & dissolves smoothly into the homepage
  *     - Full responsive adaptation (clamp, 100dvh, safe-area-inset)
- *     - Accessible skip button, keyboard Escape handler, and hard failsafe timer (3.5s)
+ *     - Automatic cinematic animation sequence with hard failsafe buffer
  *     - 0% idle CPU/GPU consumption after dismissal
  */
 function init3DIntroExperience() {
   const overlay = document.getElementById("kmIntroOverlay");
   if (!overlay) return;
 
-  const skipBtn = document.getElementById("introSkipBtn");
   const logoCard = document.getElementById("introLogoCard");
   const logoShadow = document.getElementById("introLogoShadow");
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1010,7 +1009,6 @@ function init3DIntroExperience() {
     // Remove event listeners
     window.removeEventListener("mousemove", onMouseMove);
     window.removeEventListener("touchmove", onTouchMove);
-    window.removeEventListener("keydown", onKeyDown);
 
     if (immediate || prefersReduced) {
       overlay.classList.add("intro-dismissed");
@@ -1100,19 +1098,8 @@ function init3DIntroExperience() {
     }
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === "Escape") {
-      dismissIntro(false);
-    }
-  };
-
   window.addEventListener("mousemove", onMouseMove, { passive: true });
   window.addEventListener("touchmove", onTouchMove, { passive: true });
-  window.addEventListener("keydown", onKeyDown, { passive: true });
-
-  if (skipBtn) {
-    skipBtn.addEventListener("click", () => dismissIntro(false));
-  }
 
   // Automatic sequence:
   // Step 1 (Logo) -> Step 2 (Name & Tagline reveal at 650-900ms) -> Step 3 (Cinematic transition starts at 2400ms)
