@@ -1,0 +1,105 @@
+[build]
+  publish = "."
+
+# High-priority SPA rewrites for explicit subpage paths to prevent Netlify from serving fallback directory files
+[[redirects]]
+  from = "/about"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/about/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/portfolio/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/process"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/process/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/testimonials"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/testimonials/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/pricing"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/pricing/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/faq/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+# Catch-all Netlify SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -8,7 +8,10 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize all interactive modules
+  // 1. Initialize router first to establish canonical page view and URL state
+  initRouter();
+
+  // 2. Initialize interactive modules
   initSiteConfigSync();
   initNavbarScroll();
   initMobileMenu();
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initFaqAccordion();
   initContactForm();
 
-  // Phase 3: Premium 3D & Interactive Modules (Initialize 3D Canvas & Parallax before Intro)
+  // 3. Phase 3: Premium 3D & Interactive Modules (Initialize 3D Canvas & Parallax before Intro)
   initScrollProgress();
   initHeroSpatialCanvas();
   initHero3DParallax();
@@ -26,9 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initCustomCursor();
   initButtonMicroInteractions();
   init3DIntroExperience();
-
-  // Router initializes after 3D hooks are registered
-  initRouter();
 });
 
 /**
@@ -750,7 +750,8 @@ function initContactForm() {
 /**
  * 8. Professional Multi-Page Client-Side Router
  *    Features: Separate page views, history API (pushState/popstate),
- *              active nav highlighting, refresh-to-home redirect,
+ *              active nav highlighting, canonical root Home routing,
+ *              stray hash auto-cleaning, manual scroll restoration,
  *              and automatic drawer close.
  */
 function initRouter() {
@@ -778,6 +779,11 @@ function initRouter() {
     contact: 'Contact Kavish Murtuja — Start Your Website Project'
   };
 
+  // Disable automatic browser scroll restoration so refresh doesn't jump to old scroll targets or bottom contact form
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+
   function getBasePath() {
     const path = window.location.pathname;
     if (path.includes('/Kavish-Murtuja-Portfolio')) {
@@ -797,11 +803,31 @@ function initRouter() {
     return base ? `${base}/${page}` : `/${page}`;
   }
 
+  function isRootPath() {
+    if (window.location.protocol === 'file:') {
+      const hash = (window.location.hash || '').replace(/^#/, '').toLowerCase();
+      return !hash || hash === 'home';
+    }
+
+    const base = getBasePath();
+    let pathname = window.location.pathname;
+    if (base && pathname.startsWith(base)) {
+      pathname = pathname.substring(base.length);
+    }
+    const cleanPath = pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+    return cleanPath === '' || cleanPath === 'index.html';
+  }
+
   function getPageFromLocation() {
-    // 1. Check hash first (essential for static subpage redirects and file: protocol)
-    const hash = window.location.hash.replace(/^#/, '');
-    if (hash && VALID_PAGES.includes(hash)) {
-      return hash;
+    // 1. Root URL / must ALWAYS be the canonical Home route on initial load or refresh
+    if (isRootPath()) {
+      // If there was any stray hash on root load, clean it safely
+      if (window.location.hash && window.location.protocol !== 'file:') {
+        try {
+          window.history.replaceState({ page: 'home' }, '', getPageUrl('home'));
+        } catch (ignored) {}
+      }
+      return 'home';
     }
 
     // 2. Check path-based routing (for Netlify/custom domain SPA rewrites)
@@ -811,10 +837,16 @@ function initRouter() {
       if (base && relPath.startsWith(base)) {
         relPath = relPath.substring(base.length);
       }
-      relPath = relPath.replace(/^\/+|\/+$/g, '');
+      relPath = relPath.replace(/^\/+|\/+$/g, '').toLowerCase();
       if (VALID_PAGES.includes(relPath)) {
         return relPath;
       }
+    }
+
+    // 3. Check hash-based routing (for file: protocol or deep hash links)
+    const hash = (window.location.hash || '').replace(/^#/, '').toLowerCase();
+    if (hash && VALID_PAGES.includes(hash)) {
+      return hash;
     }
 
     return 'home';
@@ -882,12 +914,24 @@ function initRouter() {
           } else {
             window.location.hash = pageName;
           }
-        } else if (window.location.pathname !== targetUrl) {
-          window.history.pushState({ page: pageName }, '', targetUrl);
+        } else {
+          const currentRelativeUrl = window.location.pathname + window.location.search + window.location.hash;
+          if (currentRelativeUrl !== targetUrl) {
+            window.history.pushState({ page: pageName }, '', targetUrl);
+          } else if (pageName === 'home' && window.location.hash) {
+            window.history.replaceState({ page: 'home' }, '', targetUrl);
+          }
         }
       } catch (e) {
         try {
-          window.location.hash = pageName;
+          window.location.hash = pageName === 'home' ? '' : pageName;
+        } catch (ignored) {}
+      }
+    } else {
+      // Clean URL if initializing home with a stray hash or inconsistent state
+      if (pageName === 'home' && window.location.protocol !== 'file:' && window.location.hash) {
+        try {
+          window.history.replaceState({ page: 'home' }, '', getPageUrl('home'));
         } catch (ignored) {}
       }
     }
@@ -949,7 +993,7 @@ function initRouter() {
     }
   });
 
-  // Initial page load: activate user's requested page or refresh location
+  // Initial page load: activate canonical page view
   const currentPage = getPageFromLocation();
   activatePage(currentPage, false);
 
@@ -1918,6 +1962,7 @@ function initButtonMicroInteractions() {
       const targetElement = activePage ? activePage.querySelector(`#${targetId}`) : document.getElementById(targetId);
 
       if (targetElement) {
+        e.preventDefault();
         const navHeight = document.getElementById("mainNavbar")?.offsetHeight || 72;
         const targetPos = targetElement.getBoundingClientRect().top + window.scrollY - navHeight - 16;
         window.scrollTo({ top: targetPos, behavior: 'smooth' });
