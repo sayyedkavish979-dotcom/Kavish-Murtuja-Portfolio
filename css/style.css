@@ -2683,13 +2683,22 @@ footer .brand-logo-img {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 3.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
   .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
   }
+}
+
+.contact-info-col {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-info-cards {
@@ -2697,6 +2706,9 @@ footer .brand-logo-img {
   flex-direction: column;
   gap: 1.25rem;
   font-style: normal;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-info-card {
@@ -2708,6 +2720,9 @@ footer .brand-logo-img {
   align-items: center;
   gap: 1.25rem;
   transition: all var(--transition-normal);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-info-card:hover {
@@ -2731,6 +2746,13 @@ footer .brand-logo-img {
 .contact-card-icon svg {
   width: 22px;
   height: 22px;
+  flex-shrink: 0;
+}
+
+.contact-info-card > div:last-child {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: break-word;
 }
 
 .contact-card-label {
@@ -2745,6 +2767,8 @@ footer .brand-logo-img {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--text-primary);
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .contact-quick-actions {
@@ -2752,6 +2776,15 @@ footer .brand-logo-img {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-quick-actions .btn {
+  white-space: normal;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 /* Social Media Hub in Contact Area */
@@ -2761,6 +2794,9 @@ footer .brand-logo-img {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .social-hub-title {
@@ -2771,12 +2807,16 @@ footer .brand-logo-img {
 
 .social-hub-icons {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .social-hub-link {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-full);
@@ -2786,11 +2826,14 @@ footer .brand-logo-img {
   font-weight: 600;
   color: var(--text-secondary);
   transition: all var(--transition-fast);
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .social-hub-link svg {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
 }
 
 .social-hub-link:hover {
@@ -2825,24 +2868,44 @@ footer .brand-logo-img {
   padding: 2.5rem;
   position: relative;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+#leadContactForm {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .form-group-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   margin-bottom: 1.25rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   .form-group-row {
     grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 0;
   }
 }
 
 .form-group {
   margin-bottom: 1.25rem;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .form-label {
@@ -2851,10 +2914,13 @@ footer .brand-logo-img {
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 0.4rem;
+  word-break: break-word;
 }
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 0.85rem 1.15rem;
   border-radius: var(--radius-md);
   background: var(--bg-input);
@@ -2862,6 +2928,7 @@ footer .brand-logo-img {
   color: var(--text-primary);
   font-size: 0.95rem;
   transition: all var(--transition-fast);
+  box-sizing: border-box;
 }
 
 .form-select option {
@@ -2902,12 +2969,35 @@ footer .brand-logo-img {
   flex-direction: column;
   gap: 1rem;
   margin-top: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.form-submit-row .btn {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  text-align: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.95rem 1.25rem;
+  line-height: 1.35;
+}
+
+.form-submit-row .btn svg {
+  flex-shrink: 0;
 }
 
 .form-notice {
   font-size: 0.78rem;
   color: var(--text-muted);
   text-align: center;
+  line-height: 1.45;
+  margin-top: 0.5rem;
 }
 
 /* Strategic Section Conversion Banners */
@@ -3006,6 +3096,10 @@ footer .brand-logo-img {
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
   animation: fadeIn 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .fallback-header {
@@ -3017,6 +3111,7 @@ footer .brand-logo-img {
 
 .fallback-icon {
   font-size: 1.15rem;
+  flex-shrink: 0;
 }
 
 .fallback-title {
@@ -3036,6 +3131,14 @@ footer .brand-logo-img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fallback-actions .btn {
+  white-space: normal;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -3585,19 +3688,65 @@ footer .brand-logo-img {
     font-size: 1.5rem;
   }
 
-  /* Quick Actions & Socials Fluid Stacking */
+  /* Contact Section & Form Fluid Mobile Layout */
+  .contact-form-box {
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-lg);
+  }
+  .form-submit-row {
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+  .form-submit-row .btn {
+    padding: 0.85rem 0.85rem;
+    font-size: clamp(0.85rem, 3.8vw, 0.95rem);
+  }
+  .contact-info-card {
+    padding: 1.15rem 1rem;
+    gap: 1rem;
+  }
+  .contact-card-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .contact-card-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .contact-card-value {
+    font-size: 0.95rem;
+  }
   .contact-quick-actions {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
     width: 100%;
   }
   .contact-quick-actions .btn {
     width: 100%;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.8rem;
     justify-content: center;
   }
+  .social-hub-box {
+    padding: 1.15rem 1rem;
+  }
   .social-hub-icons {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    width: 100%;
   }
   .social-hub-link {
+    width: 100%;
+    padding: 0.6rem 0.5rem;
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+  .fallback-actions {
+    flex-direction: column;
+  }
+  .fallback-actions .btn {
     width: 100%;
     justify-content: center;
   }
@@ -3679,6 +3828,37 @@ footer .brand-logo-img {
   .price-val {
     font-size: 2.2rem;
   }
+
+  /* Contact Section & Form Fine-Tuning */
+  .contact-form-box {
+    padding: 1.25rem 0.85rem;
+  }
+  .contact-info-card {
+    padding: 0.95rem 0.8rem;
+    gap: 0.75rem;
+  }
+  .contact-card-value {
+    font-size: 0.9rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9rem;
+  }
+  .form-label {
+    font-size: 0.8rem;
+  }
+  .form-submit-row .btn {
+    padding: 0.8rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .contact-quick-actions {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .social-hub-icons {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 }
 
 /* Small Mobile (< 325px, e.g. 320px) */
@@ -3750,6 +3930,39 @@ footer .brand-logo-img {
   }
   .pricing-card {
     padding: 1.5rem 1rem;
+  }
+
+  /* Small Mobile Contact Form Safeguards */
+  .contact-form-box {
+    padding: 1.1rem 0.65rem;
+    border-radius: var(--radius-md);
+  }
+  .contact-info-card {
+    padding: 0.85rem 0.65rem;
+    gap: 0.65rem;
+  }
+  .contact-card-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .contact-card-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .contact-card-value {
+    font-size: 0.82rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    padding: 0.7rem 0.65rem;
+    font-size: 0.85rem;
+  }
+  .form-submit-row .btn {
+    padding: 0.7rem 0.6rem;
+    font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+  .form-notice {
+    font-size: 0.72rem;
   }
 }
 
