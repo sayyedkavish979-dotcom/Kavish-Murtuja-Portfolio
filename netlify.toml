@@ -98,6 +98,18 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/birthday"
+  to = "/birthday/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wedding"
+  to = "/wedding/"
+  status = 301
+  force = true
+
 # Catch-all Netlify SPA fallback
 [[redirects]]
   from = "/*"

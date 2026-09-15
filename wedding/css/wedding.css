@@ -1,0 +1,2198 @@
+/**
+ * ==============================================================================
+ * WEDDING EXPERIENCE DEMO — LUXURY STYLESHEET
+ * Concept Demo by Kavish Murtuja | Web Designer & Developer
+ * ==============================================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Royal Wedding Palette: Deep Wine, Midnight Plum & Champagne Gold */
+  --wed-bg-deep: #0b0711;
+  --wed-bg-surface: #140d1e;
+  --wed-bg-card: rgba(26, 17, 39, 0.78);
+  --wed-bg-card-hover: rgba(36, 24, 54, 0.9);
+  --wed-bg-glass: rgba(22, 14, 34, 0.65);
+  
+  --wed-gold: #d4af37;
+  --wed-gold-light: #f6e2a8;
+  --wed-gold-dark: #aa7c11;
+  --wed-gold-gradient: linear-gradient(135deg, #fceec5 0%, #e2be68 45%, #b58925 100%);
+  --wed-gold-border: rgba(212, 175, 55, 0.28);
+  --wed-gold-glow: rgba(212, 175, 55, 0.2);
+
+  --wed-rose: #f472b6;
+  --wed-rose-deep: #be185d;
+  --wed-wine: #4a0428;
+
+  --wed-text: #fbf8f3;
+  --wed-text-muted: #d6c8b9;
+  --wed-text-dim: #9e8e7e;
+
+  --wed-font-display: 'Cinzel', Georgia, serif;
+  --wed-font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --wed-radius-sm: 8px;
+  --wed-radius-md: 16px;
+  --wed-radius-lg: 24px;
+  --wed-radius-full: 9999px;
+
+  --wed-shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --wed-shadow-md: 0 12px 35px rgba(0, 0, 0, 0.45);
+  --wed-shadow-lg: 0 25px 60px rgba(0, 0, 0, 0.65);
+  --wed-shadow-gold: 0 0 40px rgba(212, 175, 55, 0.22);
+}
+
+/* Reset & Global Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--wed-font-body);
+  background-color: var(--wed-bg-deep);
+  color: var(--wed-text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global Container (Guaranteed 0px Horizontal Overflow) */
+.wed-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Ambient Background Lights & Glows */
+.wed-bg-glows {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  contain: strict;
+}
+
+.wed-glow-1 {
+  position: absolute;
+  top: -15%;
+  left: 10%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+.wed-glow-2 {
+  position: absolute;
+  top: 45%;
+  right: 0;
+  width: 50vw;
+  height: 50vw;
+  max-width: 550px;
+  max-height: 550px;
+  background: radial-gradient(circle, rgba(190, 24, 93, 0.12) 0%, transparent 70%);
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+.wed-glow-3 {
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  width: 50vw;
+  height: 50vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+/* ==============================================================================
+   1. TOP CREATOR STATUS BAR
+   ============================================================================== */
+.wed-status-bar {
+  position: relative;
+  z-index: 50;
+  background: rgba(11, 7, 17, 0.92);
+  border-bottom: 1px solid var(--wed-gold-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.65rem 1rem;
+}
+
+.wed-status-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.wed-status-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.825rem;
+  color: var(--wed-text-muted);
+}
+
+.wed-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--wed-gold-light);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--wed-radius-full);
+}
+
+.wed-status-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.wed-status-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.wed-btn-status-portfolio {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--wed-text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.wed-btn-status-portfolio:hover {
+  color: var(--wed-gold-light);
+}
+
+.wed-btn-status-cta {
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: #0b0711;
+  background: var(--wed-gold-gradient);
+  text-decoration: none;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--wed-radius-full);
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wed-btn-status-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.45);
+}
+
+/* ==============================================================================
+   2. ELEGANT OPENING EXPERIENCE OVERLAY (NO SKIP BUTTON)
+   ============================================================================== */
+.wed-opening-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 40%, #201230 0%, #0b0711 100%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+.wed-opening-overlay.is-opened {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  display: none;
+}
+
+.wed-opening-card {
+  max-width: 540px;
+  width: 100%;
+  background: rgba(22, 14, 34, 0.82);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.75rem);
+  text-align: center;
+  box-shadow: var(--wed-shadow-lg), var(--wed-shadow-gold);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  position: relative;
+  overflow: hidden;
+  animation: openingEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes openingEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(35px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Golden Ornamental Corners */
+.wed-opening-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--wed-gold-gradient);
+}
+
+.wed-ornament-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.04) 70%);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+  animation: ornamentPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes ornamentPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+  }
+}
+
+.wed-opening-greeting {
+  font-family: var(--wed-font-display);
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: var(--wed-gold-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+  font-weight: 600;
+}
+
+.wed-opening-couple {
+  font-family: var(--wed-font-display);
+  font-size: clamp(2.2rem, 6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
+}
+
+.wed-opening-callout {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--wed-text-muted);
+  font-weight: 300;
+  margin-bottom: 2.25rem;
+  line-height: 1.5;
+}
+
+.wed-opening-callout span {
+  display: block;
+  font-style: italic;
+  font-size: 0.9em;
+  color: var(--wed-text-dim);
+  margin-top: 0.35rem;
+}
+
+.wed-btn-open-invite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--wed-gold-gradient);
+  color: #0b0711;
+  font-family: var(--wed-font-display);
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  padding: 1.05rem 2.5rem;
+  border-radius: var(--wed-radius-full);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+  max-width: 320px;
+}
+
+.wed-btn-open-invite:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+}
+
+.wed-btn-open-invite:active {
+  transform: translateY(1px);
+}
+
+.wed-opening-footnote {
+  margin-top: 1.5rem;
+  font-size: 0.775rem;
+  color: var(--wed-text-dim);
+}
+
+/* ==============================================================================
+   3. HERO SECTION & LIVE COUNTDOWN
+   ============================================================================== */
+.wed-hero-section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.wed-hero-monogram {
+  font-family: var(--wed-font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--wed-gold-light);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.wed-hero-monogram::before,
+.wed-hero-monogram::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--wed-gold-gradient);
+}
+
+.wed-hero-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(2.75rem, 8vw, 5.25rem);
+  font-weight: 800;
+  line-height: 1.08;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.wed-hero-tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  color: var(--wed-text-muted);
+  font-style: italic;
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+  font-weight: 300;
+}
+
+.wed-hero-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--wed-font-display);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--wed-text);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.6rem 1.65rem;
+  border-radius: var(--wed-radius-full);
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.wed-hero-date-badge svg {
+  color: var(--wed-gold);
+}
+
+/* Live Countdown Box */
+.wed-countdown-box {
+  max-width: 820px;
+  margin: 0 auto 2.5rem;
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  box-shadow: var(--wed-shadow-lg), var(--wed-shadow-gold);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.wed-countdown-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wed-gold-light);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.wed-timer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.wed-timer-cell {
+  background: rgba(14, 9, 22, 0.88);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--wed-radius-md);
+  padding: clamp(0.85rem, 2.5vw, 1.5rem) 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+  min-width: 0;
+}
+
+.wed-timer-num {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.75rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.35rem;
+}
+
+.wed-timer-label {
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wed-text-muted);
+}
+
+.wed-target-date-display {
+  font-size: 0.875rem;
+  color: var(--wed-text-dim);
+}
+
+.wed-target-date-display strong {
+  color: var(--wed-gold-light);
+}
+
+/* Past Date Graceful Celebration State */
+.wed-celebration-state {
+  display: none;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(190, 24, 93, 0.18) 100%);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-md);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+}
+
+.wed-celebration-state.is-active {
+  display: block;
+}
+
+.wed-celebration-state h3 {
+  font-family: var(--wed-font-display);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--wed-gold-light);
+  margin-bottom: 0.35rem;
+}
+
+/* Hero Quick Navigation */
+.wed-hero-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.wed-hero-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--wed-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--wed-radius-full);
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.wed-hero-nav-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--wed-gold-border);
+  color: var(--wed-gold-light);
+}
+
+/* Section Header Shared */
+.wed-section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(3rem, 7vw, 5.5rem) 0;
+}
+
+.wed-section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.wed-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--wed-font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--wed-gold-light);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.35rem 1rem;
+  border-radius: var(--wed-radius-full);
+  margin-bottom: 1rem;
+}
+
+.wed-section-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
+}
+
+.wed-section-desc {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--wed-text-muted);
+  line-height: 1.6;
+}
+
+/* ==============================================================================
+   4. OUR STORY SECTION
+   ============================================================================== */
+.wed-story-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.wed-story-card {
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: var(--wed-shadow-md);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.wed-story-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: var(--wed-shadow-lg), 0 0 35px rgba(212, 175, 55, 0.15);
+}
+
+.wed-story-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.wed-story-step {
+  font-family: var(--wed-font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--wed-gold-light);
+  opacity: 0.5;
+}
+
+.wed-story-date {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wed-gold);
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--wed-radius-full);
+}
+
+.wed-story-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.wed-story-excerpt {
+  font-size: 0.975rem;
+  color: var(--wed-text-muted);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.wed-story-highlight {
+  font-size: 0.825rem;
+  font-style: italic;
+  color: var(--wed-gold-light);
+  border-left: 2px solid var(--wed-gold);
+  padding-left: 0.75rem;
+}
+
+/* ==============================================================================
+   5. WEDDING CELEBRATIONS / EVENTS
+   ============================================================================== */
+.wed-events-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.wed-event-card {
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  box-shadow: var(--wed-shadow-md);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.wed-event-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: var(--wed-shadow-lg), 0 0 35px rgba(212, 175, 55, 0.15);
+}
+
+.wed-event-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+}
+
+.wed-event-icon-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--wed-radius-md);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--wed-gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  flex-shrink: 0;
+}
+
+.wed-event-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wed-gold-light);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--wed-radius-full);
+}
+
+.wed-event-name {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.85rem;
+}
+
+.wed-event-details-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.wed-event-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.925rem;
+  color: var(--wed-text-muted);
+}
+
+.wed-event-detail-item svg {
+  color: var(--wed-gold);
+  flex-shrink: 0;
+}
+
+.wed-event-detail-item strong {
+  color: var(--wed-text);
+}
+
+.wed-event-desc {
+  font-size: 0.925rem;
+  color: var(--wed-text-dim);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.wed-event-dress-code {
+  font-size: 0.825rem;
+  color: var(--wed-gold-light);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--wed-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==============================================================================
+   6. WEDDING VENUE SECTION
+   ============================================================================== */
+.wed-venue-card {
+  max-width: 920px;
+  margin: 0 auto;
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--wed-shadow-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.wed-venue-banner {
+  height: 220px;
+  background: radial-gradient(circle at 50% 50%, #301740 0%, #170d24 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--wed-gold-border);
+}
+
+.wed-venue-palace-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+}
+
+.wed-venue-banner-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.wed-venue-banner-city {
+  font-size: 1.05rem;
+  color: var(--wed-gold-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wed-venue-body {
+  padding: clamp(1.75rem, 5vw, 3rem);
+}
+
+.wed-venue-tagline {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--wed-text-muted);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.wed-venue-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.wed-venue-info-cell {
+  background: rgba(14, 9, 22, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: var(--wed-radius-md);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.wed-venue-info-cell-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.wed-venue-info-cell-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wed-gold-light);
+  margin-bottom: 0.35rem;
+}
+
+.wed-venue-info-cell-desc {
+  font-size: 0.875rem;
+  color: var(--wed-text-muted);
+}
+
+.wed-venue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.wed-btn-venue-location {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--wed-gold-gradient);
+  color: #0b0711;
+  font-family: var(--wed-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.95rem 2rem;
+  border-radius: var(--wed-radius-full);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wed-btn-venue-location:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+}
+
+.wed-venue-disclaimer {
+  font-size: 0.775rem;
+  color: var(--wed-text-dim);
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* ==============================================================================
+   7. PHOTO GALLERY ("OUR BEAUTIFUL MOMENTS")
+   ============================================================================== */
+.wed-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.wed-gallery-card {
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--wed-shadow-md);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.wed-gallery-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: var(--wed-shadow-lg), 0 0 35px rgba(212, 175, 55, 0.2);
+}
+
+.wed-gallery-media-wrap {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle, #2a1538 0%, #140d1e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wed-gallery-art {
+  font-size: 3.5rem;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+}
+
+.wed-gallery-card:hover .wed-gallery-art {
+  transform: scale(1.1);
+}
+
+.wed-gallery-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(11, 7, 17, 0.85);
+  color: var(--wed-gold-light);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--wed-radius-full);
+}
+
+.wed-gallery-info {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.wed-gallery-date {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--wed-gold);
+  margin-bottom: 0.35rem;
+}
+
+.wed-gallery-card-title {
+  font-family: var(--wed-font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.wed-gallery-card-caption {
+  font-size: 0.875rem;
+  color: var(--wed-text-muted);
+  line-height: 1.5;
+  flex-grow: 1;
+  margin-bottom: 0.75rem;
+}
+
+.wed-gallery-view-hint {
+  font-size: 0.75rem;
+  color: var(--wed-gold-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ==============================================================================
+   8. FAMILY / INVITATION MESSAGE
+   ============================================================================== */
+.wed-family-card {
+  max-width: 840px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(32, 20, 48, 0.85) 0%, rgba(18, 11, 28, 0.95) 100%);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2rem, 5vw, 3.75rem) clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+  box-shadow: var(--wed-shadow-lg), var(--wed-shadow-gold);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+}
+
+.wed-family-card::before {
+  content: '"';
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-family: var(--wed-font-display);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--wed-gold);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.wed-family-salutation {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--wed-gold-light);
+  margin-bottom: 1.25rem;
+}
+
+.wed-family-body {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: var(--wed-text);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.wed-family-parents-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.wed-family-parent-col {
+  padding: 0 0.5rem;
+}
+
+.wed-family-parent-role {
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--wed-gold);
+  margin-bottom: 0.35rem;
+}
+
+.wed-family-parent-name {
+  font-family: var(--wed-font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.wed-family-closing {
+  font-size: 0.875rem;
+  color: var(--wed-text-dim);
+}
+
+/* ==============================================================================
+   9. RSVP SECTION ("WILL YOU JOIN US?")
+   ============================================================================== */
+.wed-rsvp-box {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2rem, 5vw, 3.25rem) clamp(1.25rem, 4vw, 2.5rem);
+  box-shadow: var(--wed-shadow-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.wed-rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.wed-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.wed-form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wed-gold-light);
+}
+
+.wed-form-input,
+.wed-form-select,
+.wed-form-textarea {
+  width: 100%;
+  background: rgba(11, 7, 17, 0.9);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--wed-radius-sm);
+  padding: 0.85rem 1rem;
+  color: var(--wed-text);
+  font-family: var(--wed-font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wed-form-input:focus,
+.wed-form-select:focus,
+.wed-form-textarea:focus {
+  outline: none;
+  border-color: var(--wed-gold);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+}
+
+.wed-rsvp-attendance-radios {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.wed-radio-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(11, 7, 17, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--wed-radius-md);
+  padding: 0.85rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--wed-text-muted);
+  transition: all 0.2s ease;
+}
+
+.wed-radio-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wed-radio-card.is-selected,
+.wed-radio-card:has(input:checked) {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--wed-gold);
+  color: var(--wed-gold-light);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.wed-btn-submit-rsvp {
+  background: var(--wed-gold-gradient);
+  color: #0b0711;
+  font-family: var(--wed-font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  padding: 1.05rem;
+  border-radius: var(--wed-radius-full);
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.wed-btn-submit-rsvp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.55);
+}
+
+.wed-rsvp-demo-notice {
+  font-size: 0.775rem;
+  color: var(--wed-text-dim);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* ==============================================================================
+   10. SPECIAL INTERACTION ("SEND YOUR BLESSINGS ✨")
+   ============================================================================== */
+.wed-blessings-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2rem, 5vw, 3.25rem) clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+  box-shadow: var(--wed-shadow-lg), var(--wed-shadow-gold);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.wed-blessings-counter-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.wed-blessings-count {
+  font-family: var(--wed-font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.wed-blessings-count-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--wed-gold-light);
+}
+
+.wed-btn-blessings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--wed-gold-gradient);
+  color: #0b0711;
+  font-family: var(--wed-font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border: none;
+  padding: 1.15rem 2.75rem;
+  border-radius: var(--wed-radius-full);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.wed-btn-blessings:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+}
+
+.wed-btn-blessings:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.wed-blessing-toast {
+  display: none;
+  margin-top: 1.5rem;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-md);
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--wed-gold-light);
+  font-weight: 500;
+  animation: toastFade 0.4s ease forwards;
+}
+
+.wed-blessing-toast.is-visible {
+  display: block;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================================================================
+   11. FINAL INVITATION SECTION
+   ============================================================================== */
+.wed-final-section {
+  text-align: center;
+  padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(2rem, 5vw, 4rem);
+  position: relative;
+  z-index: 10;
+}
+
+.wed-final-card {
+  max-width: 820px;
+  margin: 0 auto;
+  background: radial-gradient(circle at 50% 40%, rgba(38, 24, 56, 0.7) 0%, rgba(14, 9, 22, 0.9) 100%);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem);
+  box-shadow: var(--wed-shadow-lg), var(--wed-shadow-gold);
+  position: relative;
+}
+
+.wed-final-quote {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.wed-final-subquote {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--wed-text-muted);
+  font-style: italic;
+  margin-bottom: 2.25rem;
+}
+
+.wed-final-names {
+  font-family: var(--wed-font-display);
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 800;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==============================================================================
+   12. CREATOR BUSINESS CALL TO ACTION & FOOTER
+   ============================================================================== */
+.wed-cta-section {
+  position: relative;
+  z-index: 10;
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+  background: rgba(8, 5, 12, 0.96);
+  border-top: 1px solid var(--wed-gold-border);
+  text-align: center;
+}
+
+.wed-cta-box {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--wed-bg-card);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.75rem);
+  box-shadow: var(--wed-shadow-lg);
+}
+
+.wed-cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--wed-gold-light);
+  border: 1px solid var(--wed-gold-border);
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--wed-radius-full);
+  margin-bottom: 1.25rem;
+}
+
+.wed-cta-title {
+  font-family: var(--wed-font-display);
+  font-size: clamp(1.85rem, 4.5vw, 2.85rem);
+  font-weight: 800;
+  background: var(--wed-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.85rem;
+}
+
+.wed-cta-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--wed-text-muted);
+  max-width: 620px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.6;
+}
+
+.wed-features-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-bottom: 2.25rem;
+}
+
+.wed-feat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.95rem;
+  border-radius: var(--wed-radius-full);
+}
+
+.wed-feat-badge svg {
+  color: var(--wed-gold);
+}
+
+.wed-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.wed-btn-whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
+  font-family: var(--wed-font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 1rem 2.25rem;
+  border-radius: var(--wed-radius-full);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wed-btn-whatsapp-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+}
+
+.wed-btn-portfolio-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--wed-text);
+  font-family: var(--wed-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 1rem 1.85rem;
+  border-radius: var(--wed-radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.wed-btn-portfolio-back:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--wed-gold-border);
+}
+
+.wed-cta-attribution {
+  margin-top: 1.75rem;
+  font-size: 0.8rem;
+  color: var(--wed-text-dim);
+}
+
+/* ==============================================================================
+   13. LIGHTBOX & DEMO MODALS
+   ============================================================================== */
+.wed-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 4, 11, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 10001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.wed-modal.is-open {
+  display: flex;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.wed-modal-card {
+  max-width: 580px;
+  width: 100%;
+  background: var(--wed-bg-surface);
+  border: 1px solid var(--wed-gold-border);
+  border-radius: var(--wed-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--wed-shadow-lg);
+  position: relative;
+}
+
+.wed-modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.wed-modal-close-btn:hover {
+  transform: scale(1.1);
+  background: rgba(212, 175, 55, 0.8);
+  color: #0b0711;
+}
+
+.wed-modal-graphic {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5rem;
+  position: relative;
+  background: radial-gradient(circle, #301740 0%, #140d1e 100%);
+}
+
+.wed-modal-body {
+  padding: 1.75rem;
+}
+
+.wed-modal-date {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--wed-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.wed-modal-title {
+  font-family: var(--wed-font-display);
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.65rem;
+}
+
+.wed-modal-desc {
+  font-size: 0.975rem;
+  color: var(--wed-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.wed-modal-customize-note {
+  font-size: 0.775rem;
+  color: var(--wed-text-dim);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  padding-top: 0.85rem;
+}
+
+/* ==============================================================================
+   14. COMPREHENSIVE RESPONSIVE DESIGN (320px - 1024px)
+   ============================================================================== */
+@media (max-width: 1024px) {
+  .wed-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wed-venue-info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .wed-story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wed-events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wed-family-parents-wrap {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .wed-venue-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .wed-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wed-rsvp-attendance-radios {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .wed-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .wed-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .wed-hero-monogram {
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+  }
+
+  .wed-countdown-box {
+    padding: 1.25rem 0.65rem;
+  }
+
+  .wed-timer-grid {
+    gap: 0.35rem;
+  }
+
+  .wed-timer-cell {
+    padding: 0.65rem 0.2rem;
+    min-width: 0;
+  }
+
+  .wed-timer-num {
+    font-size: 1.5rem;
+  }
+
+  .wed-timer-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.02em;
+  }
+
+  .wed-opening-card {
+    padding: 1.75rem 1rem;
+  }
+
+  .wed-btn-whatsapp-cta,
+  .wed-btn-portfolio-back,
+  .wed-btn-venue-location,
+  .wed-btn-blessings {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .wed-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .wed-hero-title {
+    font-size: 2.15rem;
+  }
+
+  .wed-opening-couple {
+    font-size: 2rem;
+  }
+
+  .wed-countdown-box {
+    padding: 1rem 0.4rem;
+  }
+
+  .wed-timer-grid {
+    gap: 0.25rem;
+  }
+
+  .wed-timer-cell {
+    padding: 0.5rem 0.1rem;
+  }
+
+  .wed-timer-num {
+    font-size: 1.3rem;
+  }
+
+  .wed-timer-label {
+    font-size: 0.55rem;
+    letter-spacing: 0;
+  }
+
+  .wed-status-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==============================================================================
+   15. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   ============================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .wed-opening-overlay {
+    transition: opacity 0.2s ease !important;
+  }
+
+  .wed-ornament-icon {
+    animation: none !important;
+  }
+}
+
+/* ==============================================================================
+   16. FLOATING WHATSAPP BUTTON (WEDDING DEMO)
+   ============================================================================== */
+.wed-floating-wa {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.15rem 0.75rem 0.95rem;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, filter 0.25s ease;
+  backdrop-filter: blur(8px);
+}
+
+.wed-floating-wa:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.45), 0 0 20px rgba(212, 175, 55, 0.35);
+  filter: brightness(1.05);
+  color: #ffffff;
+}
+
+.wed-floating-wa:focus-visible {
+  outline: 3px solid #25D366;
+  outline-offset: 3px;
+}
+
+.wed-floating-wa svg {
+  flex-shrink: 0;
+  display: block;
+}
+
+.wed-floating-wa-label {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .wed-floating-wa {
+    bottom: 20px;
+    right: 18px;
+    padding: 0.75rem;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    justify-content: center;
+  }
+  .wed-floating-wa-label {
+    display: none;
+  }
+}
+
+/* ==============================================================================
+   17. STRATEGIC MID-PAGE CONVERSION BANNER (WEDDING DEMO)
+   ============================================================================== */
+.wed-mid-cta-banner {
+  padding: 1.5rem 0 3.5rem;
+}
+
+.wed-mid-cta-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(20, 14, 28, 0.85) 50%, rgba(139, 92, 246, 0.12) 100%);
+  border: 1px solid var(--wed-gold-border, rgba(212, 175, 55, 0.35));
+  border-radius: var(--wed-radius-lg, 24px);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+.wed-mid-cta-content {
+  flex: 1;
+  max-width: 680px;
+}
+
+.wed-mid-cta-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--wed-gold-light, #fef08a);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--wed-gold-border, rgba(212, 175, 55, 0.35));
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.65rem;
+}
+
+.wed-mid-cta-title {
+  font-family: var(--wed-font-display, inherit);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  line-height: 1.25;
+}
+
+.wed-mid-cta-desc {
+  font-size: 0.95rem;
+  color: var(--wed-text-muted, #cbd5e1);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.wed-btn-mid-cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.85rem;
+  background: var(--wed-gold-gradient, linear-gradient(135deg, #d4af37 0%, #fef08a 50%, #d4af37 100%));
+  color: #0b0711;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.98rem;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  white-space: nowrap;
+}
+
+.wed-btn-mid-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.5);
+  filter: brightness(1.08);
+}
+
+@media (max-width: 820px) {
+  .wed-mid-cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  .wed-btn-mid-cta {
+    width: 100%;
+  }
+}
+
+/* ==============================================================================
+   18. CONTACT ACTION PANEL MODAL (WEDDING DEMO)
+   ============================================================================== */
+.wed-contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.25s ease, opacity 0.25s ease;
+}
+
+.wed-contact-modal.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.wed-contact-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 6, 17, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.wed-contact-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(165deg, rgba(26, 16, 38, 0.97) 0%, rgba(15, 9, 24, 0.99) 100%);
+  border: 1px solid var(--wed-gold-border, rgba(212, 175, 55, 0.4));
+  border-radius: 24px;
+  padding: clamp(1.75rem, 5vw, 2.35rem);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(212, 175, 55, 0.15);
+  transform: scale(0.92) translateY(12px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 1;
+}
+
+.wed-contact-modal.active .wed-contact-card {
+  transform: scale(1) translateY(0);
+}
+
+.wed-contact-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.wed-contact-close:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: scale(1.08);
+}
+
+.wed-contact-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.wed-contact-badge {
+  display: inline-block;
+  font-size: 0.725rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--wed-gold-light, #fef08a);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--wed-gold-border, rgba(212, 175, 55, 0.35));
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  margin-bottom: 0.65rem;
+}
+
+.wed-contact-title {
+  font-family: var(--wed-font-display, inherit);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.45rem;
+}
+
+.wed-contact-subtitle {
+  font-size: 0.92rem;
+  color: var(--wed-text-muted, #cbd5e1);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.wed-contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.wed-contact-opt {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1.15rem;
+  border-radius: 16px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wed-contact-opt:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.wed-contact-opt.opt-whatsapp {
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.18) 0%, rgba(18, 140, 126, 0.25) 100%);
+  border: 1px solid rgba(37, 211, 102, 0.5);
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.15);
+}
+
+.wed-contact-opt.opt-whatsapp:hover {
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.28) 0%, rgba(18, 140, 126, 0.35) 100%);
+  border-color: #25D366;
+  box-shadow: 0 8px 26px rgba(37, 211, 102, 0.3);
+}
+
+.wed-contact-opt.opt-email:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.wed-contact-opt.opt-call:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.wed-contact-opt-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.wed-contact-opt.opt-whatsapp .wed-contact-opt-icon {
+  background: #25D366;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.wed-contact-opt.opt-email .wed-contact-opt-icon {
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.wed-contact-opt.opt-call .wed-contact-opt-icon {
+  color: var(--wed-gold-light, #fef08a);
+  border: 1px solid var(--wed-gold-border, rgba(212, 175, 55, 0.35));
+}
+
+.wed-contact-opt-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.wed-contact-opt-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.wed-contact-opt-name {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #ffffff;
+  display: block;
+}
+
+.wed-contact-badge-instant {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: #25D366;
+  color: #0b2e13;
+}
+
+.wed-contact-opt-detail {
+  font-size: 0.8rem;
+  color: var(--wed-text-muted, #94a3b8);
+  display: block;
+  margin-top: 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wed-contact-opt-arrow {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.wed-contact-opt:hover .wed-contact-opt-arrow {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.wed-contact-footer {
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}

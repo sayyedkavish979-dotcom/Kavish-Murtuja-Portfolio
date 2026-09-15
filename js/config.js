@@ -156,6 +156,47 @@ const SITE_CONFIG = {
       techStack: ["HTML5", "CSS3", "JavaScript", "Local Business Schema", "Mobile First"],
       results: "Built to generate reliable local inbound inquiries and prove craftsmanship quality to neighborhood homeowners.",
       whatsappText: "Hello Kavish, I saw your MetroCraft local business demo website and I want a website like this for my local trade/service business."
+    },
+    "birthday-surprise": {
+      id: "birthday-surprise",
+      title: "Birthday Surprise",
+      category: "Special Occasion",
+      tagline: "Personalized Digital Birthday Surprise & Celebration Concept",
+      status: "Concept Demo",
+      image: "assets/images/projects/birthday-surprise.svg",
+      liveUrl: "birthday/",
+      overview: "A premium, emotional, and personalized digital surprise experience engineered for clients looking to celebrate someone special. Features an animated opening curtain, customizable photo memory gallery, milestone timeline, live countdown ticker, and interactive 3D birthday cake with candle wish blow.",
+      deliverables: [
+        "Animated Opening Surprise Curtain & Zero-Dependency Confetti Cannon",
+        "Personal Photo Gallery with Lightbox Previews",
+        "Our Memories Milestone Story Timeline",
+        "Live Birthday Countdown Timer with Past-Date Graceful Celebration",
+        "Interactive Birthday Cake with 'Make a Wish ✨' Candle Blow Interaction"
+      ],
+      techStack: ["HTML5", "Modern CSS", "JavaScript", "Canvas Confetti Engine", "100% Fluid Mobile UI"],
+      results: "Engineered to deliver an unforgettable digital surprise that clients can share via link on WhatsApp, Instagram, or email.",
+      whatsappText: "Hi Kavish, I saw your Birthday Surprise Demo website and I’d like to create a personalized surprise website for someone special. Please let me know how we can get started."
+    },
+    "wedding-experience": {
+      id: "wedding-experience",
+      title: "Wedding Experience",
+      category: "Special Occasion",
+      tagline: "Personalized Luxury Digital Wedding Invitation & Celebration Experience",
+      status: "Concept Demo",
+      image: "assets/images/projects/wedding-experience.svg",
+      liveUrl: "wedding/",
+      overview: "A luxury, interactive digital wedding invitation engineered for modern couples. Features an elegant opening envelope sequence, multi-event schedule cards, interactive venue directions, live countdown ticker, photo memory gallery, family blessings letter, transparent RSVP management, and special blessing celebrations.",
+      deliverables: [
+        "Animated Opening Invitation Reveal Curtain with Zero Skip Control",
+        "Live Countdown Ticker with Graceful Celebration Hand-off",
+        "Multi-Function Wedding Celebrations Schedule (Mehendi, Haldi, Ceremony, Reception)",
+        "Curated Photo Memory Gallery with Modal Lightbox",
+        "Interactive 'Send Your Blessings ✨' with Golden Petal Celebration",
+        "Transparent RSVP Attendance System with Instant WhatsApp Dispatch"
+      ],
+      techStack: ["HTML5", "Modern CSS", "JavaScript", "Canvas Confetti Engine", "100% Fluid Mobile Architecture"],
+      results: "Designed to provide modern couples with an unforgettable digital invitation that guests can access across all devices.",
+      whatsappText: "Hi Kavish, I saw your Wedding Website Demo and I’d like to create a personalized wedding invitation website for our upcoming wedding. Please let me know how we can get started."
     }
   }
 };

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aarav &amp; Anaya — Wedding Celebration | Concept Demo by Kavish Murtuja</title>
+  <meta name="description" content="Personalized luxury digital wedding invitation demo created by Kavish Murtuja. Features animated opening, multi-event schedules, venue details, countdown, photo gallery, and interactive blessings.">
+  <meta name="author" content="Kavish Murtuja">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:title" content="Aarav &amp; Anaya — Wedding Celebration">
+  <meta property="og:description" content="Personalized luxury digital wedding invitation demo engineered by Kavish Murtuja | Web Designer &amp; Developer.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon / Brand -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg">
+
+  <!-- Luxury Stylesheet -->
+  <link rel="stylesheet" href="css/wedding.css">
+</head>
+<body>
+
+  <!-- Background Ambient Glow Elements -->
+  <div class="wed-bg-glows" aria-hidden="true">
+    <div class="wed-glow-1"></div>
+    <div class="wed-glow-2"></div>
+    <div class="wed-glow-3"></div>
+  </div>
+
+  <!-- Zero-Dependency HTML5 Confetti Canvas -->
+  <canvas id="wedConfettiCanvas" style="position: fixed; inset: 0; pointer-events: none; z-index: 9999; width: 100%; height: 100%;"></canvas>
+
+  <!-- 1. Top Creator Status Bar -->
+  <header class="wed-status-bar">
+    <div class="wed-container wed-status-inner">
+      <div class="wed-status-left">
+        <span class="wed-status-badge"><span class="dot"></span> Concept Demo</span>
+        <span>Designed by <strong>Kavish Murtuja</strong> | Web Designer &amp; Developer</span>
+      </div>
+      <div class="wed-status-right">
+        <a href="../#portfolio" class="wed-btn-status-portfolio">&larr; Back to Portfolio</a>
+        <button type="button" class="wed-btn-status-cta btn-open-contact" data-open-contact="true">Get Yours &rarr;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Elegant Opening Experience Overlay (NO SKIP BUTTON) -->
+  <div id="wedOpeningOverlay" class="wed-opening-overlay" role="dialog" aria-modal="true" aria-label="Wedding Invitation Envelope">
+    <div class="wed-opening-card">
+      <div class="wed-ornament-icon">💍</div>
+      <p class="wed-opening-greeting">Together with their families</p>
+      <h1 class="wed-opening-couple dyn-couple-names">Aarav &amp; Anaya</h1>
+      <p class="wed-opening-callout">
+        Invite You To Celebrate Their Wedding
+        <span>Two hearts. One beautiful beginning.</span>
+      </p>
+      <button id="btnOpenInvite" class="wed-btn-open-invite" type="button">
+        Open Invitation ✨
+      </button>
+      <p class="wed-opening-footnote">Fictional Wedding Invitation Concept Demo</p>
+    </div>
+  </div>
+
+  <!-- Main Wedding Experience -->
+  <main id="mainWeddingContent">
+
+    <!-- 3. Hero Section & Live Countdown -->
+    <section class="wed-hero-section">
+      <div class="wed-container">
+        <div class="wed-hero-monogram">The Wedding Celebration</div>
+        <h1 class="wed-hero-title dyn-couple-names">Aarav &amp; Anaya</h1>
+        <p id="dynHeroTagline" class="wed-hero-tagline">Two hearts. One beautiful beginning.</p>
+
+        <div id="dynHeroDateBadge" class="wed-hero-date-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          15 December 2026
+        </div>
+
+        <!-- Live Countdown Ticker Box -->
+        <div class="wed-countdown-box">
+          <h2 class="wed-countdown-title">
+            <span>✨</span> Counting Down To The Sacred Day <span>✨</span>
+          </h2>
+
+          <div id="wedTimerGrid" class="wed-timer-grid">
+            <div class="wed-timer-cell">
+              <span id="wedTimerDays" class="wed-timer-num">--</span>
+              <span class="wed-timer-label">Days</span>
+            </div>
+            <div class="wed-timer-cell">
+              <span id="wedTimerHours" class="wed-timer-num">--</span>
+              <span class="wed-timer-label">Hours</span>
+            </div>
+            <div class="wed-timer-cell">
+              <span id="wedTimerMins" class="wed-timer-num">--</span>
+              <span class="wed-timer-label">Minutes</span>
+            </div>
+            <div class="wed-timer-cell">
+              <span id="wedTimerSecs" class="wed-timer-num">--</span>
+              <span class="wed-timer-label">Seconds</span>
+            </div>
+          </div>
+
+          <!-- Expired Celebration Banner State -->
+          <div id="wedCelebrationState" class="wed-celebration-state">
+            <h3>🎉 The Wedding Celebrations Have Begun!</h3>
+            <p>Wishing Aarav &amp; Anaya endless love, laughter, and lifelong happiness!</p>
+          </div>
+
+          <p class="wed-target-date-display">
+            Auspicious Date: <strong id="dynTargetDateDisplay">15 December 2026</strong>
+          </p>
+        </div>
+
+        <!-- Hero Quick Navigation -->
+        <nav class="wed-hero-nav-links" aria-label="Quick Section Links">
+          <a href="#ourStory" class="wed-hero-nav-btn">Our Story</a>
+          <a href="#weddingEvents" class="wed-hero-nav-btn">Celebrations</a>
+          <a href="#weddingVenue" class="wed-hero-nav-btn">Venue</a>
+          <a href="#photoGallery" class="wed-hero-nav-btn">Moments</a>
+          <a href="#weddingRsvp" class="wed-hero-nav-btn">RSVP</a>
+          <a href="#sendBlessings" class="wed-hero-nav-btn">Send Blessings ✨</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 4. Our Story Section -->
+    <section id="ourStory" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">How It All Began</span>
+          <h2 class="wed-section-title">Our Story</h2>
+          <p class="wed-section-desc">Every great love story has a beginning. Here is a glimpse into the serendipitous chapters that brought us together.</p>
+        </header>
+
+        <div id="wedStoryGrid" class="wed-story-grid">
+          <!-- Populated dynamically from wedding-config.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Wedding Celebrations / Multi-Event Schedule -->
+    <section id="weddingEvents" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Multi-Function Schedule</span>
+          <h2 class="wed-section-title">Wedding Celebrations</h2>
+          <p class="wed-section-desc">Join us in the vibrant festivities leading up to our sacred wedding vows and grand evening reception.</p>
+        </header>
+
+        <div id="wedEventsGrid" class="wed-events-grid">
+          <!-- Populated dynamically from wedding-config.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Wedding Venue Section -->
+    <section id="weddingVenue" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Destination &amp; Hospitality</span>
+          <h2 class="wed-section-title">Wedding Venue</h2>
+          <p class="wed-section-desc">All ceremonies will be celebrated at our chosen royal destination nestled in Uttar Pradesh.</p>
+        </header>
+
+        <div class="wed-venue-card">
+          <div class="wed-venue-banner">
+            <div class="wed-venue-palace-icon">🏰</div>
+            <h3 id="dynVenueName" class="wed-venue-banner-title">The Grand Palace</h3>
+            <p id="dynVenueCity" class="wed-venue-banner-city">Kanpur, Uttar Pradesh</p>
+          </div>
+          <div class="wed-venue-body">
+            <p id="dynVenueTagline" class="wed-venue-tagline">"A majestic royal destination nestled amidst lush heritage gardens"</p>
+
+            <div class="wed-venue-info-grid">
+              <div class="wed-venue-info-cell">
+                <div class="wed-venue-info-cell-icon">📍</div>
+                <div class="wed-venue-info-cell-title">Full Address</div>
+                <div id="dynVenueAddress" class="wed-venue-info-cell-desc">The Grand Palace, Civil Lines, Kanpur, UP 208001</div>
+              </div>
+              <div class="wed-venue-info-cell">
+                <div class="wed-venue-info-cell-icon">✈️</div>
+                <div class="wed-venue-info-cell-title">Airport Connectivity</div>
+                <div id="dynVenueAirport" class="wed-venue-info-cell-desc">18 km from Kanpur Airport (KNU)</div>
+              </div>
+              <div class="wed-venue-info-cell">
+                <div class="wed-venue-info-cell-icon">🚗</div>
+                <div class="wed-venue-info-cell-title">Valet &amp; Parking</div>
+                <div id="dynVenueValet" class="wed-venue-info-cell-desc">Complimentary Valet Parking Available for all Guests</div>
+              </div>
+            </div>
+
+            <div class="wed-venue-actions">
+              <a id="btnViewVenueLocation" href="https://maps.google.com/?q=The+Grand+Palace+Kanpur" target="_blank" rel="noopener" class="wed-btn-venue-location">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                View Location on Map &nearr;
+              </a>
+            </div>
+
+            <p class="wed-venue-disclaimer">
+              ℹ️ <em>Placeholder venue information for concept demonstration. In production, exact map coordinates, hotel booking links, and directions are personalized for each couple.</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Photo Gallery ("Our Beautiful Moments") -->
+    <section id="photoGallery" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Memories &amp; Milestones</span>
+          <h2 class="wed-section-title">Our Beautiful Moments</h2>
+          <p class="wed-section-desc">A curated collection of cherished memories, pre-wedding journeys, and quiet smiles shared along the way.</p>
+        </header>
+
+        <div id="wedGalleryGrid" class="wed-gallery-grid">
+          <!-- Populated dynamically from wedding-config.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategic Mid-Page Conversion Banner -->
+    <div class="wed-mid-cta-banner">
+      <div class="wed-container">
+        <div class="wed-mid-cta-card">
+          <div class="wed-mid-cta-content">
+            <span class="wed-mid-cta-badge">Custom Digital Wedding Invitation</span>
+            <h3 class="wed-mid-cta-title">Planning your special day?</h3>
+            <p class="wed-mid-cta-desc">Create a personalized digital wedding experience with custom music, photo albums, WhatsApp RSVP, and interactive venue navigation.</p>
+          </div>
+          <button type="button" class="wed-btn-mid-cta wed-mid-cta-btn btn-open-contact" data-open-contact="true">Get Yours &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Family / Invitation Message -->
+    <section id="familyMessage" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Warm Blessings</span>
+          <h2 class="wed-section-title">With Love From Our Families</h2>
+          <p class="wed-section-desc">A celebration of two families uniting with joy, gratitude, and shared love.</p>
+        </header>
+
+        <div class="wed-family-card">
+          <h3 id="dynFamilySalutation" class="wed-family-salutation">Dear Friends &amp; Family,</h3>
+          <p id="dynFamilyBody" class="wed-family-body">
+            "With hearts full of gratitude and immense joy, we invite you to be part of our most cherished milestone. Weddings are not merely the union of two individuals; they are a celebration of community, heritage, and the friendships that shaped who we are. Your presence, laughter, and warm blessings will make our special day truly complete."
+          </p>
+
+          <div class="wed-family-parents-wrap">
+            <div class="wed-family-parent-col">
+              <div class="wed-family-parent-role">Groom's Parents</div>
+              <div id="dynParentsGroom" class="wed-family-parent-name">Mr. Ramesh &amp; Mrs. Sunita Sharma</div>
+            </div>
+            <div class="wed-family-parent-col">
+              <div class="wed-family-parent-role">Bride's Parents</div>
+              <div id="dynParentsBride" class="wed-family-parent-name">Mr. Vikram &amp; Mrs. Meenakshi Kapoor</div>
+            </div>
+          </div>
+
+          <p id="dynFamilyClosing" class="wed-family-closing">
+            We eagerly look forward to welcoming you with warm hearts and celebratory smiles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. RSVP Section ("Will You Join Us?") -->
+    <section id="weddingRsvp" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Guest Attendance</span>
+          <h2 class="wed-section-title">Will You Join Us?</h2>
+          <p class="wed-section-desc">Please let us know if you will be celebrating with us so we can arrange your royal hospitality.</p>
+        </header>
+
+        <div class="wed-rsvp-box">
+          <form id="wedRsvpForm" class="wed-rsvp-form">
+            <div class="wed-form-group">
+              <label for="rsvpGuestName" class="wed-form-label">Your Full Name *</label>
+              <input type="text" id="rsvpGuestName" class="wed-form-input" placeholder="e.g. Rohan Mehra" required>
+            </div>
+
+            <div class="wed-form-group">
+              <label class="wed-form-label">Attendance *</label>
+              <div class="wed-rsvp-attendance-radios">
+                <label class="wed-radio-card is-selected">
+                  <input type="radio" name="attendance" value="Joyfully Accept" checked>
+                  <span>🎉 Joyfully Accept</span>
+                </label>
+                <label class="wed-radio-card">
+                  <input type="radio" name="attendance" value="Regretfully Decline">
+                  <span>💌 Regretfully Decline</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="wed-form-group">
+              <label for="rsvpGuestCount" class="wed-form-label">Number of Guests Attending *</label>
+              <select id="rsvpGuestCount" class="wed-form-select">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5+">5+ Guests (Family)</option>
+              </select>
+            </div>
+
+            <div class="wed-form-group">
+              <label for="rsvpGuestMessage" class="wed-form-label">A Note For The Couple (Optional)</label>
+              <textarea id="rsvpGuestMessage" class="wed-form-textarea" rows="3" placeholder="Share your warm wishes or travel arrival details..."></textarea>
+            </div>
+
+            <button type="submit" class="wed-btn-submit-rsvp">
+              Submit RSVP Response
+            </button>
+
+            <p class="wed-rsvp-demo-notice">
+              🔒 <em>Demo Notice: This RSVP interface validates input and demonstrates client workflows transparently without fake backend claims.</em>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Special Interaction ("Send Your Blessings ✨") -->
+    <section id="sendBlessings" class="wed-section">
+      <div class="wed-container">
+        <header class="wed-section-header">
+          <span class="wed-section-badge">Shower Love</span>
+          <h2 class="wed-section-title">Send Your Blessings</h2>
+          <p class="wed-section-desc">Click below to shower Aarav &amp; Anaya with virtual flower petals, golden sparkles, and heartfelt blessings.</p>
+        </header>
+
+        <div class="wed-blessings-card">
+          <div class="wed-blessings-counter-wrap">
+            <div id="wedBlessingsCount" class="wed-blessings-count">248</div>
+            <div class="wed-blessings-count-label">Warm Blessings Sent</div>
+          </div>
+
+          <button id="btnSendBlessings" class="wed-btn-blessings" type="button">
+            Send Your Blessings ✨
+          </button>
+
+          <div id="wedBlessingToast" class="wed-blessing-toast">
+            <!-- Populated on click -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Final Romantic Invitation Section -->
+    <section class="wed-final-section">
+      <div class="wed-container">
+        <div class="wed-final-card">
+          <p id="dynFinalQuote" class="wed-final-quote">
+            "Two lives, one journey, countless memories to come."
+          </p>
+          <p id="dynFinalSubquote" class="wed-final-subquote">
+            We can't wait to celebrate this beautiful beginning with you.
+          </p>
+          <h3 class="wed-final-names dyn-couple-names">Aarav &amp; Anaya</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Creator Business Call-to-Action & Lead Generation -->
+    <section id="weddingCta" class="wed-cta-section">
+      <div class="wed-container">
+        <div class="wed-cta-box">
+          <span class="wed-cta-badge">Web Design &amp; Development by Kavish Murtuja</span>
+          <h2 class="wed-cta-title">Want a Wedding Website Like This?</h2>
+          <p class="wed-cta-subtitle">
+            Create a beautiful digital wedding invitation and experience.
+          </p>
+
+          <div class="wed-features-list">
+            <span class="wed-feat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Custom Couple Domain</span>
+            <span class="wed-feat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> WhatsApp RSVP Integration</span>
+            <span class="wed-feat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Google Maps Venue Link</span>
+            <span class="wed-feat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 100% Mobile Responsive</span>
+            <span class="wed-feat-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Elegant Photo Lightbox</span>
+          </div>
+
+          <div class="wed-cta-actions">
+            <button type="button" id="btnCreateWeddingWebsiteWA" class="wed-btn-whatsapp-cta btn-open-contact" data-open-contact="true">
+              <span>Get Yours</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <a href="../#portfolio" class="wed-btn-portfolio-back">
+              Back to Portfolio
+            </a>
+          </div>
+
+          <p class="wed-cta-attribution">
+            Concept Demo &copy; 2026 Kavish Murtuja. Handcrafted with modern web standards and fluid responsive architecture.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 13. Lightbox Modal For Gallery Moments -->
+  <div id="wedGalleryModal" class="wed-modal" role="dialog" aria-modal="true" aria-labelledby="wedModalTitle">
+    <div class="wed-modal-card">
+      <button id="btnWedCloseModal" class="wed-modal-close-btn" type="button" aria-label="Close Photo Preview">&times;</button>
+      <div id="wedModalGraphic" class="wed-modal-graphic">✨</div>
+      <div class="wed-modal-body">
+        <div id="wedModalDate" class="wed-modal-date">Date</div>
+        <h3 id="wedModalTitle" class="wed-modal-title">Moment Title</h3>
+        <p id="wedModalDesc" class="wed-modal-desc">Moment caption text...</p>
+        <p id="wedModalNote" class="wed-modal-customize-note">Customizable placeholder note</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14. RSVP Demo Confirmation Modal -->
+  <div id="wedRsvpDemoModal" class="wed-modal" role="dialog" aria-modal="true" aria-labelledby="wedRsvpModalTitle">
+    <div class="wed-modal-card">
+      <button id="btnWedCloseRsvpModal" class="wed-modal-close-btn" type="button" aria-label="Close Modal">&times;</button>
+      <div class="wed-modal-body" style="padding: 2.25rem 1.75rem; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 0.75rem;">💌</div>
+        <h3 id="wedRsvpModalTitle" class="wed-modal-title" style="margin-bottom: 1rem;">RSVP Captured (Demo Mode)</h3>
+        <div id="wedRsvpModalText" class="wed-modal-desc" style="text-align: left; background: rgba(11, 7, 17, 0.7); border: 1px solid var(--wed-gold-border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+          <!-- Populated dynamically upon submit -->
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+          <a id="btnShareRsvpWhatsApp" href="#" target="_blank" rel="noopener" class="wed-btn-whatsapp-cta" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+            Send RSVP via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15. Floating WhatsApp Action Button -->
+  <a href="https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20custom%20Wedding%20website%20like%20your%20demo.%20I%E2%80%99d%20like%20to%20discuss%20my%20requirements%2C%20available%20packages%2C%20and%20pricing."
+     id="wedFloatingWhatsapp"
+     class="wed-floating-wa"
+     target="_blank"
+     rel="noopener"
+     aria-label="Chat with Kavish on WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.06 7.42C8.89 7.42 8.62 7.49 8.39 7.74C8.16 8 7.5 8.61 7.5 9.87C7.5 11.12 8.42 12.33 8.55 12.5C8.68 12.67 10.35 15.24 12.91 16.35C13.52 16.61 14 16.77 14.37 16.89C14.98 17.08 15.54 17.06 15.98 16.99C16.48 16.92 17.49 16.38 17.7 15.79C17.91 15.21 17.91 14.71 17.85 14.6C17.79 14.5 17.62 14.43 17.37 14.31C17.12 14.19 15.9 13.59 15.67 13.5C15.45 13.42 15.28 13.38 15.12 13.63C14.95 13.88 14.48 14.43 14.33 14.6C14.19 14.77 14.04 14.79 13.79 14.67C13.54 14.54 12.5 14.2 11.27 13.11C10.31 12.26 9.66 11.2 9.47 10.88C9.28 10.56 9.45 10.39 9.58 10.26C9.69 10.15 9.83 9.97 9.96 9.83C10.08 9.68 10.13 9.57 10.21 9.41C10.29 9.24 10.25 9.1 10.19 8.98C10.13 8.85 9.63 7.63 9.42 7.13C9.22 6.64 9.02 6.71 8.87 6.7C8.72 6.7 8.56 6.7 8.39 6.7L9.06 7.42Z"/>
+    </svg>
+    <span class="wed-floating-wa-label">Chat on WhatsApp</span>
+  </a>
+
+  <!-- 16. Quick Contact Action Panel Modal -->
+  <div class="wed-contact-modal" id="wedContactModal" role="dialog" aria-modal="true" aria-labelledby="wedContactTitle" aria-hidden="true">
+    <div class="wed-contact-backdrop" id="wedContactBackdrop"></div>
+    <div class="wed-contact-card">
+      <button type="button" class="wed-contact-close" id="btnWedCloseContact" aria-label="Close contact options">&times;</button>
+      
+      <div class="wed-contact-header">
+        <div class="wed-contact-badge">✨ Let's Connect</div>
+        <h3 class="wed-contact-title" id="wedContactTitle">Let's Create Yours</h3>
+        <p class="wed-contact-subtitle">Choose the easiest way to get in touch with Kavish.</p>
+      </div>
+
+      <div class="wed-contact-options">
+        <!-- 1. WhatsApp (Primary/Highlighted) -->
+        <a href="https://wa.me/917355568493?text=Hi%20Kavish%2C%20I%E2%80%99m%20interested%20in%20getting%20a%20custom%20Wedding%20website%20like%20your%20demo.%20I%E2%80%99d%20like%20to%20discuss%20my%20requirements%2C%20available%20packages%2C%20and%20pricing." 
+           id="wedding-whatsapp-cta" 
+           class="wed-contact-opt opt-whatsapp" 
+           target="_blank" 
+           rel="noopener">
+          <div class="wed-contact-opt-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.06 7.42C8.89 7.42 8.62 7.49 8.39 7.74C8.16 8 7.5 8.61 7.5 9.87C7.5 11.12 8.42 12.33 8.55 12.5C8.68 12.67 10.35 15.24 12.91 16.35C13.52 16.61 14 16.77 14.37 16.89C14.98 17.08 15.54 17.06 15.98 16.99C16.48 16.92 17.49 16.38 17.7 15.79C17.91 15.21 17.91 14.71 17.85 14.6C17.79 14.5 17.62 14.43 17.37 14.31C17.12 14.19 15.9 13.59 15.67 13.5C15.45 13.42 15.28 13.38 15.12 13.63C14.95 13.88 14.48 14.43 14.33 14.6C14.19 14.77 14.04 14.79 13.79 14.67C13.54 14.54 12.5 14.2 11.27 13.11C10.31 12.26 9.66 11.2 9.47 10.88C9.28 10.56 9.45 10.39 9.58 10.26C9.69 10.15 9.83 9.97 9.96 9.83C10.08 9.68 10.13 9.57 10.21 9.41C10.29 9.24 10.25 9.1 10.19 8.98C10.13 8.85 9.63 7.63 9.42 7.13C9.22 6.64 9.02 6.71 8.87 6.7C8.72 6.7 8.56 6.7 8.39 6.7L9.06 7.42Z"/></svg>
+          </div>
+          <div class="wed-contact-opt-info">
+            <div class="wed-contact-opt-top">
+              <span class="wed-contact-opt-name">Chat on WhatsApp</span>
+              <span class="wed-contact-badge-instant">Fastest Response</span>
+            </div>
+            <span class="wed-contact-opt-detail">Instant reply &bull; Direct chat</span>
+          </div>
+          <div class="wed-contact-opt-arrow">&rarr;</div>
+        </a>
+
+        <!-- 2. Email -->
+        <a href="mailto:kavishwebsitedesigner@gmail.com?subject=Wedding%20Website%20Enquiry" 
+           id="wedding-email-cta" 
+           class="wed-contact-opt opt-email">
+          <div class="wed-contact-opt-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
+          <div class="wed-contact-opt-info">
+            <span class="wed-contact-opt-name">Send an Email</span>
+            <span class="wed-contact-opt-detail">kavishwebsitedesigner@gmail.com</span>
+          </div>
+          <div class="wed-contact-opt-arrow">&rarr;</div>
+        </a>
+
+        <!-- 3. Call -->
+        <a href="tel:+917355568493" 
+           id="wedding-call-cta" 
+           class="wed-contact-opt opt-call">
+          <div class="wed-contact-opt-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <div class="wed-contact-opt-info">
+            <span class="wed-contact-opt-name">Call Kavish</span>
+            <span class="wed-contact-opt-detail">+91 7355568493</span>
+          </div>
+          <div class="wed-contact-opt-arrow">&rarr;</div>
+        </a>
+      </div>
+
+      <div class="wed-contact-footer">
+        <span>Concept Demo by <strong>Kavish Murtuja</strong> &bull; Web Designer &amp; Developer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/wedding-config.js"></script>
+  <script src="js/wedding.js"></script>
+
+</body>
+</html>

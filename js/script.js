@@ -295,6 +295,17 @@ function initProjectModal() {
     const inquiryUrl = `https://wa.me/917355568493?text=${encodeURIComponent(project.whatsappText)}`;
     modalWhatsappBtn.href = inquiryUrl;
 
+    // Handle Live Demo button in modal if project has a liveUrl
+    const modalLiveDemoBtn = document.getElementById("modalLiveDemoBtn");
+    if (modalLiveDemoBtn) {
+      if (project.liveUrl) {
+        modalLiveDemoBtn.href = project.liveUrl;
+        modalLiveDemoBtn.style.display = "inline-flex";
+      } else {
+        modalLiveDemoBtn.style.display = "none";
+      }
+    }
+
     // Show modal
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
@@ -313,9 +324,17 @@ function initProjectModal() {
 
   viewButtons.forEach(btn => {
     btn.addEventListener("click", (e) => {
+      // If the button is an <a> tag linking directly to a live demo URL (e.g. birthday/, wedding/)
+      // allow native browser navigation to open the demo in target="_blank"
+      const href = btn.getAttribute("href");
+      if (btn.tagName === "A" && href && !href.startsWith("#")) {
+        return; // Allow native navigation
+      }
       e.preventDefault();
       const projectId = btn.getAttribute("data-project-id");
-      openModal(projectId);
+      if (projectId) {
+        openModal(projectId);
+      }
     });
   });
 
@@ -326,9 +345,11 @@ function initProjectModal() {
     preview.addEventListener("click", () => {
       const card = preview.closest(".project-card");
       const btn = card ? card.querySelector(".view-project-btn") : null;
-      if (btn) {
-        const projectId = btn.getAttribute("data-project-id");
+      const projectId = (btn && btn.getAttribute("data-project-id")) || (card && card.getAttribute("data-project-id"));
+      if (projectId) {
         openModal(projectId);
+      } else if (btn && btn.tagName === "A" && btn.getAttribute("href")) {
+        window.open(btn.getAttribute("href"), btn.getAttribute("target") || "_blank");
       }
     });
   });
