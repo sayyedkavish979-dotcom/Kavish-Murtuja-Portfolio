@@ -14,6 +14,5 @@
 /faq/*          /index.html   200!
 /contact        /index.html   200!
 /contact/*      /index.html   200!
-/birthday       /birthday/    301!
-/wedding        /wedding/     301!
 /*              /index.html   200
+
